@@ -57,8 +57,8 @@
   </section>
 
   <div class="ireal-actions">
-    <button id="irealBtn">iReal Proで鳴らす</button>
-    <button class="secondary" id="copyBtn">iReal Pro用コードをコピー</button>
+    <button id="irealBtn">共有／コピーでiReal Proへ送る</button>
+    <button class="secondary" id="copyBtn">コードだけコピー</button>
     <p class="status" id="irealStatus"></p>
   </div>
 
@@ -125,16 +125,6 @@ function practiceText(){
   const bars = currentPractice.chords.map(irealChord).join(" | ");
   return `${currentPractice.title}\nKey: ${currentPractice.key}\n${bars} | ${bars} ||`;
 }
-function irealUrl(){
-  const title = currentPractice ? currentPractice.title : "Daily 251";
-  const composer = "Daily 251 Sax Practice";
-  const style = currentPractice && currentPractice.mode.startsWith("Minor") ? "Medium Swing" : "Medium Swing";
-  const key = currentPractice ? currentPractice.key : "C";
-  const chart = currentPractice
-    ? `| ${currentPractice.chords.map(irealChord).join(" | ")} | ${currentPractice.chords.map(irealChord).join(" | ")} |`
-    : "| D-7 | G7 | C^7 | C^7 |";
-  return `irealb://${[title, composer, style, key, "n", chart].map(encodeURIComponent).join("=")}`;
-}
 function render(extraSeed=""){
   const mode = document.getElementById("mode").value;
   const key = keySelect.value;
@@ -161,9 +151,23 @@ document.getElementById("mode").addEventListener("change",()=>render());
 keySelect.addEventListener("change",()=>render());
 document.getElementById("todayBtn").addEventListener("click",()=>{ keySelect.value=todayKey(); render(); });
 document.getElementById("randomBtn").addEventListener("click",()=>render(String(Date.now())));
-document.getElementById("irealBtn").addEventListener("click",()=>{
-  document.getElementById("irealStatus").textContent = "iReal Proを開きます。開かない場合は下のコピーを使ってください。";
-  window.location.href = irealUrl();
+document.getElementById("irealBtn").addEventListener("click",async ()=>{
+  const text = practiceText();
+  if (navigator.share) {
+    try {
+      await navigator.share({title: currentPractice.title, text});
+      document.getElementById("irealStatus").textContent = "共有しました。iReal Proで新規曲に貼り付けて再生してください。";
+      return;
+    } catch {
+      // The user may cancel the share sheet; fall through to clipboard.
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById("irealStatus").textContent = "コード進行をコピーしました。iReal Proを開き、新規曲に貼り付けて再生してください。";
+  } catch {
+    document.getElementById("irealStatus").textContent = text;
+  }
 });
 document.getElementById("copyBtn").addEventListener("click",async ()=>{
   const text = practiceText();
