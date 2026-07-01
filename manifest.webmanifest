@@ -1,0 +1,19 @@
+{
+  "name": "Daily Ⅱ–Ⅴ–Ⅰ Sax Practice",
+  "short_name": "Daily 251",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f2ea",
+  "theme_color": "#0f6b5f",
+  "description": "毎日のサックス向けⅡ–Ⅴ–Ⅰフレーズ練習PWA",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230f6b5f'/%3E%3Ctext x='96' y='86' text-anchor='middle' font-family='Arial,sans-serif' font-size='46' font-weight='700' fill='white'%3E251%3C/text%3E%3Ctext x='96' y='126' text-anchor='middle' font-family='Arial,sans-serif' font-size='28' fill='%23f6f2ea'%3ESAX%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

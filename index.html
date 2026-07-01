@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Daily 251" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>Daily Ⅱ–Ⅴ–Ⅰ Sax Practice</title>
+  <style>
+    :root { color-scheme: light; --bg:#f6f2ea; --card:#fffdf8; --ink:#201f1b; --muted:#6f665b; --line:#d7cfc1; --accent:#0f6b5f; --accent-2:#b45137; --soft:#efe7d9; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; background:var(--bg); color:var(--ink); }
+    main { max-width:760px; margin:0 auto; padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom)); }
+    h1 { font-size:26px; line-height:1.15; margin:12px 0 4px; letter-spacing:0; }
+    .sub { color:var(--muted); margin:0 0 18px; font-size:14px; }
+    .controls { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
+    label { display:block; color:var(--muted); font-size:12px; margin:0 0 5px; }
+    select, button { width:100%; border:1px solid var(--line); border-radius:8px; padding:12px; font-size:16px; background:#fffdf8; color:var(--ink); }
+    button { background:var(--accent); color:white; border-color:var(--accent); font-weight:700; }
+    button.secondary { background:#fffdf8; color:var(--accent); }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; box-shadow:0 10px 28px rgba(61,45,27,.10); }
+    .date { color:var(--muted); font-size:13px; margin:0 0 10px; }
+    .name { font-size:22px; font-weight:800; margin:0 0 16px; color:var(--accent-2); }
+    .section { color:var(--muted); font-size:13px; font-weight:700; margin:16px 0 7px; }
+    .music { font-family:"SF Mono",Menlo,Consolas,monospace; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; font-size:22px; line-height:1.55; overflow-wrap:anywhere; }
+    .tip { font-size:17px; line-height:1.6; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; }
+    .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+    details { margin-top:16px; color:var(--muted); }
+    details div { margin-top:8px; line-height:1.7; }
+    @media (max-width:420px){ h1{font-size:23px}.music{font-size:19px}.controls,.actions{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Daily Ⅱ–Ⅴ–Ⅰ Sax Practice</h1>
+  <p class="sub">今日の251ルーティン</p>
+
+  <div class="controls">
+    <div><label for="mode">モード</label><select id="mode"><option>Major 251</option><option>Minor 251</option></select></div>
+    <div><label for="key">キー</label><select id="key"></select></div>
+  </div>
+
+  <section class="card">
+    <p class="date" id="dateLine"></p>
+    <p class="name" id="phraseName"></p>
+    <p class="section">コード進行</p>
+    <div class="music" id="chords"></div>
+    <p class="section">フレーズ：I chord基準の度数表記</p>
+    <div class="music" id="degrees"></div>
+    <p class="section">今日のポイント</p>
+    <div class="tip" id="tip"></div>
+  </section>
+
+  <div class="actions">
+    <button class="secondary" id="todayBtn">今日のキーに戻す</button>
+    <button id="randomBtn">別フレーズを試す</button>
+  </div>
+
+  <details>
+    <summary>練習メモ</summary>
+    <div>
+      1. まずテンポ ♩=60 で全部8分音符。<br>
+      2. コードだけを先にアルペジオで確認。<br>
+      3. キーを変えて12キー移調。<br>
+      4. 最後の小節だけ自分で変奏。<br><br>
+      数字はI chordから見た度数です。b9/#9/b13は主にV7で使うテンションです。
+    </div>
+  </details>
+</main>
+
+<script>
+const KEYS = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+const MAJOR_251 = {C:["Dm7","G7","Cmaj7"],Db:["Ebm7","Ab7","Dbmaj7"],D:["Em7","A7","Dmaj7"],Eb:["Fm7","Bb7","Ebmaj7"],E:["F#m7","B7","Emaj7"],F:["Gm7","C7","Fmaj7"],Gb:["Abm7","Db7","Gbmaj7"],G:["Am7","D7","Gmaj7"],Ab:["Bbm7","Eb7","Abmaj7"],A:["Bm7","E7","Amaj7"],Bb:["Cm7","F7","Bbmaj7"],B:["C#m7","F#7","Bmaj7"]};
+const MINOR_251 = {C:["Dm7b5","G7alt","Cm6/CmMaj7"],Db:["Ebm7b5","Ab7alt","Dbm6/DbmMaj7"],D:["Em7b5","A7alt","Dm6/DmMaj7"],Eb:["Fm7b5","Bb7alt","Ebm6/EbmMaj7"],E:["F#m7b5","B7alt","Em6/EmMaj7"],F:["Gm7b5","C7alt","Fm6/FmMaj7"],Gb:["Abm7b5","Db7alt","Gbm6/GbmMaj7"],G:["Am7b5","D7alt","Gm6/GmMaj7"],Ab:["Bbm7b5","Eb7alt","Abm6/AbmMaj7"],A:["Bm7b5","E7alt","Am6/AmMaj7"],Bb:["Cm7b5","F7alt","Bbm6/BbmMaj7"],B:["C#m7b5","F#7alt","Bm6/BmMaj7"]};
+const MAJOR_PHRASES = [
+{name:"Bebop enclosure",degrees:"2 4 6 1 | 7 b9 5 3 | 1 7 6 5 | 3 2 1 -",tip:"V7でb9を軽く入れて、Iの3度へ解決。"},
+{name:"Parker-ish turn",degrees:"4 3 2 1 | 7 5 b9 3 | 2 1 7 6 | 5 3 1 -",tip:"半音アプローチを短く、リズムは跳ねすぎない。"},
+{name:"Guide-tone line",degrees:"4 6 1 3 | 7 5 4 3 | 3 2 1 7 | 6 5 3 -",tip:"iiの3度→Vの7度→Iの3度を意識。"},
+{name:"Simple eighths",degrees:"2 3 4 5 | 7 6 5 b9 | 1 2 3 5 | 6 5 3 1",tip:"まず全部8分音符で。慣れたら裏拍スタート。"},
+{name:"Chromatic approach",degrees:"6 5 #4 5 | 4 3 b9 7 | 1 3 2 b2 | 1 - - -",tip:"クロマチックは小さく、着地点を強く。"},
+{name:"Arpeggio focus",degrees:"2 4 6 1 | 5 7 2 4 | 3 5 7 2 | 1 - - -",tip:"コードトーン中心。テンポを上げても崩れにくい。"},
+{name:"Altered flavor",degrees:"2 4 6 1 | b9 #9 3 b13 | 5 3 2 7 | 1 - - -",tip:"V7だけ少し濃く。音量は控えめに。"},
+{name:"Descending resolve",degrees:"1 6 4 2 | 7 b13 5 3 | 2 7 6 5 | 3 2 1 -",tip:"下降ラインの流れを歌ってから吹く。"}
+];
+const MINOR_PHRASES = [
+{name:"Minor classic",degrees:"2 4 b6 1 | 7 b9 #9 3 | 1 7 b6 5 | b3 2 1 -",tip:"最後はm6感を出すなら6度も試す。"},
+{name:"Half-diminished shape",degrees:"2 4 b6 1 | b9 7 b13 3 | 5 b3 2 7 | 1 - - -",tip:"m7b5のb5感をしっかり鳴らす。"},
+{name:"Melodic minor landing",degrees:"4 b6 1 2 | 7 b9 3 b13 | 5 6 7 2 | 1 - - -",tip:"解決後に6/7度を入れるとモダン。"},
+{name:"Dark bebop",degrees:"b6 4 2 1 | 7 b9 #9 3 | b3 2 7 b6 | 5 b3 1 -",tip:"暗い音色で、V7altは短く強く。"},
+{name:"Easy minor",degrees:"2 4 b6 4 | 7 b9 5 3 | 1 2 b3 5 | 6 5 b3 1",tip:"初心者向け。歌いやすさ重視。"},
+{name:"Parker minor turn",degrees:"4 b3 2 1 | 7 5 b9 3 | 2 1 7 b6 | 5 b3 1 -",tip:"b3への解決を大切に。"}
+];
+const keySelect = document.getElementById("key");
+KEYS.forEach(k => keySelect.add(new Option(k,k)));
+function localYmd(date = new Date()){
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+function hashString(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function todayKey(){ const d = new Date(); const n = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); return KEYS[n % KEYS.length]; }
+function render(extraSeed=""){
+  const mode = document.getElementById("mode").value;
+  const key = keySelect.value;
+  const pool = mode.startsWith("Minor") ? MINOR_PHRASES : MAJOR_PHRASES;
+  const chords = mode.startsWith("Minor") ? MINOR_251[key] : MAJOR_251[key];
+  const today = localYmd();
+  const idx = hashString(`${today}-${mode}-${key}-${extraSeed}`) % pool.length;
+  const p = pool[idx];
+  document.getElementById("dateLine").textContent = `${today} / Key: ${key} / ${mode}`;
+  document.getElementById("phraseName").textContent = p.name;
+  document.getElementById("chords").textContent = chords.join("  |  ");
+  document.getElementById("degrees").textContent = p.degrees;
+  document.getElementById("tip").textContent = p.tip;
+}
+document.getElementById("mode").addEventListener("change",()=>render());
+keySelect.addEventListener("change",()=>render());
+document.getElementById("todayBtn").addEventListener("click",()=>{ keySelect.value=todayKey(); render(); });
+document.getElementById("randomBtn").addEventListener("click",()=>render(String(Date.now())));
+keySelect.value = todayKey(); render();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+</script>
+</body>
+</html>
