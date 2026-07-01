@@ -133,9 +133,13 @@ function irealKeyLabel(mode, key){
   if (!mode.startsWith("Minor")) return key;
   return IREAL_MINOR_KEY_LABEL[key] || `${key}-`;
 }
+// Wrapping in repeat bars ({ }) both supplies the opening bar-line marker
+// that every real iReal Pro chart starts with (without one, iReal Pro's
+// own chord-tone display can fail to sync on measure 1) and lets iReal
+// Pro repeat the 4-bar phrase itself, instead of writing it out twice.
 function irealProgressionText(chords){
   const bars = practiceBars(chords).map(irealChord);
-  return `T44${bars.concat(bars).join(" |")} Z`;
+  return `T44{${bars.join(" |")} } Z`;
 }
 // Builds the custom irealbook:// URL documented at
 // https://www.irealpro.com/ireal-pro-custom-chord-chart-protocol
