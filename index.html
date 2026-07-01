@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#101827" />
+  <meta name="theme-color" content="#0f6b5f" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Daily 251" />
@@ -28,6 +28,8 @@
     .music { font-family:"SF Mono",Menlo,Consolas,monospace; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; font-size:22px; line-height:1.55; overflow-wrap:anywhere; }
     .tip { font-size:17px; line-height:1.6; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; }
     .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+    .ireal-actions { display:grid; grid-template-columns:1fr; gap:8px; margin-top:12px; }
+    .status { min-height:18px; color:var(--muted); font-size:13px; margin:8px 0 0; }
     details { margin-top:16px; color:var(--muted); }
     details div { margin-top:8px; line-height:1.7; }
     @media (max-width:420px){ h1{font-size:23px}.music{font-size:19px}.controls,.actions{grid-template-columns:1fr} }
@@ -54,6 +56,12 @@
     <div class="tip" id="tip"></div>
   </section>
 
+  <div class="ireal-actions">
+    <button id="irealBtn">iReal Proで鳴らす</button>
+    <button class="secondary" id="copyBtn">iReal Pro用コードをコピー</button>
+    <p class="status" id="irealStatus"></p>
+  </div>
+
   <div class="actions">
     <button class="secondary" id="todayBtn">今日のキーに戻す</button>
     <button id="randomBtn">別フレーズを試す</button>
@@ -74,7 +82,7 @@
 <script>
 const KEYS = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 const MAJOR_251 = {C:["Dm7","G7","Cmaj7"],Db:["Ebm7","Ab7","Dbmaj7"],D:["Em7","A7","Dmaj7"],Eb:["Fm7","Bb7","Ebmaj7"],E:["F#m7","B7","Emaj7"],F:["Gm7","C7","Fmaj7"],Gb:["Abm7","Db7","Gbmaj7"],G:["Am7","D7","Gmaj7"],Ab:["Bbm7","Eb7","Abmaj7"],A:["Bm7","E7","Amaj7"],Bb:["Cm7","F7","Bbmaj7"],B:["C#m7","F#7","Bmaj7"]};
-const MINOR_251 = {C:["Dm7b5","G7alt","Cm6/CmMaj7"],Db:["Ebm7b5","Ab7alt","Dbm6/DbmMaj7"],D:["Em7b5","A7alt","Dm6/DmMaj7"],Eb:["Fm7b5","Bb7alt","Ebm6/EbmMaj7"],E:["F#m7b5","B7alt","Em6/EmMaj7"],F:["Gm7b5","C7alt","Fm6/FmMaj7"],Gb:["Abm7b5","Db7alt","Gbm6/GbmMaj7"],G:["Am7b5","D7alt","Gm6/GmMaj7"],Ab:["Bbm7b5","Eb7alt","Abm6/AbmMaj7"],A:["Bm7b5","E7alt","Am6/AmMaj7"],Bb:["Cm7b5","F7alt","Bbm6/BbmMaj7"],B:["C#m7b5","F#7alt","Bm6/BmMaj7"]};
+const MINOR_251 = {C:["Dm7b5","G7alt","Cm6"],Db:["Ebm7b5","Ab7alt","Dbm6"],D:["Em7b5","A7alt","Dm6"],Eb:["Fm7b5","Bb7alt","Ebm6"],E:["F#m7b5","B7alt","Em6"],F:["Gm7b5","C7alt","Fm6"],Gb:["Abm7b5","Db7alt","Gbm6"],G:["Am7b5","D7alt","Gm6"],Ab:["Bbm7b5","Eb7alt","Abm6"],A:["Bm7b5","E7alt","Am6"],Bb:["Cm7b5","F7alt","Bbm6"],B:["C#m7b5","F#7alt","Bm6"]};
 const MAJOR_PHRASES = [
 {name:"Bebop enclosure",degrees:"2 4 6 1 | 7 b9 5 3 | 1 7 6 5 | 3 2 1 -",tip:"V7でb9を軽く入れて、Iの3度へ解決。"},
 {name:"Parker-ish turn",degrees:"4 3 2 1 | 7 5 b9 3 | 2 1 7 6 | 5 3 1 -",tip:"半音アプローチを短く、リズムは跳ねすぎない。"},
@@ -95,6 +103,7 @@ const MINOR_PHRASES = [
 ];
 const keySelect = document.getElementById("key");
 KEYS.forEach(k => keySelect.add(new Option(k,k)));
+let currentPractice = null;
 function localYmd(date = new Date()){
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -103,6 +112,29 @@ function localYmd(date = new Date()){
 }
 function hashString(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
 function todayKey(){ const d = new Date(); const n = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); return KEYS[n % KEYS.length]; }
+function irealChord(chord){
+  return chord
+    .replace("maj7", "^7")
+    .replace("m7b5", "h7")
+    .replace("7alt", "7alt")
+    .replace("m6", "-6")
+    .replace("m7", "-7");
+}
+function practiceText(){
+  if (!currentPractice) return "";
+  const bars = currentPractice.chords.map(irealChord).join(" | ");
+  return `${currentPractice.title}\nKey: ${currentPractice.key}\n${bars} | ${bars} ||`;
+}
+function irealUrl(){
+  const title = currentPractice ? currentPractice.title : "Daily 251";
+  const composer = "Daily 251 Sax Practice";
+  const style = currentPractice && currentPractice.mode.startsWith("Minor") ? "Medium Swing" : "Medium Swing";
+  const key = currentPractice ? currentPractice.key : "C";
+  const chart = currentPractice
+    ? `| ${currentPractice.chords.map(irealChord).join(" | ")} | ${currentPractice.chords.map(irealChord).join(" | ")} |`
+    : "| D-7 | G7 | C^7 | C^7 |";
+  return `irealb://${[title, composer, style, key, "n", chart].map(encodeURIComponent).join("=")}`;
+}
 function render(extraSeed=""){
   const mode = document.getElementById("mode").value;
   const key = keySelect.value;
@@ -111,16 +143,37 @@ function render(extraSeed=""){
   const today = localYmd();
   const idx = hashString(`${today}-${mode}-${key}-${extraSeed}`) % pool.length;
   const p = pool[idx];
+  currentPractice = {
+    title: `Daily 251 ${mode.startsWith("Minor") ? "Minor" : "Major"} ${key}`,
+    mode,
+    key,
+    chords,
+    phrase: p
+  };
   document.getElementById("dateLine").textContent = `${today} / Key: ${key} / ${mode}`;
   document.getElementById("phraseName").textContent = p.name;
   document.getElementById("chords").textContent = chords.join("  |  ");
   document.getElementById("degrees").textContent = p.degrees;
   document.getElementById("tip").textContent = p.tip;
+  document.getElementById("irealStatus").textContent = "";
 }
 document.getElementById("mode").addEventListener("change",()=>render());
 keySelect.addEventListener("change",()=>render());
 document.getElementById("todayBtn").addEventListener("click",()=>{ keySelect.value=todayKey(); render(); });
 document.getElementById("randomBtn").addEventListener("click",()=>render(String(Date.now())));
+document.getElementById("irealBtn").addEventListener("click",()=>{
+  document.getElementById("irealStatus").textContent = "iReal Proを開きます。開かない場合は下のコピーを使ってください。";
+  window.location.href = irealUrl();
+});
+document.getElementById("copyBtn").addEventListener("click",async ()=>{
+  const text = practiceText();
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById("irealStatus").textContent = "コード進行をコピーしました。iReal Proで新規曲に貼り付けてください。";
+  } catch {
+    document.getElementById("irealStatus").textContent = text;
+  }
+});
 keySelect.value = todayKey(); render();
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
 </script>
