@@ -57,8 +57,8 @@
   </section>
 
   <div class="ireal-actions">
-    <button id="irealBtn">共有／コピーでiReal Proへ送る</button>
-    <button class="secondary" id="copyBtn">コードだけコピー</button>
+    <button id="irealBtn">iReal Proで開く</button>
+    <button class="secondary" id="copyBtn">iReal Pro用リンクをコピー</button>
     <p class="status" id="irealStatus"></p>
   </div>
 
@@ -116,14 +116,31 @@ function irealChord(chord){
   return chord
     .replace("maj7", "^7")
     .replace("m7b5", "h7")
-    .replace("7alt", "7alt")
     .replace("m6", "-6")
     .replace("m7", "-7");
 }
-function practiceText(){
+// iReal Pro only accepts minor key labels from a fixed set that uses
+// sharps for these three (e.g. "Ab" major becomes "G#-" minor), not flats.
+const IREAL_MINOR_KEY_LABEL = {Db:"C#-", Gb:"F#-", Ab:"G#-"};
+function irealKeyLabel(mode, key){
+  if (!mode.startsWith("Minor")) return key;
+  return IREAL_MINOR_KEY_LABEL[key] || `${key}-`;
+}
+function irealProgressionText(chords){
+  const bars = chords.map(irealChord);
+  return `T44${bars.concat(bars).join(" |")} Z`;
+}
+// Builds the custom irealbook:// URL documented at
+// https://www.irealpro.com/ireal-pro-custom-chord-chart-protocol
+function irealUrl(){
   if (!currentPractice) return "";
-  const bars = currentPractice.chords.map(irealChord).join(" | ");
-  return `${currentPractice.title}\nKey: ${currentPractice.key}\n${bars} | ${bars} ||`;
+  const { title, mode, key, chords } = currentPractice;
+  const composer = "App Daily251";
+  const style = "Medium Swing";
+  const keyLabel = irealKeyLabel(mode, key);
+  const progression = irealProgressionText(chords);
+  const raw = `${title}=${composer}=${style}=${keyLabel}=n=${progression}`;
+  return `irealbook://${encodeURIComponent(raw)}`;
 }
 function render(extraSeed=""){
   const mode = document.getElementById("mode").value;
@@ -151,31 +168,19 @@ document.getElementById("mode").addEventListener("change",()=>render());
 keySelect.addEventListener("change",()=>render());
 document.getElementById("todayBtn").addEventListener("click",()=>{ keySelect.value=todayKey(); render(); });
 document.getElementById("randomBtn").addEventListener("click",()=>render(String(Date.now())));
-document.getElementById("irealBtn").addEventListener("click",async ()=>{
-  const text = practiceText();
-  if (navigator.share) {
-    try {
-      await navigator.share({title: currentPractice.title, text});
-      document.getElementById("irealStatus").textContent = "共有しました。iReal Proで新規曲に貼り付けて再生してください。";
-      return;
-    } catch {
-      // The user may cancel the share sheet; fall through to clipboard.
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(text);
-    document.getElementById("irealStatus").textContent = "コード進行をコピーしました。iReal Proを開き、新規曲に貼り付けて再生してください。";
-  } catch {
-    document.getElementById("irealStatus").textContent = text;
-  }
+document.getElementById("irealBtn").addEventListener("click",()=>{
+  // Custom URL schemes must be navigated to synchronously inside the click
+  // handler, or iOS Safari may drop the gesture and silently do nothing.
+  document.getElementById("irealStatus").textContent = "iReal Proを起動しています…開かない場合は「iReal Pro用リンクをコピー」をお試しください。";
+  window.location.href = irealUrl();
 });
 document.getElementById("copyBtn").addEventListener("click",async ()=>{
-  const text = practiceText();
+  const url = irealUrl();
   try {
-    await navigator.clipboard.writeText(text);
-    document.getElementById("irealStatus").textContent = "コード進行をコピーしました。iReal Proで新規曲に貼り付けてください。";
+    await navigator.clipboard.writeText(url);
+    document.getElementById("irealStatus").textContent = "リンクをコピーしました。iReal Proを開き「＋」→「Clipboard」から新規曲として読み込んでください。";
   } catch {
-    document.getElementById("irealStatus").textContent = text;
+    document.getElementById("irealStatus").textContent = url;
   }
 });
 keySelect.value = todayKey(); render();
