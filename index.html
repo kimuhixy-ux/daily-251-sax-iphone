@@ -119,6 +119,13 @@ function irealChord(chord){
     .replace("m6", "-6")
     .replace("m7", "-7");
 }
+// Phrases are written as 4 bars (ii, V, I, I) so the tonic gets a full
+// 2 bars to resolve into, but MAJOR_251/MINOR_251 only lists 3 chords.
+// Hold the tonic for the 4th bar so displayed/exported measures line up
+// 1:1 with the phrase's degree notation.
+function practiceBars(chords){
+  return [chords[0], chords[1], chords[2], chords[2]];
+}
 // iReal Pro only accepts minor key labels from a fixed set that uses
 // sharps for these three (e.g. "Ab" major becomes "G#-" minor), not flats.
 const IREAL_MINOR_KEY_LABEL = {Db:"C#-", Gb:"F#-", Ab:"G#-"};
@@ -127,7 +134,7 @@ function irealKeyLabel(mode, key){
   return IREAL_MINOR_KEY_LABEL[key] || `${key}-`;
 }
 function irealProgressionText(chords){
-  const bars = chords.map(irealChord);
+  const bars = practiceBars(chords).map(irealChord);
   return `T44${bars.concat(bars).join(" |")} Z`;
 }
 // Builds the custom irealbook:// URL documented at
@@ -159,7 +166,7 @@ function render(extraSeed=""){
   };
   document.getElementById("dateLine").textContent = `${today} / Key: ${key} / ${mode}`;
   document.getElementById("phraseName").textContent = p.name;
-  document.getElementById("chords").textContent = chords.join("  |  ");
+  document.getElementById("chords").textContent = practiceBars(chords).join("  |  ");
   document.getElementById("degrees").textContent = p.degrees;
   document.getElementById("tip").textContent = p.tip;
   document.getElementById("irealStatus").textContent = "";
