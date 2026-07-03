@@ -115,22 +115,22 @@ const COLTRANE_CENTERS = {C:["C","Ab","E"],Db:["Db","A","F"],D:["D","Bb","F#"],E
 
 /* ---------- phrase content ---------- */
 const MAJOR_PHRASES = [
-{name:"Bebop enclosure",degrees:"2 4 6 1 | 7 b9 5 3 | 1 7 6 5 | 3 2 1 -",tip:"V7でb9を軽く入れて、Iの3度へ解決。"},
-{name:"Parker-ish turn",degrees:"4 3 2 1 | 7 5 b9 3 | 2 1 7 6 | 5 3 1 -",tip:"半音アプローチを短く、リズムは跳ねすぎない。"},
+{name:"Bebop enclosure",degrees:"2 4 6 1 | 7 b6 5 3 | 1 7 6 5 | 3 2 1 -",tip:"V7でb9を軽く入れて、Iの3度へ解決。"},
+{name:"Parker-ish turn",degrees:"4 3 2 1 | 7 5 b6 3 | 2 1 7 6 | 5 3 1 -",tip:"半音アプローチを短く、リズムは跳ねすぎない。"},
 {name:"Guide-tone line",degrees:"4 6 1 3 | 7 5 4 3 | 3 2 1 7 | 6 5 3 -",tip:"iiの3度→Vの7度→Iの3度を意識。"},
-{name:"Simple eighths",degrees:"2 3 4 5 | 7 6 5 b9 | 1 2 3 5 | 6 5 3 1",tip:"まず全部8分音符で。慣れたら裏拍スタート。"},
-{name:"Chromatic approach",degrees:"6 5 #4 5 | 4 3 b9 7 | 1 3 2 b2 | 1 - - -",tip:"クロマチックは小さく、着地点を強く。"},
+{name:"Simple eighths",degrees:"2 3 4 5 | 7 6 5 b6 | 1v 2 3 5 | 6 5 3 1",tip:"まず全部8分音符で。慣れたら裏拍スタート。"},
+{name:"Chromatic approach",degrees:"6 5 #4 5 | 4 3 b6 7 | 1 3 2 b2 | 1 - - -",tip:"クロマチックは小さく、着地点を強く。"},
 {name:"Arpeggio focus",degrees:"2 4 6 1 | 5 7 2 4 | 3 5 7 2 | 1 - - -",tip:"コードトーン中心。テンポを上げても崩れにくい。"},
-{name:"Altered flavor",degrees:"2 4 6 1 | b9 #9 3 b13 | 5 3 2 7 | 1 - - -",tip:"V7だけ少し濃く。音量は控えめに。"},
-{name:"Descending resolve",degrees:"1 6 4 2 | 7 b13 5 3 | 2 7 6 5 | 3 2 1 -",tip:"下降ラインの流れを歌ってから吹く。"}
+{name:"Altered flavor",degrees:"2 4 6 1 | b6 b7 3 b3 | 5 3 2 7 | 1 - - -",tip:"V7だけ少し濃く。音量は控えめに。"},
+{name:"Descending resolve",degrees:"1 6 4 2 | 7 b3 5 3 | 2 7 6 5 | 3 2 1 -",tip:"下降ラインの流れを歌ってから吹く。"}
 ];
 const MINOR_PHRASES = [
-{name:"Minor classic",degrees:"2 4 b6 1 | 7 b9 #9 3 | 1 7 b6 5 | b3 2 1 -",tip:"最後はm6感を出すなら6度も試す。"},
-{name:"Half-diminished shape",degrees:"2 4 b6 1 | b9 7 b13 3 | 5 b3 2 7 | 1 - - -",tip:"m7b5のb5感をしっかり鳴らす。"},
-{name:"Melodic minor landing",degrees:"4 b6 1 2 | 7 b9 3 b13 | 5 6 7 2 | 1 - - -",tip:"解決後に6/7度を入れるとモダン。"},
-{name:"Dark bebop",degrees:"b6 4 2 1 | 7 b9 #9 3 | b3 2 7 b6 | 5 b3 1 -",tip:"暗い音色で、V7altは短く強く。"},
-{name:"Easy minor",degrees:"2 4 b6 4 | 7 b9 5 3 | 1 2 b3 5 | 6 5 b3 1",tip:"初心者向け。歌いやすさ重視。"},
-{name:"Parker minor turn",degrees:"4 b3 2 1 | 7 5 b9 3 | 2 1 7 b6 | 5 b3 1 -",tip:"b3への解決を大切に。"}
+{name:"Minor classic",degrees:"2 4 b6 1 | 7 b6 b7 3 | 1 7 b6 5 | b3 2 1 -",tip:"最後はm6感を出すなら6度も試す。"},
+{name:"Half-diminished shape",degrees:"2 4 b6 1 | b6 7 b3 3 | 5 b3 2 7 | 1 - - -",tip:"m7b5のb5感をしっかり鳴らす。"},
+{name:"Melodic minor landing",degrees:"4 b6 1 2 | 7 b6 3 b3 | 5 6 7 2 | 1 - - -",tip:"解決後に6/7度を入れるとモダン。"},
+{name:"Dark bebop",degrees:"b6 4 2 1 | 7 b6 b7 3 | b3 2 7 b6 | 5 b3 1 -",tip:"暗い音色で、V7altは短く強く。"},
+{name:"Easy minor",degrees:"2 4 b6 4 | 7 b6 5 3 | 1 2 b3 5 | 6 5 b3 1",tip:"初心者向け。歌いやすさ重視。"},
+{name:"Parker minor turn",degrees:"4 b3 2 1 | 7 5 b6 3 | 2 1 7 b6 | 5 b3 1 -",tip:"b3への解決を大切に。"}
 ];
 const APPROACH_PHRASES = [
 {name:"半音下から(クロマチック・ロウワー)",degrees:"3 4 6 1 | b7 7 5 2 | 7 1 3 5 | 1 - - -",tip:"ターゲットの半音下から入るラインを丁寧に。着地する音を強く。"},
@@ -139,14 +139,14 @@ const APPROACH_PHRASES = [
 ];
 const BEBOP_PHRASES = [
 {name:"ビバップ経過音",degrees:"6 4 2 1 | 7 5 b6 5 | 1 7 6 5 | 3 2 1 -",tip:"b6は経過音として一瞬だけ。強拍にコードトーンを置く意識で。"},
-{name:"II-Vターンアラウンド",degrees:"2 4 6 1 | b9 1 7 5 | 6 5 4 3 | 2 7 1 -",tip:"V7のb9は短く鋭く。Iへの着地でリズムを落ち着かせる。"},
+{name:"II-Vターンアラウンド",degrees:"2 4 6 1 | b6 1 7 5 | 6 5 4 3 | 2 7 1 -",tip:"V7のb9は短く鋭く。Iへの着地でリズムを落ち着かせる。"},
 {name:"8分バップライン",degrees:"1 2 3 4 | 5 6 b7 7 | 1 7 6 5 | 3 2 1 -",tip:"b7は6と7をつなぐ経過音。均等な8分音符で滑らかに。"}
 ];
 const TURNAROUND_PHRASES = {
-  basic: [{name:"基本形 I-vi7-ii7-V7",degrees:"1 3 5 6 | 5 3 2 1 | 2 4 6 2 | 7 b9 5 3",tip:"コードトーンを中心に。各コードの3度・7度を意識。"}],
+  basic: [{name:"基本形 I-vi7-ii7-V7",degrees:"1 3 5 6 | 5 3 2 1 | 2 4 6 2 | 7 b6 5 3",tip:"コードトーンを中心に。各コードの3度・7度を意識。"}],
   iiisub: [{name:"iii7代理形 iii7-vi7-ii7-V7",degrees:"3 5 7 6 | 5 3 2 1 | 2 4 6 2 | 7 5 3 1",tip:"iii7はIの代理。同じトニック感を保ちながら滑らかに繋ぐ。"}],
   tritone: [{name:"裏コード形 I-vi7-ii7-subV7",degrees:"1 3 5 6 | 5 3 2 1 | 2 4 6 2 | b2 4 b6 7",tip:"最後のsubVはb9→3rdの半音進行が肝。着地はIの3度へ。"}],
-  minorized: [{name:"マイナー化 I-VI7-iiø7-V7",degrees:"1 3 5 6 | 6 5 3 #1 | 2 4 b6 2 | 7 b9 5 3",tip:"VI7は#1(ルートの半音上)から入ると解決感が出る。iiø7はb5を意識。"}]
+  minorized: [{name:"マイナー化 I-VI7-iiø7-V7",degrees:"1 3 5 6 | 6 5 3 #1 | 2 4 b6 2 | 7 b6 5 3",tip:"VI7は#1(ルートの半音上)から入ると解決感が出る。iiø7はb5を意識。"}]
 };
 const COLTRANE_PHRASES = [
   { name:"コードのみ(コード進行を確認)",
@@ -267,7 +267,7 @@ function parseKeySpelling(keyStr){
 // Degree numbers (1-9, 13, optionally b/#-prefixed) are read as major-scale
 // steps above the tonic, per this app's existing notation convention.
 function degreeLetterAndPc(tonic, token){
-  const m = /^([b#]?)([1-9]|13)$/.exec(token);
+  const m = /^([b#]?)([1-9]|13)[v^]?$/.exec(token);
   const alter = m[1] === 'b' ? -1 : m[1] === '#' ? 1 : 0;
   const num = parseInt(m[2], 10);
   const baseNum = num > 7 ? num - 7 : num;                 // 9->2, 13->6
@@ -298,7 +298,13 @@ function resolveTonicForSegment(seg, ctx){
 // in-band candidates, picks whichever is closest to the previous note
 // (prevAbs === null for the first note of a phrase, where it instead picks
 // the candidate closest to the middle of the staff, B4).
-function pickOctaveInBand(letter, targetPc, prevAbs){
+// `bias` (-1/0/+1) shifts which in-band candidate counts as "closest to the
+// previous note" by a octave, without changing the candidate set itself (so
+// the register-band guarantee still holds) -- used sparingly, per phrase, to
+// break a tie away from a candidate that would otherwise force the *next*
+// note into a big jump. See degrees strings using a "v"/"^" token suffix.
+function pickOctaveInBand(letter, targetPc, prevAbs, bias){
+  bias = bias || 0;
   const guess = prevAbs === null ? 4 : Math.round((prevAbs - targetPc) / 12);
   let candidates = [];
   for (let o = guess - 2; o <= guess + 2; o++){
@@ -315,8 +321,9 @@ function pickOctaveInBand(letter, targetPc, prevAbs){
     return candidates.reduce((best, o) =>
       Math.abs(diatonicStep(letter, o) - 4) < Math.abs(diatonicStep(letter, best) - 4) ? o : best);
   }
+  const target = prevAbs + bias * 12;
   return candidates.reduce((best, o) =>
-    Math.abs(o * 12 + targetPc - prevAbs) < Math.abs(best * 12 + targetPc - prevAbs) ? o : best);
+    Math.abs(o * 12 + targetPc - target) < Math.abs(best * 12 + targetPc - target) ? o : best);
 }
 // Expands a phrase's degree text into a flat beat sequence. Each new (non-hold)
 // note picks whichever in-band octave lands closest to the previous note's
@@ -335,8 +342,9 @@ function flattenPhrase(phrase, ctx){
   const beats = [];
   pairs.forEach(({ tonic, tok }) => {
     if (tok === "-") { beats.push({ hold: true }); return; }
+    const bias = tok.endsWith('v') ? -1 : tok.endsWith('^') ? 1 : 0;
     const d = degreeLetterAndPc(tonic, tok);
-    const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs);
+    const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs, bias);
     prevAbs = octave * 12 + d.targetPc;
     beats.push({ hold: false, letter: d.letter, accidental: d.accidental, octave });
   });
