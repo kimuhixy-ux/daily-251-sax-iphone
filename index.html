@@ -228,13 +228,21 @@ const LETTERS = ['C','D','E','F','G','A','B'];
 const NATURAL_PC = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 const MAJOR_STEP_SEMITONES = [0,2,4,5,7,9,11];
 // Target register band for flattenPhrase's octave selection, expressed as
-// diatonicStep (0 = E4, the bottom staff line). C4 (1 ledger line below the
-// staff) up to B5 (1 ledger line above -- one step past A5, since every other
-// letter gets two candidate octaves in this band [its octave-4 and octave-5
-// spelling] but B's octave-5 spelling, B5, is step 11, one past a plain
-// A5 ceiling; without it B is the only letter locked to a single octave,
-// which forces large leaps whenever a nearby note approaches from above).
-const MELODY_MIN_STEP = -2, MELODY_MAX_STEP = 11;
+// diatonicStep (0 = E4, the bottom staff line). B3 (still just 1 ledger line
+// below the staff -- it sits in the space just under the C4 ledger, so it
+// costs nothing extra) up to C6 (2 ledger lines above). Widened by exactly
+// 1 step on each side versus a plain C4-B5 band: with only [-2,11], the
+// letters "B" (candidates step 4, 11) and "C" (candidates step -2, 5) each
+// had just one candidate near the register floor/ceiling, so a Cb/B-natural
+// note approaching from a neighboring letter one semitone away (e.g. a
+// written Cb next to a D, or a B natural resolving down) had no nearby
+// same-letter candidate to land on and was forced into a large jump instead
+// (this is what caused notes spelled Cb/B to visibly leap in the score).
+// Giving B a low-side candidate (B3) and C a high-side candidate (C6) fixes
+// that specific enharmonic seam at both edges of the band, at zero added
+// ledger cost on the low side and one extra ledger line on the high side
+// (still within the "staff + 1-2 ledger lines" target).
+const MELODY_MIN_STEP = -3, MELODY_MAX_STEP = 12;
 
 function parseKeySpelling(keyStr){
   return { letter: keyStr[0], acc: keyStr.length > 1 && keyStr[1] === 'b' ? -1 : 0 };
