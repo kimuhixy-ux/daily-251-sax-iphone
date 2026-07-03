@@ -202,23 +202,40 @@ function irealKeyLabel(mode, key){
   if (!mode.startsWith("Minor")) return key;
   return IREAL_MINOR_KEY_LABEL[key] || `${key}-`;
 }
+// Turns any category's chordPlan (the same {events, totalBars} structure
+// used to draw on-screen chord labels) into one iReal-chord-string per
+// bar, so the exported progression can never diverge from what's shown
+// on screen. Multiple events sharing a bar (e.g. coltrane's ii and V in
+// bar 1) are space-joined into that one bar slot.
+function irealBarsFromChordPlan(chordPlan){
+  const byBar = new Map();
+  chordPlan.events.forEach(e => {
+    if (!byBar.has(e.barIndex)) byBar.set(e.barIndex, []);
+    byBar.get(e.barIndex).push(e);
+  });
+  const bars = [];
+  for (let i = 0; i < chordPlan.totalBars; i++){
+    const evs = (byBar.get(i) || []).slice().sort((a, b) => a.beatInBar - b.beatInBar);
+    bars.push(evs.map(e => irealChord(e.label)).join(" "));
+  }
+  return bars;
+}
 // Wrapping in repeat bars ({ }) both supplies the opening bar-line marker
 // that every real iReal Pro chart starts with (without one, iReal Pro's
 // own chord-tone display can fail to sync on measure 1) and lets iReal
-// Pro repeat the 4-bar phrase itself, instead of writing it out twice.
-function irealProgressionText(chords){
-  const bars = practiceBars(chords).map(irealChord);
+// Pro repeat the phrase itself, instead of writing it out twice.
+function irealProgressionText(bars){
   return `T44{${bars.join(" |")} } Z`;
 }
 // Builds the custom irealbook:// URL documented at
 // https://www.irealpro.com/ireal-pro-custom-chord-chart-protocol
 function irealUrl(){
   if (!currentPractice) return "";
-  const { title, mode, key, chords } = currentPractice;
+  const { title, mode, key, chordPlan } = currentPractice;
   const composer = "App Daily251";
   const style = "Medium Swing";
   const keyLabel = irealKeyLabel(mode, key);
-  const progression = irealProgressionText(chords);
+  const progression = irealProgressionText(irealBarsFromChordPlan(chordPlan));
   const raw = `${title}=${composer}=${style}=${keyLabel}=n=${progression}`;
   return `irealbook://${encodeURIComponent(raw)}`;
 }
@@ -514,20 +531,21 @@ function render(){
   document.getElementById("nextBtn").disabled = pool.length <= 1;
 
   const irealSection = document.getElementById("irealSection");
-  if (category === "diatonic"){
-    irealSection.style.display = "";
-    const isMinor = variant === "minor";
-    const chords = (isMinor ? MINOR_251 : MAJOR_251)[key];
-    currentPractice = {
-      title: `Daily 251 ${isMinor ? "Minor" : "Major"} ${key}`,
-      mode: isMinor ? "Minor" : "Major",
-      key, chords
-    };
-    document.getElementById("irealStatus").textContent = "";
-  } else {
-    irealSection.style.display = "none";
-    currentPractice = null;
-  }
+  irealSection.style.display = "";
+  const TURNAROUND_LABEL = { basic:"基本形", iiisub:"iii7代理", tritone:"裏コード", minorized:"マイナー化" };
+  const titleByCategory = {
+    diatonic: `Daily 251 ${variant === "minor" ? "Minor" : "Major"} ${key}`,
+    approach: `Daily 251 Approach ${key}`,
+    bebop: `Daily 251 Bebop ${key}`,
+    turnaround: `Daily 251 Turnaround ${TURNAROUND_LABEL[variant] || "基本形"} ${key}`,
+    coltrane: `Daily 251 Coltrane ${key}`
+  };
+  currentPractice = {
+    title: titleByCategory[category] || `Daily 251 ${key}`,
+    mode: (category === "diatonic" && variant === "minor") ? "Minor" : "Major",
+    key, chordPlan
+  };
+  document.getElementById("irealStatus").textContent = "";
 }
 
 categorySelect.addEventListener("change", () => {
