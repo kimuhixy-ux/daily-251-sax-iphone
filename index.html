@@ -417,7 +417,7 @@ function renderScore(beats, chordPlan){
       }
       if (n.accidental){
         const glyph = n.accidental < 0 ? "♭" : "♯";
-        svg += `<text x="${cx - 15}" y="${y + 4}" font-size="12" fill="${INK}">${glyph}</text>`;
+        svg += `<text x="${cx - 17}" y="${y + 6}" font-size="18" font-weight="700" fill="${INK}">${glyph}</text>`;
       }
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}"/>`;
       const stemUp = step < 4;
