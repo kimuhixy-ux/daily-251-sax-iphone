@@ -227,9 +227,14 @@ function irealUrl(){
 const LETTERS = ['C','D','E','F','G','A','B'];
 const NATURAL_PC = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 const MAJOR_STEP_SEMITONES = [0,2,4,5,7,9,11];
-// Playable-register safety band for flattenPhrase's octave clamp, expressed
-// as diatonicStep (0 = E4, the bottom staff line). Roughly G3 to A5.
-const MELODY_MIN_STEP = -9, MELODY_MAX_STEP = 16;
+// Target register band for flattenPhrase's octave selection, expressed as
+// diatonicStep (0 = E4, the bottom staff line). C4 (1 ledger line below the
+// staff) up to B5 (1 ledger line above -- one step past A5, since every other
+// letter gets two candidate octaves in this band [its octave-4 and octave-5
+// spelling] but B's octave-5 spelling, B5, is step 11, one past a plain
+// A5 ceiling; without it B is the only letter locked to a single octave,
+// which forces large leaps whenever a nearby note approaches from above).
+const MELODY_MIN_STEP = -2, MELODY_MAX_STEP = 11;
 
 function parseKeySpelling(keyStr){
   return { letter: keyStr[0], acc: keyStr.length > 1 && keyStr[1] === 'b' ? -1 : 0 };
@@ -253,7 +258,7 @@ function degreeLetterAndPc(tonic, token){
   let accidental = targetPc - NATURAL_PC[letter];
   if (accidental > 6) accidental -= 12;
   if (accidental < -6) accidental += 12;
-  return { letter, accidental, targetPc, letterOctaveOffset };
+  return { letter, accidental, targetPc };
 }
 function resolveTonicForSegment(seg, ctx){
   if (seg.tonicRef && seg.tonicRef.centerIndex !== undefined){
@@ -261,9 +266,37 @@ function resolveTonicForSegment(seg, ctx){
   }
   return parseKeySpelling(ctx.key);
 }
+// Picks the octave for one note. Only octaves that keep the note inside the
+// [MELODY_MIN_STEP, MELODY_MAX_STEP] register band are considered, so the
+// letter name/accidental (and therefore its harmonic meaning, e.g. "b5 of
+// Bbm7b5") never changes -- only which octave it's placed in. Among the
+// in-band candidates, picks whichever is closest to the previous note
+// (prevAbs === null for the first note of a phrase, where it instead picks
+// the candidate closest to the middle of the staff, B4).
+function pickOctaveInBand(letter, targetPc, prevAbs){
+  const guess = prevAbs === null ? 4 : Math.round((prevAbs - targetPc) / 12);
+  let candidates = [];
+  for (let o = guess - 2; o <= guess + 2; o++){
+    const step = diatonicStep(letter, o);
+    if (step >= MELODY_MIN_STEP && step <= MELODY_MAX_STEP) candidates.push(o);
+  }
+  if (!candidates.length){
+    for (let o = guess - 6; o <= guess + 6; o++){
+      const step = diatonicStep(letter, o);
+      if (step >= MELODY_MIN_STEP && step <= MELODY_MAX_STEP) candidates.push(o);
+    }
+  }
+  if (prevAbs === null){
+    return candidates.reduce((best, o) =>
+      Math.abs(diatonicStep(letter, o) - 4) < Math.abs(diatonicStep(letter, best) - 4) ? o : best);
+  }
+  return candidates.reduce((best, o) =>
+    Math.abs(o * 12 + targetPc - prevAbs) < Math.abs(best * 12 + targetPc - prevAbs) ? o : best);
+}
 // Expands a phrase's degree text into a flat beat sequence. Each new (non-hold)
-// note picks whichever octave lands closest to the previous note's pitch, so
-// e.g. "1 6 4 2" actually descends instead of always resolving upward.
+// note picks whichever in-band octave lands closest to the previous note's
+// pitch, so e.g. "1 6 4 2" actually descends instead of always resolving
+// upward, while staying inside the readable register band.
 function flattenPhrase(phrase, ctx){
   const segments = phrase.segments || [{ tonicRef: "self", degrees: phrase.degrees }];
   const pairs = [];
@@ -278,12 +311,7 @@ function flattenPhrase(phrase, ctx){
   pairs.forEach(({ tonic, tok }) => {
     if (tok === "-") { beats.push({ hold: true }); return; }
     const d = degreeLetterAndPc(tonic, tok);
-    let octave = prevAbs === null ? (4 + d.letterOctaveOffset) : Math.round((prevAbs - d.targetPc) / 12);
-    // Nearest-pitch chaining can drift a long phrase outside a playable
-    // register over many notes; pull it back by whole octaves if it does.
-    let step = diatonicStep(d.letter, octave);
-    while (step > MELODY_MAX_STEP) { octave -= 1; step -= 7; }
-    while (step < MELODY_MIN_STEP) { octave += 1; step += 7; }
+    const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs);
     prevAbs = octave * 12 + d.targetPc;
     beats.push({ hold: false, letter: d.letter, accidental: d.accidental, octave });
   });
