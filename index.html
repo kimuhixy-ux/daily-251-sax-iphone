@@ -78,7 +78,7 @@
       2. コードだけを先にアルペジオで確認。<br>
       3. キーを変えて12キー移調。<br>
       4. 最後の小節だけ自分で変奏。<br><br>
-      数字はI chordから見た度数です。b9/#9/b13は主にV7で使うテンションです。
+      音符の下の小さな数字は、その音が「今鳴っているコードに対して」何度かを表します(グレー=コードトーン、紫=テンション)。同じ音でもコードが変わると数字も変わります。
     </div>
   </details>
 </main>
@@ -111,7 +111,7 @@ const TURNAROUND_DICTS = { basic:TURNAROUND_BASIC, iiisub:TURNAROUND_IIISUB, tri
 const TURNAROUND_FUNCS = { basic:["I","vi","ii","V"], iiisub:["vi","vi","ii","V"], tritone:["I","vi","ii","subV"], minorized:["I","vi","dim","V"] };
 
 // Giant Steps style key centers: three tonal centers a major 3rd apart.
-const COLTRANE_CENTERS = {C:["C","Ab","E"],Db:["Db","A","F"],D:["D","Bb","F#"],Eb:["Eb","B","G"],E:["E","C","Ab"],F:["F","Db","A"],Gb:["Gb","D","Bb"],G:["G","Eb","B"],Ab:["Ab","E","C"],A:["A","F","Db"],Bb:["Bb","Gb","D"],B:["B","G","Eb"]};
+const COLTRANE_CENTERS = {C:["C","Ab","E"],Db:["Db","A","F"],D:["D","Bb","Gb"],Eb:["Eb","B","G"],E:["E","C","Ab"],F:["F","Db","A"],Gb:["Gb","D","Bb"],G:["G","Eb","B"],Ab:["Ab","E","C"],A:["A","F","Db"],Bb:["Bb","Gb","D"],B:["B","G","Eb"]};
 
 /* ---------- phrase content ---------- */
 const MAJOR_PHRASES = [
@@ -122,7 +122,9 @@ const MAJOR_PHRASES = [
 {name:"Chromatic approach",degrees:"6 5 #4 5 | 4 3 b6 7 | 1 3 2 b2 | 1 - - -",tip:"クロマチックは小さく、着地点を強く。"},
 {name:"Arpeggio focus",degrees:"2 4 6 1 | 5 7 2 4 | 3 5 7 2 | 1 - - -",tip:"コードトーン中心。テンポを上げても崩れにくい。"},
 {name:"Altered flavor",degrees:"2 4 6 1 | b6 b7 3 b3 | 5 3 2 7 | 1 - - -",tip:"V7だけ少し濃く。音量は控えめに。"},
-{name:"Descending resolve",degrees:"1 6 4 2 | 7 b3 5 3 | 2 7 6 5 | 3 2 1 -",tip:"下降ラインの流れを歌ってから吹く。"}
+{name:"Descending resolve",degrees:"1 6 4 2 | 7 b3 5 3 | 2 7 6 5 | 3 2 1 -",tip:"下降ラインの流れを歌ってから吹く。"},
+// 8分音符主体。V7バーでコード基準の b9/#9/9/13 を横断する(iiバーは9/11/13も含む)。
+{name:"8分音符スケールライン",degrees:"2e 3e 4e 5e 6e 7e 1e 2e | b6e 5e 3 b7e 6e 2 | 1 3e 5e 3 2e 7e | 1 - - -",tip:"1小節目は全部8分音符でスケールを一気に。V7ではb9/#9/9のテンションの響きを聴き比べて。"}
 ];
 const MINOR_PHRASES = [
 {name:"Minor classic",degrees:"2 4 b6 1 | 7 b6 b7 3 | 1 7 b6 5 | b3 2 1 -",tip:"最後はm6感を出すなら6度も試す。"},
@@ -130,17 +132,23 @@ const MINOR_PHRASES = [
 {name:"Melodic minor landing",degrees:"4 b6 1 2 | 7 b6 3 b3 | 5 6 7 2 | 1 - - -",tip:"解決後に6/7度を入れるとモダン。"},
 {name:"Dark bebop",degrees:"b6 4 2 1 | 7 b6 b7 3 | b3 2 7 b6 | 5 b3 1 -",tip:"暗い音色で、V7altは短く強く。"},
 {name:"Easy minor",degrees:"2 4 b6 4 | 7 b6 5 3 | 1 2 b3 5 | 6 5 b3 1",tip:"初心者向け。歌いやすさ重視。"},
-{name:"Parker minor turn",degrees:"4 b3 2 1 | 7 5 b6 3 | 2 1 7 b6 | 5 b3 1 -",tip:"b3への解決を大切に。"}
+{name:"Parker minor turn",degrees:"4 b3 2 1 | 7 5 b6 3 | 2 1 7 b6 | 5 b3 1 -",tip:"b3への解決を大切に。"},
+// 3連符主体。V7altバーでコード基準の b9/#9/9/13/b13 を全部通過する高密度テンション課題。
+{name:"マイナー3連符ライン",degrees:"2t 4t b6t 1 7t b6t 5t b3 | b6 b7t 6t 5t 3 b3 | 1 b3 5 6 | 1 - - -",tip:"3連符は転がすように滑らかに。V7altでb9/#9/9/13/b13が次々出てくるのを感じて。"}
 ];
 const APPROACH_PHRASES = [
 {name:"半音下から(クロマチック・ロウワー)",degrees:"3 4 6 1 | b7 7 5 2 | 7 1 3 5 | 1 - - -",tip:"ターゲットの半音下から入るラインを丁寧に。着地する音を強く。"},
 {name:"半音上から(クロマチック・アッパー)",degrees:"b3 2 b5 4 | 1 7 b6 5 | b2 1 4 3 | 1 - - -",tip:"上からのアプローチは音量を抑えて、着地でしっかり鳴らす。"},
-{name:"エンクロージャー(上下から挟む)",degrees:"3 b5 4 6 | b7 1 7 5 | 7 b2 1 3 | 1 - - -",tip:"ターゲット音を上下から挟み込むように。テンポはゆっくりから。"}
+{name:"エンクロージャー(上下から挟む)",degrees:"3 b5 4 6 | b7 1 7 5 | 7 b2 1 3 | 1 - - -",tip:"ターゲット音を上下から挟み込むように。テンポはゆっくりから。"},
+// 8分音符2つでの上下エンクロージャーを各コードで実施。V7バーはb9/#9/9/13を経由。
+{name:"ダブルクロマチック・エンクロージャー(8分音符)",degrees:"b5e 3e 4 6e 1e 2 | 1e b7e 7 b6e 5e 3 | 2e 7e 1 3 5e 6e | 1 - - -",tip:"上下の半音から8分音符2つでターゲットを挟み込み、着地する音を強く。V7ではb9も絡めて緊張感を。"}
 ];
 const BEBOP_PHRASES = [
 {name:"ビバップ経過音",degrees:"6 4 2 1 | 7 5 b6 5 | 1 7 6 5 | 3 2 1 -",tip:"b9は経過音として一瞬だけ。強拍にコードトーンを置く意識で。"},
 {name:"II-Vターンアラウンド",degrees:"2 4 6 1 | b6 1 7 5 | 6 5 4 3 | 2 7 1 -",tip:"V7のb9は短く鋭く。Iへの着地でリズムを落ち着かせる。"},
-{name:"8分バップライン",degrees:"1 2 3 4 | 5 6 b7 7 | 1 7 6 5 | 3 2 1 -",tip:"b7は6と7をつなぐ経過音。均等な8分音符で滑らかに。"}
+{name:"8分バップライン",degrees:"1 2 3 4 | 5 6 b7 7 | 1 7 6 5 | 3 2 1 -",tip:"b7は6と7をつなぐ経過音。均等な8分音符で滑らかに。"},
+// ビバップ・ドミナントスケール(ルートとb7の間に経過音の7thを挟む)を全部8分音符で。V7バーは7*/13/11/9を経由。
+{name:"ビバップ・ドミナントスケール(8分音符)",degrees:"2e 4e 6e 1e 2 4 | 5e #4e 4e 3e 2e 1e 7e 6e | 1 3 5e 7e 6e 5e | 1 - - -",tip:"V7で6と5の間に経過音(#4/b5)を挟むビバップスケールを、均等な8分音符で。ノリを崩さず一定のテンポで。"}
 ];
 const TURNAROUND_PHRASES = {
   basic: [{name:"基本形 I-vi7-ii7-V7",degrees:"1 3 5 6 | 5 3 2 1 | 2 4 6 2 | 7 b6 5 3",tip:"コードトーンを中心に。各コードの3度・7度を意識。"}],
@@ -169,7 +177,15 @@ const COLTRANE_PHRASES = [
       {tonicRef:{centerIndex:1}, degrees:"4 6 5 3 | 1 - - -"},
       {tonicRef:{centerIndex:2}, degrees:"4 6 5 3 | 1 - - -"}
     ],
-    tip:"下降するラインでルートに着地。テンポを落として調の変化を確認。" }
+    tip:"下降するラインでルートに着地。テンポを落として調の変化を確認。" },
+  // 各調のii-Vを8分音符アルペジオでつなぐ。V7バーはコード基準で9/13のテンションを経由。
+  { name:"接続ラインC(8分音符でii-Vを駆け抜ける)",
+    segments:[
+      {tonicRef:{centerIndex:0}, degrees:"2e 4e 6e 1e 7e 6e 5e 3e | 5 - - -"},
+      {tonicRef:{centerIndex:1}, degrees:"2e 4e 6e 1e 7e 6e 5e 3e | 5 - - -"},
+      {tonicRef:{centerIndex:2}, degrees:"2e 4e 6e 1e 7e 6e 5e 3e | 5 - - -"}
+    ],
+    tip:"8分音符のアルペジオで各調のii-Vを駆け抜け、5度に着地。まずはゆっくり、調の切り替わりを感じながら。" }
 ];
 
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
@@ -261,8 +277,13 @@ const MAJOR_STEP_SEMITONES = [0,2,4,5,7,9,11];
 // (still within the "staff + 1-2 ledger lines" target).
 const MELODY_MIN_STEP = -3, MELODY_MAX_STEP = 12;
 
+// Handles both flat ("Db") and sharp ("F#") spellings. Practice keys (from
+// KEYS) are always flat-spelled, but chord-symbol roots parsed for the
+// chord-relative degree display (e.g. "F#m7") can be sharp, so this must
+// recognize both.
 function parseKeySpelling(keyStr){
-  return { letter: keyStr[0], acc: keyStr.length > 1 && keyStr[1] === 'b' ? -1 : 0 };
+  const acc = keyStr[1] === 'b' ? -1 : keyStr[1] === '#' ? 1 : 0;
+  return { letter: keyStr[0], acc };
 }
 // Degree numbers (1-9, 13, optionally b/#-prefixed) are read as major-scale
 // steps above the tonic, per this app's existing notation convention.
@@ -325,30 +346,97 @@ function pickOctaveInBand(letter, targetPc, prevAbs, bias){
   return candidates.reduce((best, o) =>
     Math.abs(o * 12 + targetPc - target) < Math.abs(best * 12 + targetPc - target) ? o : best);
 }
-// Expands a phrase's degree text into a flat beat sequence. Each new (non-hold)
-// note picks whichever in-band octave lands closest to the previous note's
-// pitch, so e.g. "1 6 4 2" actually descends instead of always resolving
-// upward, while staying inside the readable register band.
+// Duration suffixes on a degree token (after any b/#, before/around a v/^
+// register-bias suffix): none = quarter note (1 beat, every phrase before
+// this feature), "e" = eighth note (0.5 beat, written in pairs that together
+// fill 1 beat), "t" = triplet eighth (1/3 beat, written in groups of 3 that
+// together fill 1 beat). A hold token ("-") can carry the same suffix (e.g.
+// "-e") to tie/sustain the previous note for that fraction of a beat instead
+// of the default full beat.
+function parseDurationToken(tok){
+  if (tok.endsWith('e')) return { base: tok.slice(0, -1), duration: 0.5 };
+  if (tok.endsWith('t')) return { base: tok.slice(0, -1), duration: 1 / 3 };
+  return { base: tok, duration: 1 };
+}
+// Expands a phrase's degree text into a flat list of notes, each carrying its
+// bar index, its position within that bar (in beats, possibly fractional for
+// eighths/triplets) and its duration (in beats). Each new (non-hold) note
+// picks whichever in-band octave lands closest to the previous note's pitch,
+// so e.g. "1 6 4 2" actually descends instead of always resolving upward,
+// while staying inside the readable register band. A hold token extends the
+// previous note's duration instead of starting a new note.
 function flattenPhrase(phrase, ctx){
   const segments = phrase.segments || [{ tonicRef: "self", degrees: phrase.degrees }];
-  const pairs = [];
+  let prevAbs = null;
+  let barOffset = 0;
+  const notes = [];
   segments.forEach(seg => {
     const tonic = resolveTonicForSegment(seg, ctx);
-    seg.degrees.split("|").forEach(barStr => {
-      barStr.trim().split(/\s+/).forEach(tok => pairs.push({ tonic, tok }));
+    const bars = seg.degrees.split("|");
+    bars.forEach((barStr, localBarIndex) => {
+      const barIndex = barOffset + localBarIndex;
+      let beatInBar = 0;
+      barStr.trim().split(/\s+/).forEach(tok => {
+        const { base, duration } = parseDurationToken(tok);
+        if (base === "-") {
+          if (notes.length) notes[notes.length - 1].duration += duration;
+          beatInBar += duration;
+          return;
+        }
+        const bias = base.endsWith('v') ? -1 : base.endsWith('^') ? 1 : 0;
+        const d = degreeLetterAndPc(tonic, base);
+        const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs, bias);
+        prevAbs = octave * 12 + d.targetPc;
+        notes.push({ barIndex, beatInBar, duration, letter: d.letter, accidental: d.accidental, octave });
+        beatInBar += duration;
+      });
     });
+    barOffset += bars.length;
   });
-  let prevAbs = null;
-  const beats = [];
-  pairs.forEach(({ tonic, tok }) => {
-    if (tok === "-") { beats.push({ hold: true }); return; }
-    const bias = tok.endsWith('v') ? -1 : tok.endsWith('^') ? 1 : 0;
-    const d = degreeLetterAndPc(tonic, tok);
-    const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs, bias);
-    prevAbs = octave * 12 + d.targetPc;
-    beats.push({ hold: false, letter: d.letter, accidental: d.accidental, octave });
-  });
-  return beats;
+  return notes;
+}
+
+/* ---------- chord-relative degree labels (task 4) ---------- */
+// [degreeName, isChordTone] for each semitone offset (0-11) above the chord
+// root, one table per chord quality actually used by this app's chord
+// dictionaries (all derived from MAJOR_251/MINOR_251, so only maj7/m7/m7b5/
+// m6/7/7alt ever appear as a chord label suffix).
+const QUALITY_DEGREE_TABLE = {
+  "7":    [["1",true],["b9",false],["9",false],["#9",false],["3",true],["11",false],["#11",false],["5",true],["b13",false],["13",false],["b7",true],["7",false]],
+  "maj7": [["1",true],["b9",false],["9",false],["#9",false],["3",true],["11",false],["#11",false],["5",true],["#5",false],["13",false],["b7",false],["7",true]],
+  "m7":   [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["13",false],["b7",true],["7",false]],
+  "m7b5": [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["b5",true],["5",false],["b13",false],["13",false],["b7",true],["7",false]],
+  "m6":   [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["6",true],["b7",false],["7",false]]
+};
+function parseChordSymbolQuality(label){
+  const m = /^([A-G][b#]?)(.*)$/.exec(label);
+  const rest = m[2];
+  let quality = "7"; // dominant is the fallback: also covers "7alt" (same tension spellings as plain 7)
+  if (rest === "maj7") quality = "maj7";
+  else if (rest === "m7b5") quality = "m7b5";
+  else if (rest === "m6") quality = "m6";
+  else if (rest === "m7") quality = "m7";
+  return { rootStr: m[1], quality };
+}
+// Finds the chord sounding under a note (same bar, latest chord event at or
+// before the note's own beat position) -- every bar has an event at
+// beatInBar 0, so this always finds a match.
+function activeChordForNote(note, chordPlan){
+  return chordPlan.events
+    .filter(e => e.barIndex === note.barIndex && e.beatInBar <= note.beatInBar + 1e-6)
+    .reduce((best, e) => (!best || e.beatInBar > best.beatInBar) ? e : best, null);
+}
+// Phrase degrees are written relative to the tonic (see degreeLetterAndPc),
+// but the on-screen label needed here is relative to whichever chord is
+// sounding, e.g. a tonic-relative "b6" reads as "b9" while V7 is sounding.
+function chordRelativeDegree(note, chordEvent){
+  const { rootStr, quality } = parseChordSymbolQuality(chordEvent.label);
+  const root = parseKeySpelling(rootStr);
+  const rootPc = ((NATURAL_PC[root.letter] + root.acc) % 12 + 12) % 12;
+  const notePc = ((NATURAL_PC[note.letter] + note.accidental) % 12 + 12) % 12;
+  const offset = ((notePc - rootPc) % 12 + 12) % 12;
+  const [name, isChordTone] = QUALITY_DEGREE_TABLE[quality][offset];
+  return { name, isChordTone };
 }
 
 /* ---------- SVG score rendering (pure geometry, no music theory) ---------- */
@@ -356,6 +444,12 @@ const BEAT_W = 40, STAFF_LEFT = 32, BARS_PER_ROW = 2, BEATS_PER_BAR = 4;
 const HALF_GAP = 4, ROW_H = 110, STAFF_TOP0 = 50, NOTE_RX = 5, NOTE_RY = 4, STEM_LEN = 26;
 const INK = "#201f1b", MUTED = "#6f665b";
 const LETTER_ORD = {C:0,D:1,E:2,F:3,G:4,A:5,B:6};
+// Degree-label row (task 4): fixed offset below staffTopY rather than
+// relative to each note's own height, so labels stay in one tidy line
+// regardless of pitch -- 62px clears the lowest note in the register band
+// (MELODY_MIN_STEP, with its ledger line) by a comfortable margin.
+const DEGREE_LABEL_Y = 62, DEGREE_LABEL_SIZE = 9.5, DEGREE_LABEL_SIZE_DENSE = 7.5, DEGREE_TENSION_COLOR = "#8a2d6b";
+const BEAM_Y_PAD = 4; // extra stem length beyond STEM_LEN so beams clear noteheads of varying pitch
 
 function yForStep(step, staffTopY){ return staffTopY + (8 - step) * HALF_GAP; }
 function ledgerSteps(step){
@@ -371,17 +465,11 @@ function diatonicStep(letter, octave){
 }
 function escapeXml(s){ return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-function renderScore(beats, chordPlan){
+function renderScore(notes, chordPlan){
   const totalBars = chordPlan.totalBars;
   const rows = Math.ceil(totalBars / BARS_PER_ROW);
   const svgW = STAFF_LEFT + BARS_PER_ROW * BEATS_PER_BAR * BEAT_W + 16;
-  const svgH = STAFF_TOP0 + Math.max(0, rows - 1) * ROW_H + 70;
-
-  const notes = [];
-  beats.forEach((b, i) => {
-    if (b.hold) { if (notes.length) notes[notes.length - 1].endBeat = i; }
-    else notes.push({ startBeat: i, endBeat: i, letter: b.letter, accidental: b.accidental, octave: b.octave });
-  });
+  const svgH = STAFF_TOP0 + Math.max(0, rows - 1) * ROW_H + 86;
 
   let svg = `<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
 
@@ -389,8 +477,7 @@ function renderScore(beats, chordPlan){
     const staffTopY = STAFF_TOP0 + row * ROW_H;
     const barStart = row * BARS_PER_ROW;
     const barsInRow = Math.min(BARS_PER_ROW, totalBars - barStart);
-    const rowBeatStart = barStart * BEATS_PER_BAR;
-    const rowBeatEnd = rowBeatStart + barsInRow * BEATS_PER_BAR;
+    const rowBarEnd = barStart + barsInRow;
     const rowRight = STAFF_LEFT + barsInRow * BEATS_PER_BAR * BEAT_W;
 
     for (let li = 0; li < 5; li++){
@@ -402,25 +489,28 @@ function renderScore(beats, chordPlan){
       const x = STAFF_LEFT + bi * BEATS_PER_BAR * BEAT_W;
       svg += `<line x1="${x}" x2="${x}" y1="${staffTopY}" y2="${staffTopY + 32}" stroke="${INK}" stroke-width="${bi === barsInRow ? 2 : 1}"/>`;
     }
-    chordPlan.events.filter(e => e.barIndex >= barStart && e.barIndex < barStart + barsInRow).forEach(e => {
+    chordPlan.events.filter(e => e.barIndex >= barStart && e.barIndex < rowBarEnd).forEach(e => {
       const localBeat = (e.barIndex - barStart) * BEATS_PER_BAR + e.beatInBar;
       const x = STAFF_LEFT + localBeat * BEAT_W;
       const color = CHORD_COLORS[e.fn] || INK;
       svg += `<text x="${x}" y="${staffTopY - 10}" font-size="14" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
     });
-    notes.forEach(n => {
-      if (n.startBeat < rowBeatStart || n.startBeat >= rowBeatEnd) return;
-      const localStart = n.startBeat - rowBeatStart;
-      const localEnd = Math.min(n.endBeat - rowBeatStart, barsInRow * BEATS_PER_BAR - 1);
-      const cx = STAFF_LEFT + localStart * BEAT_W + BEAT_W / 2;
+
+    // Notehead / ledger / accidental / tie-sustain / degree-label pass, plus
+    // per-note geometry cached for the beam pass below.
+    const rowNotes = notes.filter(n => n.barIndex >= barStart && n.barIndex < rowBarEnd);
+    const geo = new Map();
+    rowNotes.forEach(n => {
+      const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
+      const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
       const step = diatonicStep(n.letter, n.octave);
       const y = yForStep(step, staffTopY);
       ledgerSteps(step).forEach(s => {
         const ly = yForStep(s, staffTopY);
         svg += `<line x1="${cx - 8}" x2="${cx + 8}" y1="${ly}" y2="${ly}" stroke="${INK}" stroke-width="1"/>`;
       });
-      if (localEnd > localStart){
-        const holdEndX = STAFF_LEFT + (localEnd + 1) * BEAT_W - 6;
+      if (n.duration > 1 + 1e-6){
+        const holdEndX = STAFF_LEFT + (localBeat + n.duration) * BEAT_W - 6;
         svg += `<line x1="${cx + 7}" x2="${holdEndX}" y1="${y}" y2="${y}" stroke="${INK}" stroke-width="2"/>`;
       }
       if (n.accidental){
@@ -428,11 +518,72 @@ function renderScore(beats, chordPlan){
         svg += `<text x="${cx - 19}" y="${y + 7}" font-size="22" font-weight="700" fill="${INK}">${glyph}</text>`;
       }
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}"/>`;
+
+      const chordEvent = activeChordForNote(n, chordPlan);
+      if (chordEvent){
+        const { name, isChordTone } = chordRelativeDegree(n, chordEvent);
+        const color = isChordTone ? MUTED : DEGREE_TENSION_COLOR;
+        const labelSize = n.duration < 0.6 ? DEGREE_LABEL_SIZE_DENSE : DEGREE_LABEL_SIZE;
+        svg += `<text x="${cx}" y="${staffTopY + DEGREE_LABEL_Y}" font-size="${labelSize}" font-weight="700" fill="${color}" text-anchor="middle">${escapeXml(name)}</text>`;
+      }
+
+      geo.set(n, { cx, y, step });
+    });
+
+    // Stem pass: plain full-length stems for quarter notes (and longer held
+    // notes) as before. Notes shorter than a beat (eighths/triplets) are
+    // collected per beat below and beamed instead, so their stems are drawn
+    // there -- skip them here.
+    rowNotes.forEach(n => {
+      if (n.duration < 1 - 1e-6) return;
+      const { cx, y, step } = geo.get(n);
       const stemUp = step < 4;
       const stemX = stemUp ? cx + NOTE_RX - 1 : cx - NOTE_RX + 1;
       const stemY2 = stemUp ? y - STEM_LEN : y + STEM_LEN;
       svg += `<line x1="${stemX}" x2="${stemX}" y1="${y}" y2="${stemY2}" stroke="${INK}" stroke-width="1.4"/>`;
     });
+
+    // Beam pass: group same-bar, same-beat notes shorter than 1 beat (eighth
+    // pairs, triplet eighths) and connect their stems with one beam bar.
+    // Triplet groups (3 notes) also get a small "3" over the beam. An
+    // isolated short note (no group partner) falls back to a single flag --
+    // not produced by any phrase in this app today, but kept so a future
+    // mis-authored phrase degrades gracefully instead of drawing nothing.
+    for (let bi = barStart; bi < rowBarEnd; bi++){
+      for (let beatIdx = 0; beatIdx < BEATS_PER_BAR; beatIdx++){
+        const group = rowNotes.filter(n => n.barIndex === bi && n.duration < 1 - 1e-6 &&
+          n.beatInBar >= beatIdx - 1e-6 && n.beatInBar < beatIdx + 1 - 1e-6)
+          .sort((a, b) => a.beatInBar - b.beatInBar);
+        if (!group.length) continue;
+        const avgStep = group.reduce((sum, n) => sum + geo.get(n).step, 0) / group.length;
+        const stemUp = avgStep < 4;
+        if (group.length === 1){
+          const { cx, y } = geo.get(group[0]);
+          const stemX = stemUp ? cx + NOTE_RX - 1 : cx - NOTE_RX + 1;
+          const stemY2 = stemUp ? y - STEM_LEN : y + STEM_LEN;
+          svg += `<line x1="${stemX}" x2="${stemX}" y1="${y}" y2="${stemY2}" stroke="${INK}" stroke-width="1.4"/>`;
+          const flagY2 = stemUp ? stemY2 + 10 : stemY2 - 10;
+          svg += `<path d="M${stemX} ${stemY2} Q${stemX + 8} ${(stemY2 + flagY2) / 2} ${stemX + 6} ${flagY2}" fill="none" stroke="${INK}" stroke-width="1.4"/>`;
+          continue;
+        }
+        const beamY = stemUp
+          ? Math.min(...group.map(n => geo.get(n).y)) - STEM_LEN - BEAM_Y_PAD
+          : Math.max(...group.map(n => geo.get(n).y)) + STEM_LEN + BEAM_Y_PAD;
+        group.forEach(n => {
+          const { cx, y } = geo.get(n);
+          const stemX = stemUp ? cx + NOTE_RX - 1 : cx - NOTE_RX + 1;
+          svg += `<line x1="${stemX}" x2="${stemX}" y1="${y}" y2="${beamY}" stroke="${INK}" stroke-width="1.4"/>`;
+        });
+        const firstX = (stemUp ? geo.get(group[0]).cx + NOTE_RX - 1 : geo.get(group[0]).cx - NOTE_RX + 1);
+        const lastX = (stemUp ? geo.get(group[group.length - 1]).cx + NOTE_RX - 1 : geo.get(group[group.length - 1]).cx - NOTE_RX + 1);
+        svg += `<line x1="${firstX}" x2="${lastX}" y1="${beamY}" y2="${beamY}" stroke="${INK}" stroke-width="3"/>`;
+        if (group.length === 3){
+          const midX = (firstX + lastX) / 2;
+          const numY = stemUp ? beamY - 6 : beamY + 12;
+          svg += `<text x="${midX}" y="${numY}" font-size="12" font-style="italic" fill="${INK}" text-anchor="middle">3</text>`;
+        }
+      }
+    }
   }
   svg += `</svg>`;
   document.getElementById("score").innerHTML = svg;
