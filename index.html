@@ -91,9 +91,10 @@ const CATEGORIES = [
   { id:"approach",  label:"アプローチノート" },
   { id:"bebop",     label:"ビバップ" },
   { id:"turnaround",label:"循環コード" },
-  { id:"coltrane",  label:"コルトレーンチェンジ" }
+  { id:"coltrane",  label:"コルトレーンチェンジ" },
+  { id:"blues",     label:"ブルース" }
 ];
-const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28" };
+const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
 /* ---------- chord dictionaries ---------- */
 const MAJOR_251 = {C:["Dm7","G7","Cmaj7"],Db:["Ebm7","Ab7","Dbmaj7"],D:["Em7","A7","Dmaj7"],Eb:["Fm7","Bb7","Ebmaj7"],E:["F#m7","B7","Emaj7"],F:["Gm7","C7","Fmaj7"],Gb:["Abm7","Db7","Gbmaj7"],G:["Am7","D7","Gmaj7"],Ab:["Bbm7","Eb7","Abmaj7"],A:["Bm7","E7","Amaj7"],Bb:["Cm7","F7","Bbmaj7"],B:["C#m7","F#7","Bmaj7"]};
@@ -112,6 +113,13 @@ const TURNAROUND_FUNCS = { basic:["I","vi","ii","V"], iiisub:["vi","vi","ii","V"
 
 // Giant Steps style key centers: three tonal centers a major 3rd apart.
 const COLTRANE_CENTERS = {C:["C","Ab","E"],Db:["Db","A","F"],D:["D","Bb","Gb"],Eb:["Eb","B","G"],E:["E","C","Ab"],F:["F","Db","A"],Gb:["Gb","D","Bb"],G:["G","Eb","B"],Ab:["Ab","E","C"],A:["A","F","Db"],Bb:["Bb","Gb","D"],B:["B","G","Eb"]};
+
+// 12-bar major blues: I7-IV7-I7-I7-IV7-IV7-I7-VI7-ii7-V7-I7-V7
+const BLUES_MAJOR = {C:["C7","F7","C7","C7","F7","F7","C7","A7","Dm7","G7","C7","G7"],Db:["Db7","Gb7","Db7","Db7","Gb7","Gb7","Db7","Bb7","Ebm7","Ab7","Db7","Ab7"],D:["D7","G7","D7","D7","G7","G7","D7","B7","Em7","A7","D7","A7"],Eb:["Eb7","Ab7","Eb7","Eb7","Ab7","Ab7","Eb7","C7","Fm7","Bb7","Eb7","Bb7"],E:["E7","A7","E7","E7","A7","A7","E7","C#7","F#m7","B7","E7","B7"],F:["F7","Bb7","F7","F7","Bb7","Bb7","F7","D7","Gm7","C7","F7","C7"],Gb:["Gb7","Cb7","Gb7","Gb7","Cb7","Cb7","Gb7","Eb7","Abm7","Db7","Gb7","Db7"],G:["G7","C7","G7","G7","C7","C7","G7","E7","Am7","D7","G7","D7"],Ab:["Ab7","Db7","Ab7","Ab7","Db7","Db7","Ab7","F7","Bbm7","Eb7","Ab7","Eb7"],A:["A7","D7","A7","A7","D7","D7","A7","F#7","Bm7","E7","A7","E7"],Bb:["Bb7","Eb7","Bb7","Bb7","Eb7","Eb7","Bb7","G7","Cm7","F7","Bb7","F7"],B:["B7","E7","B7","B7","E7","E7","B7","G#7","C#m7","F#7","B7","F#7"]};
+const BLUES_MAJOR_FNS = ["I","IV","I","I","IV","IV","I","VI","ii","V","I","V"];
+// 12-bar minor blues: i(m6)-i-i-i-iv7-iv7-i-i-bVI7-V7alt-i-V7alt
+const BLUES_MINOR = {C:["Cm6","Cm6","Cm6","Cm6","Fm7","Fm7","Cm6","Cm6","Ab7","G7alt","Cm6","G7alt"],Db:["Dbm6","Dbm6","Dbm6","Dbm6","Gbm7","Gbm7","Dbm6","Dbm6","A7","Ab7alt","Dbm6","Ab7alt"],D:["Dm6","Dm6","Dm6","Dm6","Gm7","Gm7","Dm6","Dm6","Bb7","A7alt","Dm6","A7alt"],Eb:["Ebm6","Ebm6","Ebm6","Ebm6","Abm7","Abm7","Ebm6","Ebm6","Cb7","Bb7alt","Ebm6","Bb7alt"],E:["Em6","Em6","Em6","Em6","Am7","Am7","Em6","Em6","C7","B7alt","Em6","B7alt"],F:["Fm6","Fm6","Fm6","Fm6","Bbm7","Bbm7","Fm6","Fm6","Db7","C7alt","Fm6","C7alt"],Gb:["Gbm6","Gbm6","Gbm6","Gbm6","Cbm7","Cbm7","Gbm6","Gbm6","D7","Db7alt","Gbm6","Db7alt"],G:["Gm6","Gm6","Gm6","Gm6","Cm7","Cm7","Gm6","Gm6","Eb7","D7alt","Gm6","D7alt"],Ab:["Abm6","Abm6","Abm6","Abm6","Dbm7","Dbm7","Abm6","Abm6","Fb7","Eb7alt","Abm6","Eb7alt"],A:["Am6","Am6","Am6","Am6","Dm7","Dm7","Am6","Am6","F7","E7alt","Am6","E7alt"],Bb:["Bbm6","Bbm6","Bbm6","Bbm6","Ebm7","Ebm7","Bbm6","Bbm6","Gb7","F7alt","Bbm6","F7alt"],B:["Bm6","Bm6","Bm6","Bm6","Em7","Em7","Bm6","Bm6","G7","F#7alt","Bm6","F#7alt"]};
+const BLUES_MINOR_FNS = ["I","I","I","I","iv","iv","I","I","bVI","V","I","V"];
 
 /* ---------- phrase content ---------- */
 const MAJOR_PHRASES = [
@@ -260,6 +268,30 @@ const COLTRANE_PHRASES = [
       {tonicRef:{centerIndex:2}, degrees:"2e 4e 6e 1e 7t 6t 5t 3 | 1 - - -"}
     ],
     tip:"8分音符から3連符への切り替えを意識しながら、各調のii-Vを駆け抜ける。" }
+];
+const BLUES_MAJOR_PHRASES = [
+  {name:"ベーシック・ブルースリフ",degrees:"1 b3 3 5 | 1 b3 3 5 | 1 b3 3 5 | 1 b3 3 5 | 6 5 3 2 | 6 5 3 2 | 1 b3 3 5 | 1 b3 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"1度からb3(ブルーノート)を効かせて3度へ。IVでも同じ形をそのまま平行移動。"},
+  {name:"コール&レスポンス",degrees:"1 - 5 - | 1 - 5 - | 1 - 5 - | 1 - 5 - | 3 5 6 5 | 3 5 6 5 | 1 - 5 - | 1 - 5 - | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"ロングトーンで呼びかけ、間を活かして歌う。コール&レスポンスを意識して。"},
+  {name:"アルペジオ・ブルース",degrees:"1 3 5 b7 | 4 6 1 b3 | 1 3 5 b7 | 1 3 5 b7 | 4 6 1 b3 | 4 6 1 b3 | 1 3 5 b7 | 6 #1 3 5 | 2 4 6 1 | 5 7 2 4 | 1 3 5 b7 | 5 7 2 4",tip:"各コードのアルペジオを丁寧に。VI7の#1(3度)は鋭く、ii-Vでは滑らかに着地。"},
+  {name:"8分音符シャッフル",degrees:"5e 6e 5 3 1 | 5e 6e 5 3 1 | 1 b3 3 5 | 1 b3 3 5 | 6 5 3 2 | 6 5 3 2 | 5e 6e 5 3 1 | 1 b3 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"シャッフルのノリで8分音符を弾ませる。5度→6度の装飾から滑らかに1度へ。"},
+  {name:"下降ブルースライン",degrees:"6 b3 2 1 | 6 b3 2 1 | 1 b3 3 5 | 1 b3 3 5 | b3 2 1 - | b3 2 1 - | 6 b3 2 1 | 1 b3 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"6度からb3(ブルーノート)を経由して下降。明暗の対比を感じて。"},
+  {name:"ロングトーン&ブルーノート",degrees:"1 - 5 - | 1 - 5 - | 1 - 5 - | 1 - 5 - | 5 6 5 3 | 5 6 5 3 | 1 - 5 - | 1 - 5 - | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"IVコードでもロングトーンを維持し、6度の響きでブルース感を強調。"},
+  {name:"アルペジオ+ブルーノート・ミックス",degrees:"1 3 5 b7 | 4 6 1 b3 | 1 3 5 b7 | 1 3 5 b7 | 4 6 1 b3 | 4 6 1 b3 | 1 3 5 b7 | 6 #1 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"アルペジオとブルーノートを交互に。VI7のb7は少し溜めてから解決。"},
+  {name:"ハイレジスター・ブルース",degrees:"2 1 6v 5v | 2 1 6v 5v | 1 b3 3 5 | 1 b3 3 5 | 5 6 5 3 | 5 6 5 3 | 2 1 6v 5v | 1 b3 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"高音域でのブルースフレーズ。跳躍のあとは音程を丁寧にコントロール。"},
+  {name:"ターン・フィギュア強調",degrees:"3 5 6 5 | 3 5 6 5 | 1 b3 3 5 | 1 b3 3 5 | 5e 6e 5 3 1 | 5e 6e 5 3 1 | 3 5 6 5 | 1 b3 3 5 | 1 2 b3 3 | 5 6 5 3 | 1 b3 3 5 | 6 5 3 1",tip:"ターン音型を軽やかに。IVバーの8分音符シャッフルでリズムに乗る。"},
+  {name:"ミックス・フレーズ",degrees:"1 3 5 6 | 1 3 5 6 | 1 b3 3 5 | 1 b3 3 5 | 6 5 3 2 | 6 5 3 2 | 1 3 5 6 | 1 b3 3 5 | 2 4 6 1 | 5 7 2 4 | 1 b3 3 5 | 5 7 2 4",tip:"コードトーン中心の総合フレーズ。最後のii-V-Iで締めくくる。"}
+];
+const BLUES_MINOR_PHRASES = [
+  {name:"マイナーブルース基本リフ",degrees:"1 b3 4 b5 | 1 b3 4 b5 | 1 b3 4 b5 | 1 b3 4 b5 | b7 5 4 b3 | b7 5 4 b3 | 1 b3 4 b5 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"1-b3-4-b5(ブルーノート)の基本形。暗い響きを丁寧に歌う。"},
+  {name:"コール&レスポンス(マイナー)",degrees:"1 - 5 - | 1 - 5 - | 1 - 5 - | 1 - 5 - | 5 b7 5 b3 | 5 b7 5 b3 | 1 - 5 - | 1 - 5 - | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ロングトーンで呼びかけ、マイナーブルースの憂いを表現。"},
+  {name:"アルペジオ・マイナーブルース",degrees:"1 b3 5 6 | 1 b3 5 6 | 1 b3 5 6 | 1 b3 5 6 | 4 b6 1 b3 | 4 b6 1 b3 | 1 b3 5 6 | 1 b3 5 6 | b6 1 b3 b5 | 5 7 2 4 | 1 b3 5 6 | 5 7 2 4",tip:"各コードのアルペジオで通過。bVI7とV7altの緊張感の違いを感じて。"},
+  {name:"8分音符シャッフル(マイナー)",degrees:"5e b7e 5 4 b3 | 5e b7e 5 4 b3 | 1 b3 4 b5 | 1 b3 4 b5 | b7 5 4 b3 | b7 5 4 b3 | 5e b7e 5 4 b3 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"シャッフルのノリでb7とb3を強調。マイナーの陰影をしっかり出す。"},
+  {name:"下降ブルースライン(マイナー)",degrees:"b5 4 b3 1 | b5 4 b3 1 | 1 b3 4 b5 | 1 b3 4 b5 | 5 b7 5 b3 | 5 b7 5 b3 | b5 4 b3 1 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"b5(ブルーノート)から下降してルートへ。暗い音色を保つ。"},
+  {name:"ロングトーン&ブルーノート(マイナー)",degrees:"1 - 5 - | 1 - 5 - | 1 - 5 - | 1 - 5 - | b3 4 b5 5 | b3 4 b5 5 | 1 - 5 - | 1 - 5 - | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ロングトーンを軸に、b5のブルーノートを丁寧に響かせる。"},
+  {name:"アルペジオ+ブルーノート・ミックス(マイナー)",degrees:"1 b3 5 6 | 4 b6 1 b3 | 1 b3 5 6 | 1 b3 5 6 | 4 b6 1 b3 | 4 b6 1 b3 | 1 b3 5 6 | 1 b3 5 6 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"アルペジオとブルーノートを交互に。ivの後のbVI7で音色が変わる瞬間を意識。"},
+  {name:"レジスター・ブルース(マイナー)",degrees:"b3 1 b7v 5v | b3 1 b7v 5v | 1 b3 4 b5 | 1 b3 4 b5 | 5 4 b3 1 | 5 4 b3 1 | b3 1 b7v 5v | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"音域を広く使うマイナーブルース。跳躍後の着地を正確に。"},
+  {name:"ターン・フィギュア強調(マイナー)",degrees:"b3 4 b5 5 | b3 4 b5 5 | 1 b3 4 b5 | 1 b3 4 b5 | 1 b3 5 b7 | 1 b3 5 b7 | b3 4 b5 5 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ターン音型でb5を経由し、V7altバーではb3のブルーノートも試す。"},
+  {name:"ミックス・フレーズ(マイナー)",degrees:"5 4 b3 1 | 5 4 b3 1 | 1 b3 4 b5 | 1 b3 4 b5 | 5 b7 5 b3 | 5 b7 5 b3 | 5 4 b3 1 | 1 b3 4 b5 | b6 1 b3 b5 | 5 7 2 4 | 1 b3 4 b5 | 5 7 2 4",tip:"コードトーンとブルーノートを組み合わせた総合フレーズ。bVI7の響きを大切に。"}
 ];
 
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
@@ -696,6 +728,12 @@ function getChordPlan(category, variant, key){
     });
     return { events, totalBars: centers.length * 2 };
   }
+  if (category === "blues"){
+    const isMinor = variant === "minor";
+    const bars = (isMinor ? BLUES_MINOR : BLUES_MAJOR)[key];
+    const fns = isMinor ? BLUES_MINOR_FNS : BLUES_MAJOR_FNS;
+    return barsToPlan(bars, fns);
+  }
   return barsToPlan(practiceBars(MAJOR_251[key]), ["ii","V","I","I"]);
 }
 function getPhrasePool(category, variant){
@@ -704,6 +742,7 @@ function getPhrasePool(category, variant){
   if (category === "bebop") return BEBOP_PHRASES;
   if (category === "turnaround") return TURNAROUND_PHRASES[variant] || TURNAROUND_PHRASES.basic;
   if (category === "coltrane") return COLTRANE_PHRASES;
+  if (category === "blues") return variant === "minor" ? BLUES_MINOR_PHRASES : BLUES_MAJOR_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -731,6 +770,11 @@ function updateModeSelect(category){
     modeSelect.add(new Option("iii7代理","iiisub"));
     modeSelect.add(new Option("裏コード","tritone"));
     modeSelect.add(new Option("マイナー化","minorized"));
+    modeField.style.display = "";
+    keyField.classList.remove("full");
+  } else if (category === "blues"){
+    modeSelect.add(new Option("Major Blues","major"));
+    modeSelect.add(new Option("Minor Blues","minor"));
     modeField.style.display = "";
     keyField.classList.remove("full");
   } else {
@@ -771,11 +815,12 @@ function render(){
     approach: `Daily 251 Approach ${key}`,
     bebop: `Daily 251 Bebop ${key}`,
     turnaround: `Daily 251 Turnaround ${TURNAROUND_LABEL[variant] || "基本形"} ${key}`,
-    coltrane: `Daily 251 Coltrane ${key}`
+    coltrane: `Daily 251 Coltrane ${key}`,
+    blues: `Daily Blues ${variant === "minor" ? "Minor" : "Major"} ${key}`
   };
   currentPractice = {
     title: titleByCategory[category] || `Daily 251 ${key}`,
-    mode: (category === "diatonic" && variant === "minor") ? "Minor" : "Major",
+    mode: ((category === "diatonic" || category === "blues") && variant === "minor") ? "Minor" : "Major",
     key, chordPlan
   };
   document.getElementById("irealStatus").textContent = "";
