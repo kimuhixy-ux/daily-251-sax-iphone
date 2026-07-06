@@ -205,7 +205,8 @@ const BEBOP_PHRASES = [
 // 8分音符でクロマチックに駆け抜けるビバップライン。
 {name:"8分音符クロマチック・ラン",degrees:"1e 2e 4e #4e 5e 6e 1e 2e | 1e 7e b7e 6e 5e #4e 4e 3e | 5e 6e 7e 1e 3e 2e 1 | 1 - - -",tip:"クロマチックな経過音を均等な8分音符で。強拍のコードトーンを見失わないように。"},
 // 8分音符と3連符でダブルタイム感を出すビバップライン。
-{name:"8分+3連符ダブルタイム",degrees:"2e 4e 6e 1e 2t 1t 7t 6 | b6e 5e 3e 1e b7t 6t 5t 3 | 1e 3e 5e 7e 6t 5t 3t 1 | 1 - - -",tip:"8分音符から3連符への切り替えでダブルタイムの疾走感を。"}
+{name:"8分+3連符ダブルタイム",degrees:"2e 4e 6e 1e 2t 1t 7t 6 | b6e 5e 3e 1e b7t 6t 5t 3 | 1e 3e 5e 7e 6t 5t 3t 1 | 1 - - -",tip:"8分音符から3連符への切り替えでダブルタイムの疾走感を。"},
+{name:"クロマチック・テンション(8分音符)",degrees:"4^e 1e #1e 3e #2e #5ve 6e #1e | 7e 5e b5e 3e 4e 6e b6e #4e | 5e 4^e 2e #2e 3e #6ve 7e 2e | 1e 5e R R -",tip:"b9/#11/ナチュラル7を含む高密度ライン。半音アプローチは小さく、解決音をよく聴いて。"}
 ];
 const TURNAROUND_PHRASES = {
   // 8分音符と3連符を組み合わせてI-vi7-ii7-V7を駆け抜ける。
@@ -1042,6 +1043,20 @@ function parseKeySpelling(keyStr){
   const acc = keyStr[1] === 'b' ? -1 : keyStr[1] === '#' ? 1 : 0;
   return { letter: keyStr[0], acc };
 }
+function readableSpelling(letter, accidental, targetPc, absLetterIdx){
+  if (Math.abs(accidental) <= 1) return { letter, accidental };
+  let best = null;
+  for (let i = absLetterIdx - 2; i <= absLetterIdx + 2; i++){
+    const candidateLetter = LETTERS[((i % 7) + 7) % 7];
+    let candidateAccidental = targetPc - NATURAL_PC[candidateLetter];
+    if (candidateAccidental > 6) candidateAccidental -= 12;
+    if (candidateAccidental < -6) candidateAccidental += 12;
+    if (Math.abs(candidateAccidental) > 1) continue;
+    const cost = Math.abs(i - absLetterIdx) * 10 + Math.abs(candidateAccidental);
+    if (!best || cost < best.cost) best = { letter: candidateLetter, accidental: candidateAccidental, cost };
+  }
+  return best ? { letter: best.letter, accidental: best.accidental } : { letter, accidental };
+}
 // Degree numbers (1-9, 13, optionally b/#-prefixed) are read as major-scale
 // steps above the tonic, per this app's existing notation convention.
 function degreeLetterAndPc(tonic, token){
@@ -1061,7 +1076,7 @@ function degreeLetterAndPc(tonic, token){
   let accidental = targetPc - NATURAL_PC[letter];
   if (accidental > 6) accidental -= 12;
   if (accidental < -6) accidental += 12;
-  return { letter, accidental, targetPc };
+  return { ...readableSpelling(letter, accidental, targetPc, absLetterIdx), targetPc };
 }
 function resolveTonicForSegment(seg, ctx){
   if (seg.tonicRef && seg.tonicRef.centerIndex !== undefined){
@@ -1130,6 +1145,8 @@ function parseDurationToken(tok){
 // previous note's duration instead of starting a new note.
 function flattenPhrase(phrase, ctx){
   const segments = phrase.segments || [{ tonicRef: "self", degrees: phrase.degrees }];
+  const cautionaryNaturals = new Set(phrase.cautionaryNaturals || []);
+  let noteOrdinal = 0;
   let prevAbs = null;
   let barOffset = 0;
   const notes = [];
@@ -1155,7 +1172,9 @@ function flattenPhrase(phrase, ctx){
         const d = degreeLetterAndPc(tonic, base);
         const octave = pickOctaveInBand(d.letter, d.targetPc, prevAbs, bias);
         prevAbs = octave * 12 + d.targetPc;
-        notes.push({ barIndex, beatInBar, duration, letter: d.letter, accidental: d.accidental, octave });
+        const natural = cautionaryNaturals.has(noteOrdinal);
+        notes.push({ barIndex, beatInBar, duration, letter: d.letter, accidental: d.accidental, octave, natural });
+        noteOrdinal += 1;
         beatInBar += duration;
       });
     });
@@ -1302,8 +1321,8 @@ function renderScore(notes, chordPlan){
         const holdEndX = STAFF_LEFT + (localBeat + n.duration) * BEAT_W - 6;
         svg += `<line x1="${cx + 7}" x2="${holdEndX}" y1="${y}" y2="${y}" stroke="${INK}" stroke-width="2"/>`;
       }
-      if (n.accidental){
-        const glyph = n.accidental < 0 ? "♭" : "♯";
+      if (n.accidental || n.natural){
+        const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
         svg += `<text x="${cx - 19}" y="${y + 7}" font-size="22" font-weight="700" fill="${INK}">${glyph}</text>`;
       }
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}"/>`;
