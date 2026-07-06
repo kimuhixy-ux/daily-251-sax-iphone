@@ -92,7 +92,8 @@ const CATEGORIES = [
   { id:"bebop",     label:"ビバップ" },
   { id:"turnaround",label:"循環コード" },
   { id:"coltrane",  label:"コルトレーンチェンジ" },
-  { id:"blues",     label:"ブルース" }
+  { id:"blues",     label:"ブルース" },
+  { id:"original",  label:"オリジナル" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -292,6 +293,652 @@ const BLUES_MINOR_PHRASES = [
   {name:"レジスター・ブルース(マイナー)",degrees:"b3 1 b7v 5v | b3 1 b7v 5v | 1 b3 4 b5 | 1 b3 4 b5 | 5 4 b3 1 | 5 4 b3 1 | b3 1 b7v 5v | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"音域を広く使うマイナーブルース。跳躍後の着地を正確に。"},
   {name:"ターン・フィギュア強調(マイナー)",degrees:"b3 4 b5 5 | b3 4 b5 5 | 1 b3 4 b5 | 1 b3 4 b5 | 1 b3 5 b7 | 1 b3 5 b7 | b3 4 b5 5 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ターン音型でb5を経由し、V7altバーではb3のブルーノートも試す。"},
   {name:"ミックス・フレーズ(マイナー)",degrees:"5 4 b3 1 | 5 4 b3 1 | 1 b3 4 b5 | 1 b3 4 b5 | 5 b7 5 b3 | 5 b7 5 b3 | 5 4 b3 1 | 1 b3 4 b5 | b6 1 b3 b5 | 5 7 2 4 | 1 b3 4 b5 | 5 7 2 4",tip:"コードトーンとブルーノートを組み合わせた総合フレーズ。bVI7の響きを大切に。"}
+];
+
+// "50 Phrases For Jazz" real book: fixed literal chords per numbered phrase,
+// extracted via Vision OCR from the source sheet music. Unlike the other
+// categories' degree-relative phrases, these are not transposable across
+// keys -- each phrase already carries its own fixed key.
+const ORIGINAL_SOURCE_TITLE = "50 Phrases For Jazz";
+const ORIGINAL_PHRASES = [
+  {number:1, bars:[["Am7"],["D7"]], chordsDisplay:"Am7 | D7", key:"D", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.3333333333333333, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2.3333333333333335, duration:0.3333333333333333, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2.6666666666666665, duration:0.3333333333333333, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:1.5, letter:"G", octave:4, accidental:1},
+  ]},
+  {number:2, bars:[["Am7"],["D7"]], chordsDisplay:"Am7 | D7", key:"D", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:1},
+  ]},
+  {number:3, bars:[["D7+"],["D7+"]], chordsDisplay:"D7+ | D7+", key:"D", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"C", octave:6, accidental:1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:4, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:1, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"F", octave:5, accidental:0},
+  ]},
+  {number:5, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+  ]},
+  {number:6, bars:[["Em7b5"],["A7#9"],["Dm7"]], chordsDisplay:"Em7b5 | A7#9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+  ]},
+  {number:7, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"A", octave:5, accidental:0},
+  ]},
+  {number:8, bars:[["Em7b5"],["A7#9"],["Dm7"]], chordsDisplay:"Em7b5 | A7#9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:1, letter:"B", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:9, bars:[["Em7b5"],["A7#9"],["Dm7"]], chordsDisplay:"Em7b5 | A7#9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:1, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:2.5, duration:1.5, letter:"A", octave:4, accidental:0},
+  ]},
+  {number:10, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"A", octave:4, accidental:0},
+  ]},
+  {number:11, bars:[["Em7b5"],["A7#9"],["Dm7"]], chordsDisplay:"Em7b5 | A7#9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:1, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1, duration:0.3333333333333333, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.3333333333333333, duration:0.3333333333333333, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.6666666666666667, duration:0.3333333333333333, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:1, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:12, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:1, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:13, bars:[["Em7b5"],["A7b9"],["Dm7"]], chordsDisplay:"Em7b5 | A7b9 | Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:14, bars:[["Cmaj7"],["Cmaj7"]], chordsDisplay:"Cmaj7 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:15, bars:[["C7"],["C7"]], chordsDisplay:"C7 | C7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:16, bars:[["Cmaj7"],["Cmaj7"]], chordsDisplay:"Cmaj7 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:17, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:5, accidental:0},
+  ]},
+  {number:18, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:5, accidental:1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:19, bars:[["Dm7"],["G7"]], chordsDisplay:"Dm7 | G7", key:"G", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:0},
+  ]},
+  {number:20, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:1, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:21, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:2, beatInBar:0, duration:2, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:22, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:1, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:2, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:23, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:1.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:2, beatInBar:0, duration:2, letter:"C", octave:6, accidental:0},
+  ]},
+  {number:24, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:1.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:25, bars:[["Dm7"],["G7"],["C"]], chordsDisplay:"Dm7 | G7 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:1.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:26, bars:[["Dm7"],["G7b9"],["C"]], chordsDisplay:"Dm7 | G7b9 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:27, bars:[["Dm7"],["G7b9"],["C"]], chordsDisplay:"Dm7 | G7b9 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"E", octave:4, accidental:0},
+  ]},
+  {number:28, bars:[["Dm7"],["G7b9"],["C"]], chordsDisplay:"Dm7 | G7b9 | C", key:"C", notes:[
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:29, bars:[["G7"],["Cmaj7"]], chordsDisplay:"G7 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"C", octave:6, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"G", octave:5, accidental:0},
+  ]},
+  {number:30, bars:[["G7b9"]], chordsDisplay:"G7b9", key:"G", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2, duration:2, letter:"D", octave:5, accidental:-1},
+  ]},
+  {number:31, bars:[["G7b9"]], chordsDisplay:"G7b9", key:"G", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2, duration:1, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:4, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:4.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:5, duration:1, letter:"A", octave:5, accidental:-1},
+  ]},
+  {number:32, bars:[["G7b9"]], chordsDisplay:"G7b9", key:"G", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"B", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:4, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:33, bars:[["G7"],["Cmaj7"]], chordsDisplay:"G7 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:34, bars:[["G7b9"],["Cmaj7"]], chordsDisplay:"G7b9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:0, beatInBar:4, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:35, bars:[["Dm7"],["G7b9"]], chordsDisplay:"Dm7 | G7b9", key:"G", notes:[
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:2.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+  ]},
+  {number:36, bars:[["G7#9"],["Cmaj7"]], chordsDisplay:"G7#9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1.5, duration:1, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:1.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:4, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:37, bars:[["G7"],["Cmaj7"]], chordsDisplay:"G7 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0, duration:1, letter:"G", octave:5, accidental:0},
+  ]},
+  {number:38, bars:[["G7#9"],["Cmaj7"]], chordsDisplay:"G7#9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:1, beatInBar:0, duration:1, letter:"E", octave:4, accidental:0},
+  ]},
+  {number:39, bars:[["Dm7"],["G7b9"],["Cmaj7"]], chordsDisplay:"Dm7 | G7b9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:40, bars:[["Dm7"],["G7b9"],["Cmaj7"]], chordsDisplay:"Dm7 | G7b9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.3333333333333333, letter:"A", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.3333333333333333, duration:0.3333333333333333, letter:"B", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.6666666666666666, duration:0.3333333333333333, letter:"A", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+  ]},
+  {number:41, bars:[["Dm7"],["G7b9"],["Cmaj7"]], chordsDisplay:"Dm7 | G7b9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:42, bars:[["Dm7"],["G7b9"],["Cmaj7"]], chordsDisplay:"Dm7 | G7b9 | Cmaj7", key:"C", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:1, beatInBar:1, duration:0.5, letter:"B", octave:4, accidental:-1},
+    {barIndex:1, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:-1},
+    {barIndex:2, beatInBar:0, duration:1, letter:"G", octave:4, accidental:0},
+  ]},
+  {number:43, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:4, accidental:1},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:44, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:5, accidental:-1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:0},
+  ]},
+  {number:45, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+  ]},
+  {number:46, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+  ]},
+  {number:47, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"A", octave:5, accidental:0},
+  ]},
+  {number:48, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"F", octave:4, accidental:1},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:49, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+  ]},
+  {number:50, bars:[["Dm7"]], chordsDisplay:"Dm7", key:"D-", notes:[
+    {barIndex:0, beatInBar:0, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:0, beatInBar:0.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2, duration:0.5, letter:"A", octave:5, accidental:0},
+    {barIndex:0, beatInBar:2.5, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+  ]},
 ];
 
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
@@ -699,6 +1346,15 @@ function renderScore(notes, chordPlan){
 function barsToPlan(bars, fns){
   return { events: bars.map((label, i) => ({ barIndex: i, beatInBar: 0, label, fn: fns[i] })), totalBars: bars.length };
 }
+// Original-book phrases already list literal chords per bar (possibly more
+// than one per bar), unlike the degree-templated categories above.
+function chordPlanFromBars(bars){
+  const events = [];
+  bars.forEach((barChords, i) => {
+    barChords.forEach((label, j) => events.push({ barIndex: i, beatInBar: j, label, fn: null }));
+  });
+  return { events, totalBars: bars.length };
+}
 function getChordPlan(category, variant, key){
   if (category === "diatonic"){
     const isMinor = variant === "minor";
@@ -743,6 +1399,7 @@ function getPhrasePool(category, variant){
   if (category === "turnaround") return TURNAROUND_PHRASES[variant] || TURNAROUND_PHRASES.basic;
   if (category === "coltrane") return COLTRANE_PHRASES;
   if (category === "blues") return variant === "minor" ? BLUES_MINOR_PHRASES : BLUES_MAJOR_PHRASES;
+  if (category === "original") return ORIGINAL_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -760,6 +1417,7 @@ let currentPractice = null;
 
 function updateModeSelect(category){
   modeSelect.innerHTML = "";
+  keyField.style.display = "";
   if (category === "diatonic"){
     modeSelect.add(new Option("Major 251","major"));
     modeSelect.add(new Option("Minor 251","minor"));
@@ -777,8 +1435,14 @@ function updateModeSelect(category){
     modeSelect.add(new Option("Minor Blues","minor"));
     modeField.style.display = "";
     keyField.classList.remove("full");
+  } else if (category === "original"){
+    // Fixed literal chords per phrase (from the real book) -- no mode/key
+    // to choose; navigation is entirely via the prev/next phrase buttons.
+    modeField.style.display = "none";
+    keyField.style.display = "none";
   } else {
     modeField.style.display = "none";
+    keyField.style.display = "";
     keyField.classList.add("full");
   }
 }
@@ -794,21 +1458,38 @@ function render(){
   const pool = getPhrasePool(category, variant);
   if (currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
+  const today = localYmd();
+  const catLabel = CATEGORIES.find(c => c.id === category).label;
+
+  document.getElementById("prevBtn").disabled = pool.length <= 1;
+  document.getElementById("nextBtn").disabled = pool.length <= 1;
+  document.getElementById("irealSection").style.display = "";
+  document.getElementById("irealStatus").textContent = "";
+
+  if (category === "original"){
+    const chordPlan = chordPlanFromBars(phrase.bars);
+    renderScore(phrase.notes, chordPlan);
+    const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${phrase.key}`;
+    document.getElementById("phraseName").textContent = `${ORIGINAL_SOURCE_TITLE} ${numLabel}`;
+    document.getElementById("tip").textContent = phrase.chordsDisplay;
+    currentPractice = {
+      title: `${ORIGINAL_SOURCE_TITLE} ${numLabel}`,
+      mode: "Original",
+      key: phrase.key,
+      chordPlan
+    };
+    return;
+  }
+
   const chordPlan = getChordPlan(category, variant, key);
   const beats = flattenPhrase(phrase, { key });
   renderScore(beats, chordPlan);
 
-  const today = localYmd();
-  const catLabel = CATEGORIES.find(c => c.id === category).label;
   document.getElementById("dateLine").textContent = `${today} / Key: ${key} / ${catLabel}`;
   document.getElementById("phraseName").textContent = phrase.name;
   document.getElementById("tip").textContent = phrase.tip;
 
-  document.getElementById("prevBtn").disabled = pool.length <= 1;
-  document.getElementById("nextBtn").disabled = pool.length <= 1;
-
-  const irealSection = document.getElementById("irealSection");
-  irealSection.style.display = "";
   const TURNAROUND_LABEL = { basic:"基本形", iiisub:"iii7代理", tritone:"裏コード", minorized:"マイナー化" };
   const titleByCategory = {
     diatonic: `Daily 251 ${variant === "minor" ? "Minor" : "Major"} ${key}`,
@@ -823,7 +1504,6 @@ function render(){
     mode: ((category === "diatonic" || category === "blues") && variant === "minor") ? "Minor" : "Major",
     key, chordPlan
   };
-  document.getElementById("irealStatus").textContent = "";
 }
 
 categorySelect.addEventListener("change", () => {
@@ -836,7 +1516,14 @@ modeSelect.addEventListener("change", () => {
   render();
 });
 keySelect.addEventListener("change", () => render());
-document.getElementById("todayBtn").addEventListener("click", () => { keySelect.value = todayKey(); render(); });
+document.getElementById("todayBtn").addEventListener("click", () => {
+  if (categorySelect.value === "original"){
+    currentIndex = seedIndex(categorySelect.value, modeSelect.value, "");
+  } else {
+    keySelect.value = todayKey();
+  }
+  render();
+});
 document.getElementById("prevBtn").addEventListener("click", () => {
   const pool = getPhrasePool(categorySelect.value, modeSelect.value);
   currentIndex = (currentIndex - 1 + pool.length) % pool.length;
