@@ -146,7 +146,9 @@ const MAJOR_PHRASES = [
 // 8分音符と3連符を1小節ごとに切り替えるミックスライン。
 {name:"8分+3連符ミックスライン",degrees:"2e 4e 6 1t 7t 6t 5 | b6e 5e 3t b6t 5t b7 6 | 1e 3e 5t 3t 1t 7 1 | 1 - - -",tip:"8分音符と3連符の切り替えでリズムの違いを明確に。テンポはゆっくりから慣らす。"},
 // 木村が手書きで用意したフレーズ。1・3小節目末尾のオクターブ下降跳躍と、2小節目の3連符ターンが特徴。
-{name:"オクターブ跳躍ライン",degrees:"2e 3e 4e 6e 5e 3e 4e 6ve | 1e 3e 2t 6t 1t 7e 2e 4e 6e | 5e 4e 1e 2e 3e 5ve 6e 7e | 2e 1e 7e 1e 3e 5e",tip:"1・3小節目末尾のオクターブ下降跳躍を正確に。2小節目の3連符は軽く転がすように。"}
+{name:"オクターブ跳躍ライン",degrees:"2e 3e 4e 6e 5e 3e 4e 6ve | 1e 3e 2t 6t 1t 7e 2e 4e 6e | 5e 4e 1e 2e 3e 5ve 6e 7e | 2e 1e 7e 1e 3e 5e 7e 1e",tip:"1・3小節目末尾のオクターブ下降跳躍を正確に。2小節目の3連符は軽く転がすように。"},
+// 木村が手書き(五線譜)で用意したフレーズ。2小節目の8分休符+単独8分音符、4小節目の4分休符+2分休符が特徴。
+{name:"休符入りii-V-Iライン",degrees:"5^e 6e 7e 1e 1e 5e 3e 1e | 4e 5e 6e 5e Re 3ve 1^e 3e | 4e 3e 1e 5e 7e 1e 2e 3e | 1e 5e R R -",tip:"2小節目の休符の後の1音を慌てずに。4小節目は休符の長さを正確に感じてIに解決。"}
 ];
 const MINOR_PHRASES = [
 {name:"Minor classic",degrees:"2 4 b6 1 | 7 b6 b7 3 | 1 7 b6 5 | b3 2 1 -",tip:"最後はm6感を出すなら6度も試す。"},
@@ -1094,8 +1096,12 @@ function pickOctaveInBand(letter, targetPc, prevAbs, bias){
     }
   }
   if (prevAbs === null){
+    // No previous note yet: anchor to the middle of the staff (step 4 = B4),
+    // shifted by a full octave (7 diatonic steps) per unit of bias -- lets a
+    // phrase's very first note use "v"/"^" too, not just later notes.
+    const anchorStep = 4 + bias * 7;
     return candidates.reduce((best, o) =>
-      Math.abs(diatonicStep(letter, o) - 4) < Math.abs(diatonicStep(letter, best) - 4) ? o : best);
+      Math.abs(diatonicStep(letter, o) - anchorStep) < Math.abs(diatonicStep(letter, best) - anchorStep) ? o : best);
   }
   const target = prevAbs + bias * 12;
   return candidates.reduce((best, o) =>
@@ -1107,7 +1113,9 @@ function pickOctaveInBand(letter, targetPc, prevAbs, bias){
 // fill 1 beat), "t" = triplet eighth (1/3 beat, written in groups of 3 that
 // together fill 1 beat). A hold token ("-") can carry the same suffix (e.g.
 // "-e") to tie/sustain the previous note for that fraction of a beat instead
-// of the default full beat.
+// of the default full beat. "R" is a rest instead of a pitch -- same duration
+// suffixes apply (e.g. "Re" = eighth rest); a rest followed by "-" extends
+// into a longer rest (e.g. "R -" = a half rest) the same way a note does.
 function parseDurationToken(tok){
   if (tok.endsWith('e')) return { base: tok.slice(0, -1), duration: 0.5 };
   if (tok.endsWith('t')) return { base: tok.slice(0, -1), duration: 1 / 3 };
@@ -1135,6 +1143,11 @@ function flattenPhrase(phrase, ctx){
         const { base, duration } = parseDurationToken(tok);
         if (base === "-") {
           if (notes.length) notes[notes.length - 1].duration += duration;
+          beatInBar += duration;
+          return;
+        }
+        if (base === "R") {
+          notes.push({ barIndex, beatInBar, duration, rest: true });
           beatInBar += duration;
           return;
         }
@@ -1251,9 +1264,30 @@ function renderScore(notes, chordPlan){
       svg += `<text x="${x}" y="${staffTopY - 10}" font-size="14" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
     });
 
+    // Rest pass: eighth/quarter/half rest glyphs. Rests carry no pitch, so
+    // they're kept out of the notehead/geo pass below (and out of beaming --
+    // a rest never shares a beam with a note).
+    const restY = yForStep(4, staffTopY); // middle staff line (B4), the shared anchor for all rest glyphs
+    notes.filter(n => n.rest && n.barIndex >= barStart && n.barIndex < rowBarEnd).forEach(n => {
+      const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
+      const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
+      if (n.duration < 1 - 1e-6){
+        // eighth rest: small hooked flag with a dot, floating above center
+        svg += `<circle cx="${cx + 2}" cy="${restY - 6}" r="2.2" fill="${INK}"/>`;
+        svg += `<path d="M${cx + 2} ${restY - 6} Q${cx - 2} ${restY - 2} ${cx + 3} ${restY + 2} Q${cx - 3} ${restY + 6} ${cx + 1} ${restY + 10}" fill="none" stroke="${INK}" stroke-width="1.4"/>`;
+      } else if (n.duration < 1.5 + 1e-6){
+        // quarter rest: zigzag squiggle centered on the middle line
+        svg += `<path d="M${cx - 3} ${restY - 10} L${cx + 3} ${restY - 3} L${cx - 4} ${restY} L${cx + 3} ${restY + 4} L${cx - 3} ${restY + 10}" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
+      } else {
+        // half rest: filled rectangle sitting on top of the middle line
+        // (distinct from a whole rest, which hangs below the line above)
+        svg += `<rect x="${cx - 5}" y="${restY - 4}" width="10" height="4" fill="${INK}"/>`;
+      }
+    });
+
     // Notehead / ledger / accidental / tie-sustain / degree-label pass, plus
     // per-note geometry cached for the beam pass below.
-    const rowNotes = notes.filter(n => n.barIndex >= barStart && n.barIndex < rowBarEnd);
+    const rowNotes = notes.filter(n => n.barIndex >= barStart && n.barIndex < rowBarEnd && !n.rest);
     const geo = new Map();
     rowNotes.forEach(n => {
       const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
