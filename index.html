@@ -1859,11 +1859,20 @@ function downloadMidi(notes, title) {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  alert("MIDIファイルを生成しました！\nフレーズ名: " + title + "\n音符の数: " + processed.length + " 個\nファイルサイズ: " + fileBytes.length + " バイト\n\nファイルアプリの「このiPad内」➔「Chrome」(または「ダウンロード」)フォルダをご確認ください。");
 }
 
 document.getElementById("midiBtn").addEventListener("click", () => {
-  const currentTitle = document.getElementById("phraseName").textContent;
-  downloadMidi(currentNotes, currentTitle);
+  try {
+    const currentTitle = document.getElementById("phraseName").textContent;
+    if (!currentNotes || currentNotes.length === 0) {
+      alert("エラー: 画面の音符データ(currentNotes)が空です。一度キーやカテゴリを切り替えてから再度お試しください。");
+      return;
+    }
+    downloadMidi(currentNotes, currentTitle);
+  } catch (e) {
+    alert("MIDI生成エラーが発生しました:\n" + e.message + "\n\n" + e.stack);
+  }
 });
 
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
