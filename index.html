@@ -222,6 +222,18 @@ const CHROMATIC_TENSION_PHRASES = [
     degrees: "Re 5t 6t 1t 3e 5e b5e 4e 6ve | 3e b3e 2e b2e 1e 6ve 4ve 2ve | 5ve b5ve 4ve #2ve 3ve 5ve 7ve 2e | 2e_ 1e 1e 7ve 1e 6ve R",
     beamSizes: [2, 4, 4, 2],
     tip: "小節3最後のD5から小節4最初のD5へのタイの処理に注意してください。b13, #11, #9といったテンションの響きを感じましょう。"
+  },
+  {
+    name: "32分音符とクロマチック・アプローチ (フレーズ6)",
+    degrees: "R | 2s 4s 6s 1s 3s 2s #1s 2s #1s 3s 5s b5s | 5s 7s #4s 5s b6^s 5s b5s 4s 3s b3s 2s b2s 1d 7vd b7vd 6vd b5vd 5vd #4vd 2vd",
+    beamSizes: [2, 4, 4, 2],
+    tip: "後半の32分音符のクロマチック下降は息の流れを一定にして滑らかに吹きましょう。"
+  },
+  {
+    name: "高密度ダブルタイム・解決ライン (フレーズ7)",
+    degrees: "R | #2vs 3vs 4vs #4vs 5vs #5vs 6vs #6vs 7vs 1s #1s 2s | 4s 3s b3s 2s b2s 1s 7vs b7vs b5vd 5vd #4vd 2vd #2vd 2vd 3vd #6vd 7vs 2s b2s 1s | 3s 5s 6s 7s 1^s 7s 6s 5s 4s 3s 2s 1s 7vs 1s 2s 3s | 5e 3e R R -",
+    beamSizes: [2, 4, 4, 4],
+    tip: "1小節目の半音階上昇から始まり、G7での高密度な32分音符下降を経て、Cmaj7へ美しく解決するモダンな4小節フレーズです。"
   }
 ];
 const TURNAROUND_PHRASES = {
@@ -1155,6 +1167,7 @@ function parseDurationToken(tok){
     tied = true;
     tok = tok.slice(0, -1);
   }
+  if (tok.endsWith('d')) return { base: tok.slice(0, -1), duration: 0.125, tied };
   if (tok.endsWith('e')) return { base: tok.slice(0, -1), duration: 0.5, tied };
   if (tok.endsWith('t')) return { base: tok.slice(0, -1), duration: 1 / 3, tied };
   if (tok.endsWith('s')) return { base: tok.slice(0, -1), duration: 0.25, tied };
@@ -1490,6 +1503,23 @@ function renderScore(notes, chordPlan, phrase){
               svg += `<line x1="${x1}" x2="${x2}" y1="${beamY2}" y2="${beamY2}" stroke="${INK}" stroke-width="3"/>`;
             }
             runStart = null;
+          }
+        }
+        const BEAM3_OFFSET = 10;
+        const beamY3 = stemUp ? beamY + BEAM3_OFFSET : beamY - BEAM3_OFFSET;
+        const isThirtySecond = n => n.duration < 0.125 + 1e-6;
+        let runStart3 = null;
+        for (let i = 0; i <= group.length; i++){
+          const inRun = i < group.length && isThirtySecond(group[i]);
+          if (inRun && runStart3 === null) runStart3 = i;
+          if ((!inRun || i === group.length) && runStart3 !== null){
+            const runEnd = i - 1;
+            if (runEnd > runStart3){
+              const x1 = stemUp ? geo.get(group[runStart3]).cx + NOTE_RX - 1 : geo.get(group[runStart3]).cx - NOTE_RX + 1;
+              const x2 = stemUp ? geo.get(group[runEnd]).cx + NOTE_RX - 1 : geo.get(group[runEnd]).cx - NOTE_RX + 1;
+              svg += `<line x1="${x1}" x2="${x2}" y1="${beamY3}" y2="${beamY3}" stroke="${INK}" stroke-width="3"/>`;
+            }
+            runStart3 = null;
           }
         }
         beatIdx += actualStepSize;
