@@ -1754,22 +1754,38 @@ render();
 function downloadMidi(notes, title) {
   if (!notes || !notes.length) return;
 
+  // Header Chunk (MThd)
   const header = [
-    0x4D, 0x54, 0x68, 0x64,
-    0x00, 0x00, 0x00, 0x06,
-    0x00, 0x00,
-    0x00, 0x01,
-    0x00, 0xC0
+    0x4D, 0x54, 0x68, 0x64, // "MThd"
+    0x00, 0x00, 0x00, 0x06, // Length: 6
+    0x00, 0x01,             // Format 1 (Multi-track)
+    0x00, 0x02,             // Number of tracks: 2 (Conductor + Note track)
+    0x00, 0xC0              // Division: 192 ticks per quarter note
   ];
 
+  // Track 0: Conductor Track (Tempo & Time Signature)
+  const track0Events = [
+    0x00, 0xFF, 0x58, 0x04, 0x04, 0x02, 0x18, 0x08, // Time Signature: 4/4
+    0x00, 0xFF, 0x51, 0x03, 0x07, 0xA1, 0x20,       // Tempo: 120 BPM
+    0x00, 0xFF, 0x2F, 0x00                          // End of Track
+  ];
+  const track0Header = [0x4D, 0x54, 0x72, 0x6B]; // "MTrk"
+  const track0Len = track0Events.length;
+  const track0LenBytes = [
+    (track0Len >>> 24) & 0xFF,
+    (track0Len >>> 16) & 0xFF,
+    (track0Len >>> 8) & 0xFF,
+    track0Len & 0xFF
+  ];
+
+  // Track 1: Note Track
   const ticksPerBeat = 192;
-  const trackEvents = [];
+  const track1Events = [];
 
-  trackEvents.push(0x00, 0xFF, 0x51, 0x03, 0x07, 0xA1, 0x20);
-
+  // Track Name
   const trackName = "Sax Phrase";
   const nameBytes = Array.from(trackName).map(c => c.charCodeAt(0));
-  trackEvents.push(0x00, 0xFF, 0x03, nameBytes.length, ...nameBytes);
+  track1Events.push(0x00, 0xFF, 0x03, nameBytes.length, ...nameBytes);
 
   function toVLQ(val) {
     val = Math.round(val);
@@ -1803,31 +1819,35 @@ function downloadMidi(notes, title) {
       const pitch = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
 
       const noteOnVLQ = toVLQ(accumTime);
-      trackEvents.push(...noteOnVLQ, 0x90, pitch, 0x64);
+      track1Events.push(...noteOnVLQ, 0x90, pitch, 0x64);
 
       const noteOffVLQ = toVLQ(durationTicks);
-      trackEvents.push(...noteOffVLQ, 0x90, pitch, 0x00);
+      track1Events.push(...noteOffVLQ, 0x90, pitch, 0x00);
 
       accumTime = 0;
     }
   });
 
-  trackEvents.push(0x00, 0xFF, 0x2F, 0x00);
+  // End of Track 1
+  track1Events.push(0x00, 0xFF, 0x2F, 0x00);
 
-  const trackHeader = [0x4D, 0x54, 0x72, 0x6B];
-  const trackLength = trackEvents.length;
-  const trackLenBytes = [
-    (trackLength >>> 24) & 0xFF,
-    (trackLength >>> 16) & 0xFF,
-    (trackLength >>> 8) & 0xFF,
-    trackLength & 0xFF
+  const track1Header = [0x4D, 0x54, 0x72, 0x6B]; // "MTrk"
+  const track1Len = track1Events.length;
+  const track1LenBytes = [
+    (track1Len >>> 24) & 0xFF,
+    (track1Len >>> 16) & 0xFF,
+    (track1Len >>> 8) & 0xFF,
+    track1Len & 0xFF
   ];
 
   const fileBytes = new Uint8Array([
     ...header,
-    ...trackHeader,
-    ...trackLenBytes,
-    ...trackEvents
+    ...track0Header,
+    ...track0LenBytes,
+    ...track0Events,
+    ...track1Header,
+    ...track1LenBytes,
+    ...track1Events
   ]);
 
   const blob = new Blob([fileBytes], { type: "audio/midi" });
