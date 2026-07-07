@@ -1850,26 +1850,53 @@ function downloadMidi(notes, title) {
     ...track1Events
   ]);
 
+  const filename = `${title.replace(/\s+/g, "_")}.mid`;
+  return { fileBytes, filename, noteCount: processed.length };
+}
+
+async function saveMidiFile(fileBytes, filename) {
   const blob = new Blob([fileBytes], { type: "audio/midi" });
+
+  // iOS/iPadOS (especially when the app is installed as a home-screen PWA) does not
+  // reliably trigger a real file download for Blob + <a download> links, since standalone
+  // web apps have no "Downloads" UI to catch it. The Web Share API instead opens the native
+  // share sheet, which offers direct "ファイルに保存" / GarageBandへコピー options.
+  if (navigator.canShare) {
+    const file = new File([blob], filename, { type: "audio/midi" });
+    if (navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: filename });
+        return "share";
+      } catch (e) {
+        if (e.name === "AbortError") return "cancelled";
+        // Sharing failed for some other reason: fall through to the download-link method below.
+      }
+    }
+  }
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${title.replace(/\s+/g, "_")}.mid`;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  alert("MIDIファイルを生成しました！\nフレーズ名: " + title + "\n音符の数: " + processed.length + " 個\nファイルサイズ: " + fileBytes.length + " バイト\n\nファイルアプリの「このiPad内」➔「Chrome」(または「ダウンロード」)フォルダをご確認ください。");
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return "download";
 }
 
-document.getElementById("midiBtn").addEventListener("click", () => {
+document.getElementById("midiBtn").addEventListener("click", async () => {
   try {
     const currentTitle = document.getElementById("phraseName").textContent;
     if (!currentNotes || currentNotes.length === 0) {
       alert("エラー: 画面の音符データ(currentNotes)が空です。一度キーやカテゴリを切り替えてから再度お試しください。");
       return;
     }
-    downloadMidi(currentNotes, currentTitle);
+    const { fileBytes, filename, noteCount } = downloadMidi(currentNotes, currentTitle);
+    const result = await saveMidiFile(fileBytes, filename);
+    if (result === "download") {
+      alert("MIDIファイルを生成しました！\nフレーズ名: " + currentTitle + "\n音符の数: " + noteCount + " 個\nファイルサイズ: " + fileBytes.length + " バイト\n\nファイルアプリの「このiPad内」➔「Chrome」(または「ダウンロード」)フォルダをご確認ください。");
+    }
   } catch (e) {
     alert("MIDI生成エラーが発生しました:\n" + e.message + "\n\n" + e.stack);
   }
