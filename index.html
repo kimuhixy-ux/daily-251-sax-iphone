@@ -209,7 +209,11 @@ const BEBOP_PHRASES = [
 {name:"クロマチック・テンション(8分音符)",degrees:"4^e 1e #1e 3e #2e #5ve 6e #1e | 7e 5e b5e 3e 4e 6e b6e #4e | 5e 4^e 2e #2e 3e #6ve 7e 2e | 1e 5e R R -",tip:"b9/#11/ナチュラル7を含む高密度ライン。半音アプローチは小さく、解決音をよく聴いて。"},
 // 木村が手書きで用意したフレーズ。1小節目の3連符とG#→G♮の半音解決、
 // 3小節目の3連符でのD#(#9)の扱いが特徴。b9/#9/#11/b13が密集する高難度ライン。
-{name:"3連符とナチュラル解決の高密度テンションライン",degrees:"Re 3e 5vt 6t 1t #5^e 5e 4e 6ve | 1e 3e b3e 2e 1e 7e 2t 4t 6t | 5e 4e 2t #2t 3t 5ve 6e 7e #2e | 7e 1e 3e 5e 7e 1e R",cautionaryNaturals:[2,5],tip:"1小節目、3連符2音目のAはナチュラルを念のため意識。直後のG#→G♮の半音解決をはっきりと。3連符は転がすように軽く、b9/#9/#11/b13のテンションが密集するので着地するコードトーンを見失わないように。"}
+{name:"3連符とナチュラル解決の高密度テンションライン",degrees:"Re 3e 5vt 6t 1t #5^e 5e 4e 6ve | 1e 3e b3e 2e 1e 7e 2t 4t 6t | 5e 4e 2t #2t 3t 5ve 6e 7e #2e | 7e 1e 3e 5e 7e 1e R",cautionaryNaturals:[2,5],tip:"1小節目、3連符2音目のAはナチュラルを念のため意識。直後のG#→G♮の半音解決をはっきりと。3連符は転がすように軽く、b9/#9/#11/b13のテンションが密集するので着地するコードトーンを見失わないように。"},
+// 木村が手書きで用意したフレーズ。1小節目は8分休符+ブリッジ音+3連符+8分音符4つ、
+// 2小節目は8分音符6つ+16分音符4つ、3小節目は8分音符+3連符+4分音符+8分/16分/16分と、
+// リズムが1拍ごとに移り変わる。b9/#9/#11/b13/♮7とb3(ブルーノート)が密集する高難度ライン。
+{name:"16分音符を含む複合リズム・テンションライン",degrees:"Re b3e 5t b5t #4t 2e b2e 1e #6e | 7e 6e b5e 5e 3e #6e 5s #6s #5s 4s | b5e 5e #4t 2t 3t 5 7e b2s 2s | 1e 6e R R -",tip:"1小節目は8分休符の直後のEb(b9)を独立した1音として置き、3連符(G→Gb→F#)は拍2にぴったり収まる。2小節目末尾の16分音符4つは2本の連桁で。3小節目末尾は8分+16分+16分の部分連桁。テンションが密集するので着地するコードトーンを見失わないように。"}
 ];
 const TURNAROUND_PHRASES = {
   // 8分音符と3連符を組み合わせてI-vi7-ii7-V7を駆け抜ける。
@@ -1129,14 +1133,17 @@ function pickOctaveInBand(letter, targetPc, prevAbs, bias){
 // register-bias suffix): none = quarter note (1 beat, every phrase before
 // this feature), "e" = eighth note (0.5 beat, written in pairs that together
 // fill 1 beat), "t" = triplet eighth (1/3 beat, written in groups of 3 that
-// together fill 1 beat). A hold token ("-") can carry the same suffix (e.g.
-// "-e") to tie/sustain the previous note for that fraction of a beat instead
-// of the default full beat. "R" is a rest instead of a pitch -- same duration
-// suffixes apply (e.g. "Re" = eighth rest); a rest followed by "-" extends
-// into a longer rest (e.g. "R -" = a half rest) the same way a note does.
+// together fill 1 beat), "s" = sixteenth note (0.25 beat, written in groups
+// of 2-4 that together fill 1 beat). A hold token ("-") can carry the same
+// suffix (e.g. "-e") to tie/sustain the previous note for that fraction of a
+// beat instead of the default full beat. "R" is a rest instead of a pitch --
+// same duration suffixes apply (e.g. "Re" = eighth rest); a rest followed by
+// "-" extends into a longer rest (e.g. "R -" = a half rest) the same way a
+// note does.
 function parseDurationToken(tok){
   if (tok.endsWith('e')) return { base: tok.slice(0, -1), duration: 0.5 };
   if (tok.endsWith('t')) return { base: tok.slice(0, -1), duration: 1 / 3 };
+  if (tok.endsWith('s')) return { base: tok.slice(0, -1), duration: 0.25 };
   return { base: tok, duration: 1 };
 }
 // Expands a phrase's degree text into a flat list of notes, each carrying its
@@ -1240,6 +1247,7 @@ const LETTER_ORD = {C:0,D:1,E:2,F:3,G:4,A:5,B:6};
 // (MELODY_MIN_STEP, with its ledger line) by a comfortable margin.
 const DEGREE_LABEL_Y = 62, DEGREE_LABEL_SIZE = 9.5, DEGREE_LABEL_SIZE_DENSE = 7.5, DEGREE_TENSION_COLOR = "#8a2d6b";
 const BEAM_Y_PAD = 4; // extra stem length beyond STEM_LEN so beams clear noteheads of varying pitch
+const BEAM2_OFFSET = 5; // gap between the primary (eighth-level) beam and a secondary (sixteenth-level) partial beam
 
 function yForStep(step, staffTopY){ return staffTopY + (8 - step) * HALF_GAP; }
 function ledgerSteps(step){
@@ -1355,11 +1363,22 @@ function renderScore(notes, chordPlan){
     });
 
     // Beam pass: group same-bar, same-beat notes shorter than 1 beat (eighth
-    // pairs, triplet eighths) and connect their stems with one beam bar.
-    // Triplet groups (3 notes) also get a small "3" over the beam. An
-    // isolated short note (no group partner) falls back to a single flag --
-    // not produced by any phrase in this app today, but kept so a future
-    // mis-authored phrase degrades gracefully instead of drawing nothing.
+    // pairs, triplet eighths, sixteenth runs) and connect their stems with
+    // one primary beam bar. A consecutive run of sixteenth notes (duration
+    // 0.25) within that group additionally gets a second, shorter partial
+    // beam offset toward the noteheads, matching how mixed eighth+sixteenth
+    // beat groups (e.g. eighth + two sixteenths) are notated on paper. A true
+    // triplet (exactly 3 notes, each 1/3 beat) also gets a small "3" over the
+    // beam -- checked by duration, not just by count, so an incidental
+    // 3-note eighth/sixteenth group (e.g. eighth + sixteenth + sixteenth)
+    // isn't mistaken for a triplet. An isolated short note (no group
+    // partner) falls back to a single flag (double flag if it's a
+    // sixteenth) -- not produced by any phrase in this app today, but kept
+    // so a future mis-authored phrase degrades gracefully instead of
+    // drawing nothing. A lone sixteenth inside an otherwise non-sixteenth
+    // group (no adjacent sixteenth to pair the partial beam with) isn't
+    // handled specially and simply gets no partial beam -- not produced by
+    // any phrase in this app today either.
     for (let bi = barStart; bi < rowBarEnd; bi++){
       for (let beatIdx = 0; beatIdx < BEATS_PER_BAR; beatIdx++){
         const group = rowNotes.filter(n => n.barIndex === bi && n.duration < 1 - 1e-6 &&
@@ -1368,6 +1387,7 @@ function renderScore(notes, chordPlan){
         if (!group.length) continue;
         const avgStep = group.reduce((sum, n) => sum + geo.get(n).step, 0) / group.length;
         const stemUp = avgStep < 4;
+        const isSixteenth = n => n.duration < 0.25 + 1e-6;
         if (group.length === 1){
           const { cx, y } = geo.get(group[0]);
           const stemX = stemUp ? cx + NOTE_RX - 1 : cx - NOTE_RX + 1;
@@ -1375,6 +1395,11 @@ function renderScore(notes, chordPlan){
           svg += `<line x1="${stemX}" x2="${stemX}" y1="${y}" y2="${stemY2}" stroke="${INK}" stroke-width="1.4"/>`;
           const flagY2 = stemUp ? stemY2 + 10 : stemY2 - 10;
           svg += `<path d="M${stemX} ${stemY2} Q${stemX + 8} ${(stemY2 + flagY2) / 2} ${stemX + 6} ${flagY2}" fill="none" stroke="${INK}" stroke-width="1.4"/>`;
+          if (isSixteenth(group[0])){
+            const flagY2b = stemUp ? stemY2 + 17 : stemY2 - 17;
+            const midY2b = stemUp ? (stemY2 + 7 + flagY2b) / 2 : (stemY2 - 7 + flagY2b) / 2;
+            svg += `<path d="M${stemX} ${stemUp ? stemY2 + 7 : stemY2 - 7} Q${stemX + 8} ${midY2b} ${stemX + 6} ${flagY2b}" fill="none" stroke="${INK}" stroke-width="1.4"/>`;
+          }
           continue;
         }
         const beamY = stemUp
@@ -1388,10 +1413,26 @@ function renderScore(notes, chordPlan){
         const firstX = (stemUp ? geo.get(group[0]).cx + NOTE_RX - 1 : geo.get(group[0]).cx - NOTE_RX + 1);
         const lastX = (stemUp ? geo.get(group[group.length - 1]).cx + NOTE_RX - 1 : geo.get(group[group.length - 1]).cx - NOTE_RX + 1);
         svg += `<line x1="${firstX}" x2="${lastX}" y1="${beamY}" y2="${beamY}" stroke="${INK}" stroke-width="3"/>`;
-        if (group.length === 3){
+        const isTriplet = group.length === 3 && group.every(n => Math.abs(n.duration - 1 / 3) < 1e-6);
+        if (isTriplet){
           const midX = (firstX + lastX) / 2;
           const numY = stemUp ? beamY - 6 : beamY + 12;
           svg += `<text x="${midX}" y="${numY}" font-size="12" font-style="italic" fill="${INK}" text-anchor="middle">3</text>`;
+        }
+        const beamY2 = stemUp ? beamY + BEAM2_OFFSET : beamY - BEAM2_OFFSET;
+        let runStart = null;
+        for (let i = 0; i <= group.length; i++){
+          const inRun = i < group.length && isSixteenth(group[i]);
+          if (inRun && runStart === null) runStart = i;
+          if ((!inRun || i === group.length) && runStart !== null){
+            const runEnd = i - 1;
+            if (runEnd > runStart){
+              const x1 = stemUp ? geo.get(group[runStart]).cx + NOTE_RX - 1 : geo.get(group[runStart]).cx - NOTE_RX + 1;
+              const x2 = stemUp ? geo.get(group[runEnd]).cx + NOTE_RX - 1 : geo.get(group[runEnd]).cx - NOTE_RX + 1;
+              svg += `<line x1="${x1}" x2="${x2}" y1="${beamY2}" y2="${beamY2}" stroke="${INK}" stroke-width="3"/>`;
+            }
+            runStart = null;
+          }
         }
       }
     }
