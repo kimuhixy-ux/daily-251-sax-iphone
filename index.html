@@ -67,6 +67,9 @@
     <button class="secondary" id="todayBtn">今日のキーに戻す</button>
   </div>
   <div class="actions">
+    <button class="secondary" id="midiBtn" style="background:#fffdf8; color:#8a2d6b; border-color:#8a2d6b;">MIDIファイルを保存 (GarageBand用)</button>
+  </div>
+  <div class="actions">
     <button class="secondary" id="prevBtn">◀ 前のフレーズ</button>
     <button id="nextBtn">次のフレーズ ▶</button>
   </div>
@@ -84,6 +87,7 @@
 </main>
 
 <script>
+let currentNotes = [];
 /* ---------- keys / categories ---------- */
 const KEYS = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 const CATEGORIES = [
@@ -1658,6 +1662,7 @@ function render(){
   if (category === "original"){
     const chordPlan = chordPlanFromBars(phrase.bars);
     renderScore(phrase.notes, chordPlan, phrase);
+    currentNotes = phrase.notes;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${phrase.key}`;
     document.getElementById("phraseName").textContent = `${ORIGINAL_SOURCE_TITLE} ${numLabel}`;
@@ -1674,6 +1679,7 @@ function render(){
   const chordPlan = getChordPlan(category, variant, key);
   const beats = flattenPhrase(phrase, { key });
   renderScore(beats, chordPlan, phrase);
+  currentNotes = beats;
 
   document.getElementById("dateLine").textContent = `${today} / Key: ${key} / ${catLabel}`;
   document.getElementById("phraseName").textContent = phrase.name;
@@ -1744,6 +1750,102 @@ updateModeSelect(categorySelect.value);
 keySelect.value = todayKey();
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
+
+function downloadMidi(notes, title) {
+  if (!notes || !notes.length) return;
+
+  const header = [
+    0x4D, 0x54, 0x68, 0x64,
+    0x00, 0x00, 0x00, 0x06,
+    0x00, 0x00,
+    0x00, 0x01,
+    0x00, 0xC0
+  ];
+
+  const ticksPerBeat = 192;
+  const trackEvents = [];
+
+  trackEvents.push(0x00, 0xFF, 0x51, 0x03, 0x07, 0xA1, 0x20);
+
+  const trackName = "Sax Phrase";
+  const nameBytes = Array.from(trackName).map(c => c.charCodeAt(0));
+  trackEvents.push(0x00, 0xFF, 0x03, nameBytes.length, ...nameBytes);
+
+  function toVLQ(val) {
+    val = Math.round(val);
+    let buffer = [];
+    buffer.push(val & 0x7F);
+    while (val > 0x7F) {
+      val >>>= 7;
+      buffer.push((val & 0x7F) | 0x80);
+    }
+    return buffer.reverse();
+  }
+
+  const processed = [];
+  notes.forEach(n => {
+    if (n.tied && processed.length > 0) {
+      processed[processed.length - 1].duration += n.duration;
+    } else {
+      processed.push({ ...n });
+    }
+  });
+
+  let accumTime = 0;
+
+  processed.forEach(n => {
+    const durationTicks = n.duration * ticksPerBeat;
+
+    if (n.rest) {
+      accumTime += durationTicks;
+    } else {
+      const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+      const pitch = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
+
+      const noteOnVLQ = toVLQ(accumTime);
+      trackEvents.push(...noteOnVLQ, 0x90, pitch, 0x64);
+
+      const noteOffVLQ = toVLQ(durationTicks);
+      trackEvents.push(...noteOffVLQ, 0x90, pitch, 0x00);
+
+      accumTime = 0;
+    }
+  });
+
+  trackEvents.push(0x00, 0xFF, 0x2F, 0x00);
+
+  const trackHeader = [0x4D, 0x54, 0x72, 0x6B];
+  const trackLength = trackEvents.length;
+  const trackLenBytes = [
+    (trackLength >>> 24) & 0xFF,
+    (trackLength >>> 16) & 0xFF,
+    (trackLength >>> 8) & 0xFF,
+    trackLength & 0xFF
+  ];
+
+  const fileBytes = new Uint8Array([
+    ...header,
+    ...trackHeader,
+    ...trackLenBytes,
+    ...trackEvents
+  ]);
+
+  const blob = new Blob([fileBytes], { type: "audio/midi" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${title.replace(/\s+/g, "_")}.mid`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("midiBtn").addEventListener("click", () => {
+  const currentTitle = document.getElementById("phraseName").textContent;
+  downloadMidi(currentNotes, currentTitle);
+});
+
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
 </script>
 </body>
