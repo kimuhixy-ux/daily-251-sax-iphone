@@ -1850,7 +1850,7 @@ function downloadMidi(notes, title) {
     ...track1Events
   ]);
 
-  const blob = new Blob([fileBytes], { type: "audio/midi" });
+  const blob = new Blob([fileBytes], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
