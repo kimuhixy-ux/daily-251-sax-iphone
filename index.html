@@ -116,28 +116,12 @@ const TURNAROUND_IIISUB = {C:["Em7","Am7","Dm7","G7"],Db:["Fm7","Bbm7","Ebm7","A
 const TURNAROUND_TRITONE = {C:["Cmaj7","Am7","Dm7","Db7"],Db:["Dbmaj7","Bbm7","Ebm7","D7"],D:["Dmaj7","Bm7","Em7","Eb7"],Eb:["Ebmaj7","Cm7","Fm7","E7"],E:["Emaj7","C#m7","F#m7","F7"],F:["Fmaj7","Dm7","Gm7","Gb7"],Gb:["Gbmaj7","Ebm7","Abm7","G7"],G:["Gmaj7","Em7","Am7","Ab7"],Ab:["Abmaj7","Fm7","Bbm7","A7"],A:["Amaj7","F#m7","Bm7","Bb7"],Bb:["Bbmaj7","Gm7","Cm7","B7"],B:["Bmaj7","G#m7","C#m7","C7"]};
 // I - VI7 - iiø7 - V7
 const TURNAROUND_MINORIZED = {C:["Cmaj7","A7","Dm7b5","G7"],Db:["Dbmaj7","Bb7","Ebm7b5","Ab7"],D:["Dmaj7","B7","Em7b5","A7"],Eb:["Ebmaj7","C7","Fm7b5","Bb7"],E:["Emaj7","C#7","F#m7b5","B7"],F:["Fmaj7","D7","Gm7b5","C7"],Gb:["Gbmaj7","Eb7","Abm7b5","Db7"],G:["Gmaj7","E7","Am7b5","D7"],Ab:["Abmaj7","F7","Bbm7b5","Eb7"],A:["Amaj7","F#7","Bm7b5","E7"],Bb:["Bbmaj7","G7","Cm7b5","F7"],B:["Bmaj7","G#7","C#m7b5","F#7"]};
-// I - VI7 - ii7 - V7, written out for 20-bar practice phrases.
-const TURNAROUND_SECONDARY_20 = {
-  C:["Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7"],
-  Db:["Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7"],
-  D:["Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7"],
-  Eb:["Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7"],
-  E:["Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7"],
-  F:["Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7"],
-  Gb:["Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7"],
-  G:["Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7"],
-  Ab:["Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7"],
-  A:["Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7"],
-  Bb:["Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7"],
-  B:["Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7"]
-};
-const TURNAROUND_DICTS = { basic:TURNAROUND_BASIC, iiisub:TURNAROUND_IIISUB, tritone:TURNAROUND_TRITONE, minorized:TURNAROUND_MINORIZED, secondary20:TURNAROUND_SECONDARY_20 };
+const TURNAROUND_DICTS = { basic:TURNAROUND_BASIC, iiisub:TURNAROUND_IIISUB, tritone:TURNAROUND_TRITONE, minorized:TURNAROUND_MINORIZED };
 const TURNAROUND_FUNCS = {
   basic:["I","vi","ii","V"],
   iiisub:["vi","vi","ii","V"],
   tritone:["I","vi","ii","subV"],
-  minorized:["I","vi","dim","V"],
-  secondary20:["I","VI","ii","V","I","VI","ii","V","I","VI","ii","V","I","VI","ii","V","I","VI","ii","V"]
+  minorized:["I","vi","dim","V"]
 };
 
 // Giant Steps style key centers: three tonal centers a major 3rd apart.
@@ -276,13 +260,6 @@ const TURNAROUND_PHRASES = {
   // マイナー化進行を8分音符+3連符で駆け抜ける。
   minorized: [{name:"マイナー化 I-VI7-iiø7-V7",degrees:"1 3 5 6 | 6 5 3 #1 | 2 4 b6 2 | 7 b6 5 3",tip:"VI7は#1(ルートの半音上)から入ると解決感が出る。iiø7はb5を意識。"},
     {name:"8分+3連符ターンアラウンド(マイナー化)",degrees:"1e 3e 5e 6e 5e 3e 1e 7e | 6t 5t #1t 2 6e 5e 3e #1e | 2e 4e b6e 2e 7t b6t 5t 3 | 7t b6t 5t 3e 1e b7e 6e 5",tip:"VI7の#1を3連符で強調し、iiø7のb5を8分音符で丁寧に通過する。"}]
-  ,
-  // 画像から読み取ったC-A7-Dm7-G7循環の20小節メロディ。臨時記号は画像読み取りベースの仮確定。
-  secondary20: [{
-    name:"I-VI7-ii7-V7 循環 20小節メロディ",
-    degrees:"3 1e 2e 3e 4e 5e 3e | #1e 6e 1e b7e 6e R -e | Re #1e 2e 4e 6e 4e 3e #1e | 2 1e #4e 5e 7e 6e 4e | 3 -e 2 3e R | 5e 4e 3e #1e 2 3 | Re 2e Re 5 6e 4e 3e -e | 2e 7e 1e 2e 3 2 | 1e 2e 6e 7e 1e R -e | Re 6e 1e b7e #1e 2 -e | 3 -e 2 1e 7e 6e Re | 1 Re 6e 2e 3e R | 5e 4e 3e 2e 1 - | #1e 7e 6e 5e 5 - | Re 6e 7e 1e 2e 3e 4e 5e | 5 4e 2e 1 - | 1e 2e 3e #4e 3e 2e 1 | 6e b7e #1e 2e 4 3 | 4e 3e 2e 1e 7e 6e #5e 6e | #5e 6e 5 -e R -e",
-    tip:"画像から確認なしで採譜した20小節版。選択したキーでI-VI7-ii7-V7を4小節ごとに循環し、VI7の3度/b7、V7への半音アプローチをゆっくり確認する。"
-  }]
 };
 const COLTRANE_PHRASES = [
   { name:"コードのみ(コード進行を確認)",
@@ -1014,8 +991,24 @@ const ORIGINAL_PHRASES = [
 // MAJOR_PHRASES と同じ度数記法(移調対応)で、12キーどれでも練習できる。
 const INAYA_SOURCE_TITLE = "稲家セミナー";
 const INAYA_CHORDS = {C:["C","Am","F","G"],Db:["Db","Bbm","Gb","Ab"],D:["D","Bm","G","A"],Eb:["Eb","Cm","Ab","Bb"],E:["E","C#m","A","B"],F:["F","Dm","Bb","C"],Gb:["Gb","Ebm","Cb","Db"],G:["G","Em","C","D"],Ab:["Ab","Fm","Db","Eb"],A:["A","F#m","D","E"],Bb:["Bb","Gm","Eb","F"],B:["B","G#m","E","F#"]};
+const INAYA_SECONDARY_20_CHORDS = {
+  C:["Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7","Cmaj7","A7","Dm7","G7"],
+  Db:["Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7","Dbmaj7","Bb7","Ebm7","Ab7"],
+  D:["Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7","Dmaj7","B7","Em7","A7"],
+  Eb:["Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7","Ebmaj7","C7","Fm7","Bb7"],
+  E:["Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7","Emaj7","C#7","F#m7","B7"],
+  F:["Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7","Fmaj7","D7","Gm7","C7"],
+  Gb:["Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7","Gbmaj7","Eb7","Abm7","Db7"],
+  G:["Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7","Gmaj7","E7","Am7","D7"],
+  Ab:["Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7","Abmaj7","F7","Bbm7","Eb7"],
+  A:["Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7","Amaj7","F#7","Bm7","E7"],
+  Bb:["Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7","Bbmaj7","G7","Cm7","F7"],
+  B:["Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7","Bmaj7","G#7","C#m7","F#7"]
+};
+const INAYA_SECONDARY_20_FUNCS = ["I","VI","ii","V","I","VI","ii","V","I","VI","ii","V","I","VI","ii","V","I","VI","ii","V"];
 const INAYA_PHRASES = [
-  {number:1, degrees:"R 3e #2e 3 3_ | 3e #2e 3 3_ - | R 4e 3e 4 4_ | 5e #4e 5 5_ - | 3 3e 1e Re 1e 5^ | R Re #5e 6ve 1e 2e 1e | 4 5e 3e Re 3e b3e 2e | 2_ - - R | 1v 2e #2e 3e 5e 6e 7e | 1 -e 6e 6_ R | Re 1e 6e 1e 5e b5e 4e 5e | 3 2e 5e 5_ R | Re 5e 6e 7e 1e 2e 7e 1e | 6e 3e #2e 3e 3_ R | Re 3e 4t 6t 1t 3e b3e 2e 1e | 7e 1e 6e 7s 5s 5_ -"}
+  {number:1, name:"I-vi-IV-V 16小節メロディ", degrees:"R 3e #2e 3 3_ | 3e #2e 3 3_ - | R 4e 3e 4 4_ | 5e #4e 5 5_ - | 3 3e 1e Re 1e 5^ | R Re #5e 6ve 1e 2e 1e | 4 5e 3e Re 3e b3e 2e | 2_ - - R | 1v 2e #2e 3e 5e 6e 7e | 1 -e 6e 6_ R | Re 1e 6e 1e 5e b5e 4e 5e | 3 2e 5e 5_ R | Re 5e 6e 7e 1e 2e 7e 1e | 6e 3e #2e 3e 3_ R | Re 3e 4t 6t 1t 3e b3e 2e 1e | 7e 1e 6e 7s 5s 5_ -"},
+  {number:2, name:"I-VI7-ii7-V7 20小節メロディ", progression:"secondary20", degrees:"3 1e 2e 3e 4e 5e 3e | #1e 6e 1e b7e 6e R -e | Re #1e 2e 4e 6e 4e 3e #1e | 2 1e #4e 5e 7e 6e 4e | 3 -e 2 3e R | 5e 4e 3e #1e 2 3 | Re 2e Re 5 6e 4e 3e -e | 2e 7e 1e 2e 3 2 | 1e 2e 6e 7e 1e R -e | Re 6e 1e b7e #1e 2 -e | 3 -e 2 1e 7e 6e Re | 1 Re 6e 2e 3e R | 5e 4e 3e 2e 1 - | #1e 7e 6e 5e 5 - | Re 6e 7e 1e 2e 3e 4e 5e | 5 4e 2e 1 - | 1e 2e 3e #4e 3e 2e 1 | 6e b7e #1e 2e 4 3 | 4e 3e 2e 1e 7e 6e #5e 6e | #5e 6e 5 -e R -e"}
 ];
 
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
@@ -1587,6 +1580,21 @@ function chordPlanFromBars(bars){
   });
   return { events, totalBars: bars.length };
 }
+function inayaChordPlan(phrase, key){
+  if (phrase.progression === "secondary20"){
+    return barsToPlan(INAYA_SECONDARY_20_CHORDS[key], INAYA_SECONDARY_20_FUNCS);
+  }
+  const chords = INAYA_CHORDS[key];
+  const bars = [].concat(chords, chords, chords, chords);
+  const fns = ["I","vi","IV","V"].concat(["I","vi","IV","V"], ["I","vi","IV","V"], ["I","vi","IV","V"]);
+  return barsToPlan(bars, fns);
+}
+function inayaChordsDisplay(phrase, key){
+  if (phrase.progression === "secondary20"){
+    return `${INAYA_SECONDARY_20_CHORDS[key].slice(0, 4).join(" - ")} （5回・全20小節）`;
+  }
+  return `${INAYA_CHORDS[key].join(" - ")} （4回・全16小節）`;
+}
 function getChordPlan(category, variant, key){
   if (category === "diatonic"){
     const isMinor = variant === "minor";
@@ -1620,12 +1628,6 @@ function getChordPlan(category, variant, key){
     const isMinor = variant === "minor";
     const bars = (isMinor ? BLUES_MINOR : BLUES_MAJOR)[key];
     const fns = isMinor ? BLUES_MINOR_FNS : BLUES_MAJOR_FNS;
-    return barsToPlan(bars, fns);
-  }
-  if (category === "inaya"){
-    const chords = INAYA_CHORDS[key];
-    const bars = [].concat(chords, chords, chords, chords);
-    const fns = ["I","vi","IV","V"].concat(["I","vi","IV","V"], ["I","vi","IV","V"], ["I","vi","IV","V"]);
     return barsToPlan(bars, fns);
   }
   return barsToPlan(practiceBars(MAJOR_251[key]), ["ii","V","I","I"]);
@@ -1668,7 +1670,6 @@ function updateModeSelect(category){
     modeSelect.add(new Option("iii7代理","iiisub"));
     modeSelect.add(new Option("裏コード","tritone"));
     modeSelect.add(new Option("マイナー化","minorized"));
-    modeSelect.add(new Option("I-VI7-ii7-V7 20小節","secondary20"));
     modeField.style.display = "";
     keyField.classList.remove("full");
   } else if (category === "blues"){
@@ -1730,14 +1731,14 @@ function render(){
   }
 
   if (category === "inaya"){
-    const chordPlan = getChordPlan(category, variant, key);
+    const chordPlan = inayaChordPlan(phrase, key);
     const beats = flattenPhrase(phrase, { key });
     renderScore(beats, chordPlan, phrase);
     currentNotes = beats;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
-    const chordsDisplay = `${INAYA_CHORDS[key].join(" - ")} （4回・全16小節）`;
+    const chordsDisplay = inayaChordsDisplay(phrase, key);
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${key}`;
-    document.getElementById("phraseName").textContent = `${INAYA_SOURCE_TITLE} ${numLabel}`;
+    document.getElementById("phraseName").textContent = `${INAYA_SOURCE_TITLE} ${numLabel}: ${phrase.name}`;
     document.getElementById("tip").textContent = chordsDisplay;
     currentPractice = {
       title: `${INAYA_SOURCE_TITLE} ${numLabel} ${key}`,
@@ -1757,7 +1758,7 @@ function render(){
   document.getElementById("phraseName").textContent = phrase.name;
   document.getElementById("tip").textContent = phrase.tip;
 
-  const TURNAROUND_LABEL = { basic:"基本形", iiisub:"iii7代理", tritone:"裏コード", minorized:"マイナー化", secondary20:"I-VI7-ii7-V7 20小節" };
+  const TURNAROUND_LABEL = { basic:"基本形", iiisub:"iii7代理", tritone:"裏コード", minorized:"マイナー化" };
   const titleByCategory = {
     diatonic: `Daily 251 ${variant === "minor" ? "Minor" : "Major"} ${key}`,
     approach: `Daily 251 Approach ${key}`,
