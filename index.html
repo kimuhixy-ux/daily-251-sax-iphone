@@ -99,7 +99,8 @@ const CATEGORIES = [
   { id:"coltrane",  label:"コルトレーンチェンジ" },
   { id:"blues",     label:"ブルース" },
   { id:"chromatic_tension", label:"クロマチック・テンション" },
-  { id:"original",  label:"オリジナル" }
+  { id:"original",  label:"オリジナル" },
+  { id:"inaya", label:"稲家セミナー" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -979,6 +980,123 @@ const ORIGINAL_PHRASES = [
   ]},
 ];
 
+// 木村さんの「稲家セミナー」教材から採譜した固定進行フレーズ。
+// ORIGINAL_PHRASES と同じくキー固定・移調なしのリテラルデータ。
+const INAYA_SOURCE_TITLE = "稲家セミナー";
+const INAYA_PHRASES = [
+  {number:1, bars:[["C"],["Am"],["F"],["G"],["C"],["Am"],["F"],["G"],["C"],["Am"],["F"],["G"],["C"],["Am"],["F"],["G"]], chordsDisplay:"C - Am - F - G （4回・全16小節）", key:"C", notes:[
+    // --- 第1小節 C ---
+    {barIndex:0, beatInBar:0, duration:1, rest:true},
+    {barIndex:0, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:1.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:0, beatInBar:2, duration:1, letter:"E", octave:5, accidental:0},
+    {barIndex:0, beatInBar:3, duration:1, letter:"E", octave:5, accidental:0, tied:true},
+    // --- 第2小節 Am ---
+    {barIndex:1, beatInBar:0, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:0.5, duration:0.5, letter:"D", octave:5, accidental:1},
+    {barIndex:1, beatInBar:1, duration:1, letter:"E", octave:5, accidental:0},
+    {barIndex:1, beatInBar:2, duration:2, letter:"E", octave:5, accidental:0, tied:true},
+    // --- 第3小節 F ---
+    {barIndex:2, beatInBar:0, duration:1, rest:true},
+    {barIndex:2, beatInBar:1, duration:0.5, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:2, beatInBar:2, duration:1, letter:"F", octave:5, accidental:0},
+    {barIndex:2, beatInBar:3, duration:1, letter:"F", octave:5, accidental:0, tied:true},
+    // --- 第4小節 G ---
+    {barIndex:3, beatInBar:0, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:3, beatInBar:0.5, duration:0.5, letter:"F", octave:5, accidental:1},
+    {barIndex:3, beatInBar:1, duration:1, letter:"G", octave:5, accidental:0},
+    {barIndex:3, beatInBar:2, duration:2, letter:"G", octave:5, accidental:0, tied:true},
+    // --- 第5小節 C ---
+    {barIndex:4, beatInBar:0, duration:1, letter:"E", octave:5, accidental:0},
+    {barIndex:4, beatInBar:1, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:4, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:4, beatInBar:2, duration:0.5, rest:true},
+    {barIndex:4, beatInBar:2.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:4, beatInBar:3, duration:1, letter:"G", octave:5, accidental:0},
+    // --- 第6小節 Am ---
+    {barIndex:5, beatInBar:0, duration:1, rest:true},
+    {barIndex:5, beatInBar:1, duration:0.5, rest:true},
+    {barIndex:5, beatInBar:1.5, duration:0.5, letter:"G", octave:5, accidental:1},
+    {barIndex:5, beatInBar:2, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:5, beatInBar:2.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:5, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:5, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    // --- 第7小節 F ---
+    {barIndex:6, beatInBar:0, duration:1, letter:"F", octave:5, accidental:0},
+    {barIndex:6, beatInBar:1, duration:0.5, letter:"G", octave:5, accidental:0},
+    {barIndex:6, beatInBar:1.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:6, beatInBar:2, duration:0.5, rest:true},
+    {barIndex:6, beatInBar:2.5, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:6, beatInBar:3, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:6, beatInBar:3.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    // --- 第8小節 G(前小節のDがタイで続く) ---
+    {barIndex:7, beatInBar:0, duration:3, letter:"D", octave:5, accidental:0, tied:true},
+    {barIndex:7, beatInBar:3, duration:1, rest:true},
+    // --- 第9小節 C ---
+    {barIndex:8, beatInBar:0, duration:1, letter:"C", octave:4, accidental:0},
+    {barIndex:8, beatInBar:1, duration:0.5, letter:"D", octave:4, accidental:0},
+    {barIndex:8, beatInBar:1.5, duration:0.5, letter:"D", octave:4, accidental:1},
+    {barIndex:8, beatInBar:2, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:8, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:8, beatInBar:3, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:8, beatInBar:3.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    // --- 第10小節 Am ---
+    {barIndex:9, beatInBar:0, duration:1.5, letter:"C", octave:5, accidental:0},
+    {barIndex:9, beatInBar:1.5, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:9, beatInBar:2, duration:1, letter:"A", octave:4, accidental:0, tied:true},
+    {barIndex:9, beatInBar:3, duration:1, rest:true},
+    // --- 第11小節 F ---
+    {barIndex:10, beatInBar:0, duration:0.5, rest:true},
+    {barIndex:10, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:10, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:10, beatInBar:1.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:10, beatInBar:2, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:10, beatInBar:2.5, duration:0.5, letter:"G", octave:4, accidental:-1},
+    {barIndex:10, beatInBar:3, duration:0.5, letter:"F", octave:4, accidental:0},
+    {barIndex:10, beatInBar:3.5, duration:0.5, letter:"G", octave:4, accidental:0, natural:true},
+    // --- 第12小節 G ---
+    {barIndex:11, beatInBar:0, duration:1, letter:"E", octave:4, accidental:0},
+    {barIndex:11, beatInBar:1, duration:0.5, letter:"D", octave:4, accidental:0},
+    {barIndex:11, beatInBar:1.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:11, beatInBar:2, duration:1, letter:"G", octave:4, accidental:0, tied:true},
+    {barIndex:11, beatInBar:3, duration:1, rest:true},
+    // --- 第13小節 C ---
+    {barIndex:12, beatInBar:0, duration:0.5, rest:true},
+    {barIndex:12, beatInBar:0.5, duration:0.5, letter:"G", octave:4, accidental:0},
+    {barIndex:12, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:12, beatInBar:1.5, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:12, beatInBar:2, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:12, beatInBar:2.5, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:12, beatInBar:3, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:12, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    // --- 第14小節 Am ---
+    {barIndex:13, beatInBar:0, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:13, beatInBar:0.5, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:13, beatInBar:1, duration:0.5, letter:"D", octave:4, accidental:1},
+    {barIndex:13, beatInBar:1.5, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:13, beatInBar:2, duration:1, letter:"E", octave:4, accidental:0, tied:true},
+    {barIndex:13, beatInBar:3, duration:1, rest:true},
+    // --- 第15小節 F(4段目に"3"表記の3連符) ---
+    {barIndex:14, beatInBar:0, duration:0.5, rest:true},
+    {barIndex:14, beatInBar:0.5, duration:0.5, letter:"E", octave:4, accidental:0},
+    {barIndex:14, beatInBar:1, duration:0.3333333333333333, letter:"F", octave:4, accidental:0},
+    {barIndex:14, beatInBar:1.3333333333333333, duration:0.3333333333333333, letter:"A", octave:4, accidental:0},
+    {barIndex:14, beatInBar:1.6666666666666665, duration:0.3333333333333333, letter:"C", octave:5, accidental:0},
+    {barIndex:14, beatInBar:2, duration:0.5, letter:"E", octave:5, accidental:0},
+    {barIndex:14, beatInBar:2.5, duration:0.5, letter:"E", octave:5, accidental:-1},
+    {barIndex:14, beatInBar:3, duration:0.5, letter:"D", octave:5, accidental:0},
+    {barIndex:14, beatInBar:3.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    // --- 第16小節 G(16分音符2つ+タイの2分音符で終止) ---
+    {barIndex:15, beatInBar:0, duration:0.5, letter:"B", octave:4, accidental:0},
+    {barIndex:15, beatInBar:0.5, duration:0.5, letter:"C", octave:5, accidental:0},
+    {barIndex:15, beatInBar:1, duration:0.5, letter:"A", octave:4, accidental:0},
+    {barIndex:15, beatInBar:1.5, duration:0.25, letter:"B", octave:4, accidental:0},
+    {barIndex:15, beatInBar:1.75, duration:0.25, letter:"G", octave:4, accidental:0},
+    {barIndex:15, beatInBar:2, duration:2, letter:"G", octave:4, accidental:0, tied:true},
+  ]}
+];
+
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
 function localYmd(date = new Date()){
   const y = date.getFullYear();
@@ -1593,6 +1711,7 @@ function getPhrasePool(category, variant){
   if (category === "coltrane") return COLTRANE_PHRASES;
   if (category === "blues") return variant === "minor" ? BLUES_MINOR_PHRASES : BLUES_MAJOR_PHRASES;
   if (category === "original") return ORIGINAL_PHRASES;
+  if (category === "inaya") return INAYA_PHRASES;
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
   return MAJOR_PHRASES;
 }
@@ -1629,9 +1748,9 @@ function updateModeSelect(category){
     modeSelect.add(new Option("Minor Blues","minor"));
     modeField.style.display = "";
     keyField.classList.remove("full");
-  } else if (category === "original"){
-    // Fixed literal chords per phrase (from the real book) -- no mode/key
-    // to choose; navigation is entirely via the prev/next phrase buttons.
+  } else if (category === "original" || category === "inaya"){
+    // Fixed literal chords per phrase -- no mode/key to choose; navigation
+    // is entirely via the prev/next phrase buttons.
     modeField.style.display = "none";
     keyField.style.display = "none";
   } else {
@@ -1660,16 +1779,17 @@ function render(){
   document.getElementById("irealSection").style.display = "";
   document.getElementById("irealStatus").textContent = "";
 
-  if (category === "original"){
+  if (category === "original" || category === "inaya"){
+    const sourceTitle = category === "inaya" ? INAYA_SOURCE_TITLE : ORIGINAL_SOURCE_TITLE;
     const chordPlan = chordPlanFromBars(phrase.bars);
     renderScore(phrase.notes, chordPlan, phrase);
     currentNotes = phrase.notes;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${phrase.key}`;
-    document.getElementById("phraseName").textContent = `${ORIGINAL_SOURCE_TITLE} ${numLabel}`;
+    document.getElementById("phraseName").textContent = `${sourceTitle} ${numLabel}`;
     document.getElementById("tip").textContent = phrase.chordsDisplay;
     currentPractice = {
-      title: `${ORIGINAL_SOURCE_TITLE} ${numLabel}`,
+      title: `${sourceTitle} ${numLabel}`,
       mode: "Original",
       key: phrase.key,
       chordPlan
