@@ -986,8 +986,15 @@ const ORIGINAL_PHRASES = [
 // MAJOR_PHRASES と同じ度数記法(移調対応)で、12キーどれでも練習できる。
 const INAYA_SOURCE_TITLE = "稲家セミナー";
 const INAYA_CHORDS = {C:["C","Am","F","G"],Db:["Db","Bbm","Gb","Ab"],D:["D","Bm","G","A"],Eb:["Eb","Cm","Ab","Bb"],E:["E","C#m","A","B"],F:["F","Dm","Bb","C"],Gb:["Gb","Ebm","Cb","Db"],G:["G","Em","C","D"],Ab:["Ab","Fm","Db","Eb"],A:["A","F#m","D","E"],Bb:["Bb","Gm","Eb","F"],B:["B","G#m","E","F#"]};
+// I - VI7(secondary dominant of ii) - ii7 - V7+5 循環コード(2曲目の教材)
+const INAYA_CHORDS_TURN = {C:["C","A7","Dm7","G7+5"],Db:["Db","Bb7","Ebm7","Ab7+5"],D:["D","B7","Em7","A7+5"],Eb:["Eb","C7","Fm7","Bb7+5"],E:["E","C#7","F#m7","B7+5"],F:["F","D7","Gm7","C7+5"],Gb:["Gb","Eb7","Abm7","Db7+5"],G:["G","E7","Am7","D7+5"],Ab:["Ab","F7","Bbm7","Eb7+5"],A:["A","F#7","Bm7","E7+5"],Bb:["Bb","G7","Cm7","F7+5"],B:["B","G#7","C#m7","F#7+5"]};
+const INAYA_FNS_TURN = ["I","VI","ii","V"];
 const INAYA_PHRASES = [
-  {number:1, degrees:"R 3e #2e 3 3_ | 3e #2e 3 3_ - | R 4e 3e 4 4_ | 5e #4e 5 5_ - | 3 3e 1e Re 1e 5^ | R Re #5e 6ve 1e 2e 1e | 4 5e 3e Re 3e b3e 2e | 2_ - - R | 1v 2e #2e 3e 5e 6e 7e | 1 -e 6e 6_ R | Re 1e 6e 1e 5e b5e 4e 5e | 3 2e 5e 5_ R | Re 5e 6e 7e 1e 2e 7e 1e | 6e 3e #2e 3e 3_ R | Re 3e 4t 6t 1t 3e b3e 2e 1e | 7e 1e 6e 7s 5s 5_ -"}
+  {number:1, chordsDict:INAYA_CHORDS, chordsFns:["I","vi","IV","V"], bars:16, degrees:"R 3e #2e 3 3_ | 3e #2e 3 3_ - | R 4e 3e 4 4_ | 5e #4e 5 5_ - | 3 3e 1e Re 1e 5^ | R Re #5e 6ve 1e 2e 1e | 4 5e 3e Re 3e b3e 2e | 2_ - - R | 1v 2e #2e 3e 5e 6e 7e | 1 -e 6e 6_ R | Re 1e 6e 1e 5e b5e 4e 5e | 3 2e 5e 5_ R | Re 5e 6e 7e 1e 2e 7e 1e | 6e 3e #2e 3e 3_ R | Re 3e 4t 6t 1t 3e b3e 2e 1e | 7e 1e 6e 7s 5s 5_ -"},
+  {number:2, chordsDict:INAYA_CHORDS_TURN, chordsFns:INAYA_FNS_TURN, bars:20, degrees:"3 2e 3e 4e 3e 2e 4e | #1e 5e 6e b7e b7 R | Re #5e 6e 1e 3e 2e #1e 3e | 2 b7e 7e 7 - | 3 -e 3e 3 R | 5e 4e 3e #1e #1 3 | Re 2e Re 6e 6 4e 2e | 3e 7e 1e 2e 2 - | 5e 6e 7s 1s 6e 6 R | Re 5e 6e b7e #1e 3 -e | 2 2e 6e 1e 6e Re 2e | Re 6e Re 5e 5 R | 5e 3e 2e 1e 1 - | #1e 3e 2e 6e 6 - | Re 3e 4e 5e 6e 1e 3e 5e | 5 6e 3e 3 - | 3e 4e #4e 5e 5 - | 6e b7e #1e 3e 3 - | 2e 3e 2e 1e 6e 4e #4e 5e | 5 - - R"},
+  {number:3, chordsDict:INAYA_CHORDS_TURN, chordsFns:INAYA_FNS_TURN, bars:40, degrees:"Re 5 3e 1e 2e b3e 3e | 3 1e b7e 6e 5 -e | 4e 6e 1e 3e 2e 1 -e | 5e 7e b3e 5e 2e 7 -e | Re 5 3e 4e 5e R | Re 3 6e b7e #1e R | Re 1 4e 5e 6e R | Re 7 4e 5e #5e R | 5 6e 5e 1e 2e Re 3e | 3 5e 3e b7e 6e Re 4e | 4 -e 6 #5e 6e Re | 3 -e 7e 7 #5e 5e | 5 -e 5e 5 -e 4e | 4e 3e 4e 3e #1e 6e R | 3 4e 2e 2 6e 1e | 7 2e b7e b7 R | 5e 3e 4e 5e 3e 1e Re 3e | 3 4e #1e #1 - | 3e #1e 2e 3e 2e #1e R | 7e 5e #5e b7e b7 R | Re #4e 5 b3e 3e Re #5e | 6 1e #1e R Re 2e | 2e 1e 2e 1e 6e #4e Re 5e | 5e #5e 6e b7e b7 R | R - 3t 4s 4s_ #4e 5e 4s | 4s_ 3e 2e #1e 3e 5e b7e 6e 5s | 5s_ 4 6e 1e 3e 2 2s_ | b3 #5e b7e 3e #1 -e | 2 -e 7e 1e 2e Re b7e | b7 -e 5e 6e b7e R | 6 -e 4e 5e 6e Re #5e | #5 -e 4e 5e #5e R | R 6e #5e 5e #4e 4e 5e | 3 4e b7e b7 -e #5e | 6e 1e 2e 3e 5e #4e 4e 5e | 3 b3e 3e 3 - | Re 5e R 5e 3e Re #1e | Re 5e b7e 6e 6 R | 3 3e b3e 3e 1e Re #1e | #1e b7e #5e 5e 5 R"},
+  {number:4, chordsDict:INAYA_CHORDS_TURN, chordsFns:INAYA_FNS_TURN, bars:40, degrees:"5e b3e 3e 5e 5 - | 3e 2e 3e 5e b7e 6e 6 | Re 5e Re 3e 4 5e b3e | b3e 7e #5e 5e 5 R | #4e 5e 7e b3e 3e 5 -e | 4e 3e 5e 6e b7e 6 -e | Re #5 6e 1e 3e 2e #1e | 2e 3e 4e 5e #5e 5 -e | R 7e 5e 6e 7e 5e 3e | 4e 5e 3e b7e b7 R | Re 6e 3e #1e 2e 3e 5e 5e | #5e 7e b7e 6e 5e 4e 2e b3e | 3 3e 1e Re 2e 3 | 4 4e #1e Re 3e 4 | #5e 6e 4e 2e R b7 | b7 #5 #4e 5 -e | Re 5e 3e 1e Re b3e 3e 5e | 4e b7e Re 3e 6 2 | 2 1 7e 1e 2e 3e | 3 2 #5e 5 -e | #4e 5e 3e 2e 1e 2 -e | b3e 4e 2e b7e 6e 7 -e | Re 2 1e 4e 3e Re #5e | #5e 5e b7e #5e #5 R | 5e #5e 6e #5e 5e 3e 2e 1e | #1e 4e b3e 7e 5e b3e Re 2e | 2e 3e 4e 5e 6e 1e 6e b7e | 7 2e b7e b7 #5e 5e | 5e 5 5e 3 5e #5e | 6e 6 6e 4e 6e b7e 1e | #1e 2e 1e 6e R 3 | 3e 4e 2e b7e 7e #5 -e | 3e 7e 2e 6e 7e 5 -e | b3e b7e 1e 5e b7e 4 -e | Re 3 4e 5e 6e 1e 3e | 2 5e b3e b3 5e 3e | 3 -e 6e 6 R | 5e 6e b7e 1e 6e 5 -e | 4 -e 6e 6 #5e 6e | 3 3e 2s 1s 7e #5e 3"},
+  {number:5, chordsDict:INAYA_CHORDS_TURN, chordsFns:INAYA_FNS_TURN, bars:40, degrees:"3 3e 4e 5e 4e 3e 2e | #1 3e b7e b7 R | Re 6 1e 3e 5e #4e 4e | 4e 5e #5s b7s 5e 5 R | 5e #5e 6e 1e 3e 5 -e | #4e 3e 6e 5e 1e b7e 6e 5e | 4 6e 3e 3 2e 5e | 5e b3e 7e 5e 5 R | 6e 1e 2e 1e b3e 2e Re 3e | 3e 4e 5e b7e b7 R | 1 6e 4e 3e 2e #1 | #1e b3e 4e 5e #5e 5e 4e 3e | 3 5e 2e 2 1 | #1e 6e b7e 7e #1e b3e 2e #4e | 4 6e 3e 3 R | b3 #5e 7e 7 R | 1 2e b3e 3e 5e Re 4e | 4 -e b7e b3e #5e Re 2e | 2e 6e 7e 1e #1e 3e Re 2e | 2e 5e #5e b7e 7e #1e R | b7e #5e 5e #4e 5e 3e 2e 1e | #1e 3e 4e b7e b7 6e 5e | 4 3e 2e 1e 7e 6e #5e | 5e 6e 7e b3e b3 R | 3 3e 2e 3e 6e 5e 4e | #1 #1e 3e 5e b7e 6e 5e | 4 -e 3e 3 R | #5 -e b3e b3 R | 2 -e 1e 7e 1e Re 6e | 6e 1e 3e 5e #4e b3e 1e 6e | 5e #4e 4e 3e 3 2e 1e | 7 7e #5e 5 6e 5e | 5 -e 3e 3 -e b7e | 6 -e b3e b3 -e #5e | 6 -e 4e 4 3e 2e | 5e #4e 4e 5e #5e b7 -e | R b3e 3e 7e 1e R | b3e 3e 1e #1e R Re 6e | 6e 7e 1e 2e b3e 3e 1e 6e | 7 2e #5e #5 R"}
 ];
 
 /* ---------- misc helpers (dates / hashing / iReal export) ---------- */
@@ -1559,7 +1566,7 @@ function chordPlanFromBars(bars){
   });
   return { events, totalBars: bars.length };
 }
-function getChordPlan(category, variant, key){
+function getChordPlan(category, variant, key, phrase){
   if (category === "diatonic"){
     const isMinor = variant === "minor";
     const chords = (isMinor ? MINOR_251 : MAJOR_251)[key];
@@ -1595,9 +1602,13 @@ function getChordPlan(category, variant, key){
     return barsToPlan(bars, fns);
   }
   if (category === "inaya"){
-    const chords = INAYA_CHORDS[key];
-    const bars = [].concat(chords, chords, chords, chords);
-    const fns = ["I","vi","IV","V"].concat(["I","vi","IV","V"], ["I","vi","IV","V"], ["I","vi","IV","V"]);
+    const dict = (phrase && phrase.chordsDict) || INAYA_CHORDS;
+    const fnUnit = (phrase && phrase.chordsFns) || ["I","vi","IV","V"];
+    const reps = ((phrase && phrase.bars) || 16) / 4;
+    const unit = dict[key];
+    const bars = [];
+    const fns = [];
+    for (let i = 0; i < reps; i++){ bars.push(...unit); fns.push(...fnUnit); }
     return barsToPlan(bars, fns);
   }
   return barsToPlan(practiceBars(MAJOR_251[key]), ["ii","V","I","I"]);
@@ -1701,12 +1712,14 @@ function render(){
   }
 
   if (category === "inaya"){
-    const chordPlan = getChordPlan(category, variant, key);
+    const chordPlan = getChordPlan(category, variant, key, phrase);
     const beats = flattenPhrase(phrase, { key });
     renderScore(beats, chordPlan, phrase);
     currentNotes = beats;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
-    const chordsDisplay = `${INAYA_CHORDS[key].join(" - ")} （4回・全16小節）`;
+    const dict = phrase.chordsDict || INAYA_CHORDS;
+    const totalBars = phrase.bars || 16;
+    const chordsDisplay = `${dict[key].join(" - ")} （${totalBars / 4}回・全${totalBars}小節）`;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${key}`;
     document.getElementById("phraseName").textContent = `${INAYA_SOURCE_TITLE} ${numLabel}`;
     document.getElementById("tip").textContent = chordsDisplay;
