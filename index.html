@@ -2103,6 +2103,52 @@ function readableSpelling(letter, accidental, targetPc, absLetterIdx){
   }
   return best ? { letter: best.letter, accidental: best.accidental } : { letter, accidental };
 }
+// Transposes a literal (letter/octave/accidental) note -- as opposed to a
+// degree token -- from Key C into any of the 12 KEYS, preserving absolute
+// pitch height exactly (diatonic-interval transposition: the letter shifts
+// by the same number of diatonic steps as the target key's tonic sits from
+// C, and the accidental is whatever makes the resulting pitch correct).
+// Used by the "chad_lb" category, whose phrases are stored as literal
+// concert-pitch notes transcribed in C rather than as transposable degree
+// strings. Falls back to a same-pitch-class respelling (mirroring
+// readableSpelling above) on the rare chromatic passing tone that would
+// otherwise land on a double-sharp/double-flat in the target key.
+function transposeNoteToKey(note, key){
+  if (note.rest || key === "C") return note;
+  const target = parseKeySpelling(key);
+  const letterShift = ((LETTERS.indexOf(target.letter) - LETTERS.indexOf('C')) % 7 + 7) % 7;
+  const semitoneShift = KEYS.indexOf(key);
+  const origAbsLetterIdx = note.octave * 7 + LETTERS.indexOf(note.letter);
+  const origAbsPitch = note.octave * 12 + NATURAL_PC[note.letter] + note.accidental;
+  const newAbsLetterIdx = origAbsLetterIdx + letterShift;
+  const newAbsPitch = origAbsPitch + semitoneShift;
+  let newOctave = Math.floor(newAbsLetterIdx / 7);
+  let newLetter = LETTERS[((newAbsLetterIdx % 7) + 7) % 7];
+  let newAccidental = newAbsPitch - (newOctave * 12 + NATURAL_PC[newLetter]);
+  if (Math.abs(newAccidental) > 1){
+    let best = null;
+    for (let i = newAbsLetterIdx - 2; i <= newAbsLetterIdx + 2; i++){
+      const candOctave = Math.floor(i / 7);
+      const candLetter = LETTERS[((i % 7) + 7) % 7];
+      const candAccidental = newAbsPitch - (candOctave * 12 + NATURAL_PC[candLetter]);
+      if (Math.abs(candAccidental) > 1) continue;
+      const cost = Math.abs(i - newAbsLetterIdx) * 10 + Math.abs(candAccidental);
+      if (!best || cost < best.cost) best = { letter: candLetter, octave: candOctave, accidental: candAccidental, cost };
+    }
+    if (best) { newLetter = best.letter; newOctave = best.octave; newAccidental = best.accidental; }
+  }
+  return { ...note, letter: newLetter, octave: newOctave, accidental: newAccidental };
+}
+function transposeChadLbPhrase(phrase, key){
+  const bars = practiceBars(MAJOR_251[key]).map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: practiceBars(MAJOR_251[key]).join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // Degree numbers (1-9, 13, optionally b/#-prefixed) are read as major-scale
 // steps above the tonic, per this app's existing notation convention.
 function degreeLetterAndPc(tonic, token){
@@ -2665,9 +2711,10 @@ function updateModeSelect(category){
     keyField.style.display = "";
     keyField.classList.add("full");
   } else if (category === "chad_lb"){
-    // Fixed literal chords (Dm7-G7-Cmaj7-Cmaj7) per phrase, fixed key -- no mode/key to choose.
+    // Fixed ii-V-I-I progression, no mode to choose, but transposable to any key.
     modeField.style.display = "none";
-    keyField.style.display = "none";
+    keyField.style.display = "";
+    keyField.classList.add("full");
   } else {
     modeField.style.display = "none";
     keyField.style.display = "";
@@ -2712,17 +2759,18 @@ function render(){
   }
 
   if (category === "chad_lb"){
-    const chordPlan = chordPlanFromBars(phrase.bars);
-    renderScore(phrase.notes, chordPlan, phrase);
-    currentNotes = phrase.notes;
+    const transposed = transposeChadLbPhrase(phrase, key);
+    const chordPlan = chordPlanFromBars(transposed.bars);
+    renderScore(transposed.notes, chordPlan, transposed);
+    currentNotes = transposed.notes;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
-    document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${phrase.key}`;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${key}`;
     document.getElementById("phraseName").textContent = `${CHAD_LB_SOURCE_TITLE} ${numLabel}`;
-    document.getElementById("tip").textContent = phrase.chordsDisplay;
+    document.getElementById("tip").textContent = transposed.chordsDisplay;
     currentPractice = {
-      title: `${CHAD_LB_SOURCE_TITLE} ${numLabel}`,
-      mode: "Original",
-      key: phrase.key,
+      title: `${CHAD_LB_SOURCE_TITLE} ${numLabel} ${key}`,
+      mode: "Major",
+      key,
       chordPlan
     };
     return;
