@@ -2006,7 +2006,11 @@ function irealChord(chord){
     .replace("maj7", "^7")
     .replace("m7b5", "h7")
     .replace("m6", "-6")
-    .replace("m7", "-7");
+    .replace("m7", "-7")
+    // iReal Proは増5度を"+5"ではなく"#5"としか認識しないため変換する
+    // (未変換だと"E7+5"のようなコードが「サポートされていない」と再生エラーになる)
+    .replace("7+5", "7#5")
+    .replace("7+", "7#5");
 }
 // Phrases are written as 4 bars (ii, V, I, I) so the tonic gets a full
 // 2 bars to resolve into, but MAJOR_251/MINOR_251 only lists 3 chords.
