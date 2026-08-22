@@ -19,7 +19,7 @@
     .controls { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
     .controls .full { grid-column:1 / -1; }
     label { display:block; color:var(--muted); font-size:12px; margin:0 0 5px; }
-    select, button { width:100%; border:1px solid var(--line); border-radius:8px; padding:12px; font-size:16px; background:#fffdf8; color:var(--ink); }
+    select, button, input[type=number] { width:100%; border:1px solid var(--line); border-radius:8px; padding:12px; font-size:16px; background:#fffdf8; color:var(--ink); box-sizing:border-box; }
     button { background:var(--accent); color:white; border-color:var(--accent); font-weight:700; }
     button.secondary { background:#fffdf8; color:var(--accent); }
     button:disabled { opacity:.4; }
@@ -63,6 +63,10 @@
     <p class="status" id="irealStatus"></p>
   </div>
 
+  <div class="actions">
+    <input type="number" id="tempoInput" min="30" max="240" step="1" value="90" aria-label="テンポ(BPM)">
+    <button class="secondary" id="metronomeBtn">▶ メトロノームで再生</button>
+  </div>
   <div class="actions">
     <button class="secondary" id="todayBtn">今日のキーに戻す</button>
   </div>
@@ -3087,6 +3091,91 @@ document.getElementById("midiBtn").addEventListener("click", async () => {
   } catch (e) {
     alert("MIDI生成エラーが発生しました:\n" + e.message + "\n\n" + e.stack);
   }
+});
+
+// アプリ内蔵メトロノーム: 外部のメトロノームアプリとはリアルタイム連携できない
+// (Webページから他アプリの音を操作するAPIがiOS Safariに存在しない)ため、
+// 代わりにWeb Audio APIでクリック音+メロディー音をこのページ内で鳴らす。
+let metronomeAudioCtx = null;
+let metronomeNodes = [];
+let metronomePlaying = false;
+
+function stopMetronome(){
+  metronomeNodes.forEach(node => { try { node.stop(); } catch(e){} });
+  metronomeNodes = [];
+  metronomePlaying = false;
+  document.getElementById("metronomeBtn").textContent = "▶ メトロノームで再生";
+}
+
+function playMetronome(){
+  if (!currentNotes || currentNotes.length === 0) return;
+  if (!metronomeAudioCtx) metronomeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const ctx = metronomeAudioCtx;
+  ctx.resume();
+
+  const bpm = Number(document.getElementById("tempoInput").value) || 90;
+  const secPerBeat = 60 / bpm;
+  const startAt = ctx.currentTime + 0.15;
+
+  // タイをMIDI書き出し(downloadMidi)と同じロジックでマージする
+  const merged = [];
+  currentNotes.forEach(n => {
+    if (n.tied && merged.length > 0) {
+      merged[merged.length - 1].duration += n.duration;
+    } else {
+      merged.push({ ...n });
+    }
+  });
+
+  const totalBars = Math.max(...currentNotes.map(n => n.barIndex)) + 1;
+  const totalBeats = totalBars * 4;
+  metronomeNodes = [];
+
+  for (let beat = 0; beat < totalBeats; beat++) {
+    const t = startAt + beat * secPerBeat;
+    const accent = (beat % 4 === 0);
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.value = accent ? 1500 : 1000;
+    gain.gain.setValueAtTime(accent ? 0.25 : 0.15, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.06);
+    metronomeNodes.push(osc);
+  }
+
+  const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+  merged.forEach(n => {
+    if (n.rest) return;
+    const absBeat = n.barIndex * 4 + n.beatInBar;
+    const t = startAt + absBeat * secPerBeat;
+    const dur = n.duration * secPerBeat;
+    const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
+    const freq = 440 * Math.pow(2, (midi - 69) / 12);
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+    gain.gain.setValueAtTime(0.2, t + Math.max(dur - 0.05, 0.02));
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
+    metronomeNodes.push(osc);
+  });
+
+  metronomePlaying = true;
+  document.getElementById("metronomeBtn").textContent = "■ 停止";
+  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, (totalBeats * secPerBeat + 0.3) * 1000);
+}
+
+document.getElementById("metronomeBtn").addEventListener("click", () => {
+  if (metronomePlaying) stopMetronome();
+  else playMetronome();
 });
 
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
