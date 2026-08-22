@@ -99,6 +99,7 @@ const CATEGORIES = [
   { id:"coltrane",  label:"コルトレーンチェンジ" },
   { id:"blues",     label:"ブルース" },
   { id:"chromatic_tension", label:"クロマチック・テンション" },
+  { id:"rhythm",    label:"リズムトレーニング" },
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲家セミナー" },
   { id:"chad_lb", label:"木村オリジナル" }
@@ -335,6 +336,20 @@ const BLUES_MINOR_PHRASES = [
   {name:"レジスター・ブルース(マイナー)",degrees:"b3 1 b7v 5v | b3 1 b7v 5v | 1 b3 4 b5 | 1 b3 4 b5 | 5 4 b3 1 | 5 4 b3 1 | b3 1 b7v 5v | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"音域を広く使うマイナーブルース。跳躍後の着地を正確に。"},
   {name:"ターン・フィギュア強調(マイナー)",degrees:"b3 4 b5 5 | b3 4 b5 5 | 1 b3 4 b5 | 1 b3 4 b5 | 1 b3 5 b7 | 1 b3 5 b7 | b3 4 b5 5 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ターン音型でb5を経由し、V7altバーではb3のブルーノートも試す。"},
   {name:"ミックス・フレーズ(マイナー)",degrees:"5 4 b3 1 | 5 4 b3 1 | 1 b3 4 b5 | 1 b3 4 b5 | 5 b7 5 b3 | 5 b7 5 b3 | 5 4 b3 1 | 1 b3 4 b5 | b6 1 b3 b5 | 5 7 2 4 | 1 b3 4 b5 | 5 7 2 4",tip:"コードトーンとブルーノートを組み合わせた総合フレーズ。bVI7の響きを大切に。"}
+];
+
+// リズムトレーニング: MAJOR_PHRASESの「Simple eighths」と同じ音の並び(2 3 4 5 | 7 6 5 b6 |
+// 1v 2 3 5 | 6 5 3 1)を"伴奏"のように毎レベル使い回し、リズムの細分化だけを
+// 4分音符→8分音符→3連符→16分音符→8分+3連符ミックス→2拍3連(ヘミオラ)→総合
+// と難しくしていく。音の並びを覚え直す必要がないので、リズム読みだけに集中できる。
+const RHYTHM_PHRASES = [
+  {name:"レベル1: 4分音符",degrees:"2 3 4 5 | 7 6 5 b6 | 1v 2 3 5 | 6 5 3 1",tip:"まずは4分音符だけ。メトロノームに正確に合わせる。このメロディーをレベル7まで使い回します。"},
+  {name:"レベル2: 8分音符",degrees:"2e 2e 3e 3e 4e 4e 5e 5e | 7e 7e 6e 6e 5e 5e b6e b6e | 1ve 1ve 2e 2e 3e 3e 5e 5e | 6e 6e 5e 5e 3e 3e 1e 1e",tip:"同じ音を8分音符2つずつで。裏拍が表拍と同じ長さになるように。"},
+  {name:"レベル3: 3連符",degrees:"2t 2t 2t 3t 3t 3t 4t 4t 4t 5t 5t 5t | 7t 7t 7t 6t 6t 6t 5t 5t 5t b6t b6t b6t | 1vt 1vt 1vt 2t 2t 2t 3t 3t 3t 5t 5t 5t | 6t 6t 6t 5t 5t 5t 3t 3t 3t 1t 1t 1t",tip:"同じ音を3連符3つずつで。転がすように均等な3連符を。"},
+  {name:"レベル4: 16分音符",degrees:"2s 2s 2s 2s 3s 3s 3s 3s 4s 4s 4s 4s 5s 5s 5s 5s | 7s 7s 7s 7s 6s 6s 6s 6s 5s 5s 5s 5s b6s b6s b6s b6s | 1vs 1vs 1vs 1vs 2s 2s 2s 2s 3s 3s 3s 3s 5s 5s 5s 5s | 6s 6s 6s 6s 5s 5s 5s 5s 3s 3s 3s 3s 1s 1s 1s 1s",tip:"同じ音を16分音符4つずつで。指と息のスピードを一定に保つ。"},
+  {name:"レベル5: 8分+3連符ミックス",degrees:"2e 2e 3e 3e 4e 4e 5e 5e | 7t 7t 7t 6t 6t 6t 5t 5t 5t b6t b6t b6t | 1ve 1ve 2e 2e 3e 3e 5e 5e | 6t 6t 6t 5t 5t 5t 3t 3t 3t 1t 1t 1t",tip:"1小節ごとに8分音符と3連符を切り替え。リズムの切り替えに慣れる。"},
+  {name:"レベル6: 2拍3連(ヘミオラ)",degrees:"2q 3q 2q 4q 5q 4q | 7q 6q 7q 5q b6q 5q | 1vq 2q 1vq 3q 5q 3q | 6q 5q 6q 3q 1q 3q",tip:"2拍を3等分する2拍3連。同じ2音を行き来しながら、2拍ぴったりで3つに収める感覚を養う。"},
+  {name:"レベル7: 総合チャレンジ",degrees:"2 3 4 5 | 7e 7e 6e 6e 5e 5e b6e b6e | 1vt 1vt 1vt 2t 2t 2t 3s 3s 3s 3s 5s 5s 5s 5s | 6q 5q 6q 3q 1q 3q",tip:"4分→8分→3連符+16分→2拍3連と、全レベルを1フレーズで通して総仕上げ。"}
 ];
 
 // "50 Phrases For Jazz" real book: fixed literal chords per numbered phrase,
@@ -2223,8 +2238,10 @@ function pickOctaveInBand(letter, targetPc, prevAbs, bias){
 // this feature), "e" = eighth note (0.5 beat, written in pairs that together
 // fill 1 beat), "t" = triplet eighth (1/3 beat, written in groups of 3 that
 // together fill 1 beat), "s" = sixteenth note (0.25 beat, written in groups
-// of 2-4 that together fill 1 beat). A hold token ("-") can carry the same
-// suffix (e.g. "-e") to tie/sustain the previous note for that fraction of a
+// of 2-4 that together fill 1 beat), "q" = 2-beat triplet aka "2拍3連"
+// (2/3 beat, written in groups of 3 that together fill 2 beats -- see the
+// beam pass in renderScore for how this wider grouping is detected).
+// A hold token ("-") can carry the same
 // beat instead of the default full beat. "R" is a rest instead of a pitch --
 // same duration suffixes apply (e.g. "Re" = eighth rest); a rest followed by
 // "-" extends into a longer rest (e.g. "R -" = a half rest) the same way a
@@ -2239,6 +2256,8 @@ function parseDurationToken(tok){
   if (tok.endsWith('e')) return { base: tok.slice(0, -1), duration: 0.5, tied };
   if (tok.endsWith('t')) return { base: tok.slice(0, -1), duration: 1 / 3, tied };
   if (tok.endsWith('s')) return { base: tok.slice(0, -1), duration: 0.25, tied };
+  // "q" = 2拍3連(4分音符3連符)の1音。2拍にまたがる3連符なので1音は2/3拍。
+  if (tok.endsWith('q')) return { base: tok.slice(0, -1), duration: 2 / 3, tied };
   return { base: tok, duration: 1, tied };
 }
 // Expands a phrase's degree text into a flat list of notes, each carrying its
@@ -2509,14 +2528,20 @@ function renderScore(notes, chordPlan, phrase){
         : 2;
       let beatIdx = 0;
       while (beatIdx < BEATS_PER_BAR){
+        // 2拍3連("q"、2/3拍)は2拍にまたがる3連符なので、通常の1拍単位の判定より
+        // 先に2拍分の窓でまとめて拾う。見つかったらその2拍をまるごと1グループにする。
+        const twoBeatTriplet = rowNotes.filter(n => n.barIndex === bi &&
+          Math.abs(n.duration - 2/3) < 1e-6 &&
+          n.beatInBar >= beatIdx - 1e-6 && n.beatInBar < beatIdx + 2 - 1e-6)
+          .sort((a, b) => a.beatInBar - b.beatInBar);
         const stepSize = (barBeamSize === 4 && beatIdx % 2 === 0) ? 2 : 1;
         const nextNotes = rowNotes.filter(n => n.barIndex === bi && n.duration < 1 - 1e-6 &&
           n.beatInBar >= beatIdx - 1e-6 && n.beatInBar < beatIdx + stepSize - 1e-6);
         const hasTriplet = nextNotes.some(n => Math.abs(n.duration - 1/3) < 1e-6);
         const hasSixteenth = nextNotes.some(n => n.duration < 0.25 + 1e-6);
-        const actualStepSize = (hasTriplet || hasSixteenth) ? 1 : stepSize;
+        const actualStepSize = twoBeatTriplet.length ? 2 : (hasTriplet || hasSixteenth) ? 1 : stepSize;
 
-        const group = rowNotes.filter(n => n.barIndex === bi && n.duration < 1 - 1e-6 &&
+        const group = twoBeatTriplet.length ? twoBeatTriplet : rowNotes.filter(n => n.barIndex === bi && n.duration < 1 - 1e-6 &&
           n.beatInBar >= beatIdx - 1e-6 && n.beatInBar < beatIdx + actualStepSize - 1e-6)
           .sort((a, b) => a.beatInBar - b.beatInBar);
         if (!group.length) {
@@ -2552,7 +2577,8 @@ function renderScore(notes, chordPlan, phrase){
         const firstX = (stemUp ? geo.get(group[0]).cx + NOTE_RX - 1 : geo.get(group[0]).cx - NOTE_RX + 1);
         const lastX = (stemUp ? geo.get(group[group.length - 1]).cx + NOTE_RX - 1 : geo.get(group[group.length - 1]).cx - NOTE_RX + 1);
         svg += `<line x1="${firstX}" x2="${lastX}" y1="${beamY}" y2="${beamY}" stroke="${INK}" stroke-width="3"/>`;
-        const isTriplet = group.length === 3 && group.every(n => Math.abs(n.duration - 1 / 3) < 1e-6);
+        const isTriplet = group.length === 3 &&
+          (group.every(n => Math.abs(n.duration - 1 / 3) < 1e-6) || group.every(n => Math.abs(n.duration - 2 / 3) < 1e-6));
         if (isTriplet){
           const midX = (firstX + lastX) / 2;
           const numY = stemUp ? beamY - 6 : beamY + 12;
@@ -2669,6 +2695,7 @@ function getPhrasePool(category, variant){
   if (category === "inaya") return INAYA_PHRASES;
   if (category === "chad_lb") return CHAD_LB_PHRASES;
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
+  if (category === "rhythm") return RHYTHM_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -2818,7 +2845,8 @@ function render(){
     turnaround: `Daily 251 Turnaround ${TURNAROUND_LABEL[variant] || "基本形"} ${key}`,
     coltrane: `Daily 251 Coltrane ${key}`,
     blues: `Daily Blues ${variant === "minor" ? "Minor" : "Major"} ${key}`,
-    chromatic_tension: `Daily 251 Chromatic Tension ${key}`
+    chromatic_tension: `Daily 251 Chromatic Tension ${key}`,
+    rhythm: `Daily 251 Rhythm Training ${key}`
   };
   currentPractice = {
     title: titleByCategory[category] || `Daily 251 ${key}`,
