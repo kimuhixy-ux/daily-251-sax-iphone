@@ -3107,6 +3107,36 @@ function stopMetronome(){
   document.getElementById("metronomeBtn").textContent = "▶ メトロノームで再生";
 }
 
+// クリック音: 音程のあるスクエア波だけだとピアノの倍音に埋もれて聞こえにくいため、
+// 耳に届きやすいノイズ成分(打楽器的な「コツッ」という音)を重ねて音量も上げる。
+function playClick(ctx, t, accent){
+  const gain = ctx.createGain();
+  gain.connect(ctx.destination);
+  gain.gain.setValueAtTime(accent ? 0.55 : 0.4, t);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+
+  const osc = ctx.createOscillator();
+  osc.type = "square";
+  osc.frequency.value = accent ? 1800 : 1200;
+  osc.connect(gain);
+  osc.start(t);
+  osc.stop(t + 0.05);
+  metronomeNodes.push(osc);
+
+  const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.05, ctx.sampleRate);
+  const data = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  const noise = ctx.createBufferSource();
+  noise.buffer = noiseBuffer;
+  const filter = ctx.createBiquadFilter();
+  filter.type = "highpass";
+  filter.frequency.value = 4000;
+  noise.connect(filter).connect(gain);
+  noise.start(t);
+  noise.stop(t + 0.05);
+  metronomeNodes.push(noise);
+}
+
 // ピアノ音源は使わず、倍音を重ねる加算合成で近い音色を作る。
 // ピアノは鍵盤を押し続けても音が減衰していく楽器なので、音の長さdurに関わらず
 // 一定時間で減衰するエンベロープにするのがポイント。
@@ -3158,17 +3188,7 @@ function playMetronome(){
 
   for (let beat = 0; beat < totalBeats; beat++) {
     const t = startAt + beat * secPerBeat;
-    const accent = (beat % 4 === 0);
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "square";
-    osc.frequency.value = accent ? 1500 : 1000;
-    gain.gain.setValueAtTime(accent ? 0.25 : 0.15, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start(t);
-    osc.stop(t + 0.06);
-    metronomeNodes.push(osc);
+    playClick(ctx, t, beat % 4 === 0);
   }
 
   const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
