@@ -340,8 +340,9 @@ const BLUES_MINOR_PHRASES = [
 
 // リズムトレーニング: MAJOR_PHRASESの「Simple eighths」と同じ音の並び(2 3 4 5 | 7 6 5 b6 |
 // 1v 2 3 5 | 6 5 3 1)を"伴奏"のように毎レベル使い回し、リズムの細分化だけを
-// 4分音符→8分音符→3連符→16分音符→8分+3連符ミックス→シンコペーション(タイ)→
-// シンコペーション(裏拍のみ)→2拍3連(ヘミオラ)→総合 と難しくしていく。
+// 4分音符→8分音符→3連符→16分音符→8分+3連符ミックス(1小節単位)→シンコペーション(タイ)→
+// シンコペーション(裏拍のみ)→2拍3連(ヘミオラ)→総合→[ここから1拍/1小節の中で
+// 複数の細分化を混ぜる応用編]と難しくしていく。
 // 音の並びを覚え直す必要がないので、リズム読みだけに集中できる。
 const RHYTHM_PHRASES = [
   {name:"レベル1: 4分音符",degrees:"2 3 4 5 | 7 6 5 b6 | 1v 2 3 5 | 6 5 3 1",tip:"まずは4分音符だけ。メトロノームに正確に合わせる。このメロディーを最後のレベルまで使い回します。"},
@@ -356,7 +357,20 @@ const RHYTHM_PHRASES = [
   // パターンなので、まず手拍子で裏だけを叩いてから楽器で吹くのがおすすめ。
   {name:"レベル7: 応用シンコペーション(裏拍のみ)",degrees:"Re 2e Re 3e Re 4e Re 5e | Re 7e Re 6e Re 5e Re b6e | Re 1ve Re 2e Re 3e Re 5e | Re 6e Re 5e Re 3e Re 1e",tip:"表拍は全部休符、裏拍だけで音を出す。頭の中で表拍を数えながら、そこでは吹かない我慢が必要。"},
   {name:"レベル8: 2拍3連(ヘミオラ)",degrees:"2q 3q 2q 4q 5q 4q | 7q 6q 7q 5q b6q 5q | 1vq 2q 1vq 3q 5q 3q | 6q 5q 6q 3q 1q 3q",tip:"2拍を3等分する2拍3連。同じ2音を行き来しながら、2拍ぴったりで3つに収める感覚を養う。"},
-  {name:"レベル9: 総合チャレンジ",degrees:"2 3 4 5 | 7e 6e - 5e b6e - | 1vt 1vt 1vt 2t 2t 2t 3s 3s 3s 3s 5s 5s 5s 5s | 6q 5q 6q 3q 1q 3q",tip:"4分→シンコペーション→3連符+16分→2拍3連と、全レベルを1フレーズで通して総仕上げ。"}
+  {name:"レベル9: 総合チャレンジ",degrees:"2 3 4 5 | 7e 6e - 5e b6e - | 1vt 1vt 1vt 2t 2t 2t 3s 3s 3s 3s 5s 5s 5s 5s | 6q 5q 6q 3q 1q 3q",tip:"4分→シンコペーション→3連符+16分→2拍3連と、全レベルを1フレーズで通して総仕上げ。"},
+  // ここから応用編: 1拍または1小節の"中"で複数の細分化を混ぜる。今までは1小節=1種類の
+  // リズムだったが、ここからは同じ小節内で「長い音+細かい音」「まっすぐ+3連符」
+  // 「休符+細かい音」などが入れ替わる。実際の曲でよく出てくる形。
+  {name:"レベル10: 8分+16分ミックス(長短短)",degrees:"2e 2s 2s 3e 3s 3s 4e 4s 4s 5e 5s 5s | 7e 7s 7s 6e 6s 6s 5e 5s 5s b6e b6s b6s | 1ve 1vs 1vs 2e 2s 2s 3e 3s 3s 5e 5s 5s | 6e 6s 6s 5e 5s 5s 3e 3s 3s 1e 1s 1s",tip:"1拍の中で「8分+16分+16分」(長短短)。頭の8分をしっかり長く、後ろの16分2つを詰める。"},
+  {name:"レベル11: 16分+8分ミックス(短短長)",degrees:"2s 2s 2e 3s 3s 3e 4s 4s 4e 5s 5s 5e | 7s 7s 7e 6s 6s 6e 5s 5s 5e b6s b6s b6e | 1vs 1vs 1ve 2s 2s 2e 3s 3s 3e 5s 5s 5e | 6s 6s 6e 5s 5s 5e 3s 3s 3e 1s 1s 1e",tip:"レベル10の逆で「16分+16分+8分」(短短長)。前のめりに入って後ろで伸ばす感覚。"},
+  {name:"レベル12: 8分+3連符ミックス(1拍ごと)",degrees:"2e 2e 3t 3t 3t 4e 4e 5t 5t 5t | 7e 7e 6t 6t 6t 5e 5e b6t b6t b6t | 1ve 1ve 2t 2t 2t 3e 3e 5t 5t 5t | 6e 6e 5t 5t 5t 3e 3e 1t 1t 1t",tip:"レベル5は1小節ごとの切り替えだったが、ここは1拍ごとに8分/3連符が入れ替わる。拍ごとに感覚を切り替える練習。"},
+  {name:"レベル13: 3連符+16分ミックス(1拍ごと)",degrees:"2t 2t 2t 3s 3s 3s 3s 4t 4t 4t 5s 5s 5s 5s | 7t 7t 7t 6s 6s 6s 6s 5t 5t 5t b6s b6s b6s b6s | 1vt 1vt 1vt 2s 2s 2s 2s 3t 3t 3t 5s 5s 5s 5s | 6t 6t 6t 5s 5s 5s 5s 3t 3t 3t 1s 1s 1s 1s",tip:"1拍ごとに3連符と16分音符が入れ替わる。3等分と4等分を交互に感じ分ける、かなり高度な練習。"},
+  {name:"レベル14: シンコペーション+3連符ミックス",degrees:"2e 3e - 4t 4t 4t 5t 5t 5t | 7e 6e - 5t 5t 5t b6t b6t b6t | 1ve 2e - 3t 3t 3t 5t 5t 5t | 6e 5e - 3t 3t 3t 1t 1t 1t",tip:"前半2拍はシンコペーション(タイ)、後半2拍は3連符×2拍。1小節の中でノリの質が変わる。"},
+  {name:"レベル15: シンコペーション+16分ミックス",degrees:"2e 3e - 4s 4s 4s 4s 5s 5s 5s 5s | 7e 6e - 5s 5s 5s 5s b6s b6s b6s b6s | 1ve 2e - 3s 3s 3s 3s 5s 5s 5s 5s | 6e 5e - 3s 3s 3s 3s 1s 1s 1s 1s",tip:"前半2拍はタイで伸ばすシンコペーション、後半2拍は16分音符の連打。伸ばす→細かく刻む、の切り替え。"},
+  {name:"レベル16: 8分休符+16分ミックス",degrees:"Re 2s 2s Re 3s 3s Re 4s 4s Re 5s 5s | Re 7s 7s Re 6s 6s Re 5s 5s Re b6s b6s | Re 1vs 1vs Re 2s 2s Re 3s 3s Re 5s 5s | Re 6s 6s Re 5s 5s Re 3s 3s Re 1s 1s",tip:"1拍ごとに8分休符→16分2つ。頭を休んで、裏から細かく入る。休符の長さを正確に。"},
+  {name:"レベル17: 16分休符+8分ミックス",degrees:"Rs 2s 2e Rs 3s 3e Rs 4s 4e Rs 5s 5e | Rs 7s 7e Rs 6s 6e Rs 5s 5e Rs b6s b6e | Rs 1vs 1ve Rs 2s 2e Rs 3s 3e Rs 5s 5e | Rs 6s 6e Rs 5s 5e Rs 3s 3e Rs 1s 1e",tip:"短い16分休符の後、16分1つで駆け込んで8分で着地。一番細かいタイミングのズレが目立つパターン。"},
+  {name:"レベル18: 2拍3連+8分ミックス",degrees:"2q 3q 2q 4e 4e 5e 5e | 7q 6q 7q 5e 5e b6e b6e | 1vq 2q 1vq 3e 3e 5e 5e | 6q 5q 6q 3e 3e 1e 1e",tip:"前半2拍は2拍3連、後半2拍はまっすぐな8分音符。3等分とまっすぐな2等分を1小節でつなぐ。"},
+  {name:"レベル19: 総合チャレンジ2(応用編まとめ)",degrees:"2e 2s 2s 3e 3s 3s 4e 4s 4s 5e 5s 5s | 7e 6e - 5t 5t 5t b6t b6t b6t | Re 1vs 1vs Re 2s 2s Re 3s 3s Re 5s 5s | 6q 5q 6q 3e 3e 1e 1e",tip:"8分+16分/シンコペーション+3連符/休符+16分/2拍3連+8分と、応用編の混在パターンを1フレーズに凝縮した最終仕上げ。"}
 ];
 
 // "50 Phrases For Jazz" real book: fixed literal chords per numbered phrase,
