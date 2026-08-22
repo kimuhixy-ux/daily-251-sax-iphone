@@ -3107,6 +3107,31 @@ function stopMetronome(){
   document.getElementById("metronomeBtn").textContent = "▶ メトロノームで再生";
 }
 
+// ピアノ音源は使わず、倍音を重ねる加算合成で近い音色を作る。
+// ピアノは鍵盤を押し続けても音が減衰していく楽器なので、音の長さdurに関わらず
+// 一定時間で減衰するエンベロープにするのがポイント。
+function playPianoNote(ctx, freq, t, dur){
+  const harmonics = [1, 2, 3, 4, 5, 6];
+  const amps = [1, 0.55, 0.3, 0.18, 0.1, 0.06];
+  const gain = ctx.createGain();
+  gain.connect(ctx.destination);
+  const decayTime = Math.max(dur, 0.4) + 0.6;
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.exponentialRampToValueAtTime(0.3, t + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + decayTime);
+  harmonics.forEach((h, i) => {
+    const osc = ctx.createOscillator();
+    const harmonicGain = ctx.createGain();
+    harmonicGain.gain.value = amps[i];
+    osc.type = "sine";
+    osc.frequency.value = freq * h;
+    osc.connect(harmonicGain).connect(gain);
+    osc.start(t);
+    osc.stop(t + decayTime);
+    metronomeNodes.push(osc);
+  });
+}
+
 function playMetronome(){
   if (!currentNotes || currentNotes.length === 0) return;
   if (!metronomeAudioCtx) metronomeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -3154,18 +3179,7 @@ function playMetronome(){
     const dur = n.duration * secPerBeat;
     const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
     const freq = 440 * Math.pow(2, (midi - 69) / 12);
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
-    gain.gain.setValueAtTime(0.2, t + Math.max(dur - 0.05, 0.02));
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start(t);
-    osc.stop(t + dur + 0.02);
-    metronomeNodes.push(osc);
+    playPianoNote(ctx, freq, t, dur);
   });
 
   metronomePlaying = true;
