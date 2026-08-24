@@ -3342,6 +3342,7 @@ function playClick(ctx, t, accent){
   noise.start(t);
   noise.stop(t + 0.05);
   metronomeNodes.push(noise);
+  return t + 0.05;
 }
 
 // ピアノ音源は使わず、倍音を重ねる加算合成で近い音色を作る。
@@ -3367,6 +3368,7 @@ function playPianoNote(ctx, freq, t, dur){
     osc.stop(t + decayTime);
     metronomeNodes.push(osc);
   });
+  return t + decayTime;
 }
 
 function playMetronome(){
@@ -3395,12 +3397,14 @@ function playMetronome(){
   metronomeNodes = [];
 
   const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+  let lastEndAt = startAt;
   // 指定回数ぶん、同じフレーズを頭から続けて鳴らす
   for (let rep = 0; rep < repeatCount; rep++) {
     const repStartAt = startAt + rep * totalBeats * secPerBeat;
     for (let beat = 0; beat < totalBeats; beat++) {
       const t = repStartAt + beat * secPerBeat;
-      playClick(ctx, t, beat % 4 === 0);
+      const end = playClick(ctx, t, beat % 4 === 0);
+      if (end > lastEndAt) lastEndAt = end;
     }
     merged.forEach(n => {
       if (n.rest) return;
@@ -3409,13 +3413,17 @@ function playMetronome(){
       const dur = n.duration * secPerBeat;
       const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
       const freq = 440 * Math.pow(2, (midi - 69) / 12);
-      playPianoNote(ctx, freq, t, dur);
+      const end = playPianoNote(ctx, freq, t, dur);
+      if (end > lastEndAt) lastEndAt = end;
     });
   }
 
   metronomePlaying = true;
   document.getElementById("metronomeBtn").textContent = "■ 停止";
-  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, (repeatCount * totalBeats * secPerBeat + 0.3) * 1000);
+  // 音の減衰(余韻)が終わる時刻まで待ってから止める。固定バッファだと
+  // ロングトーンの余韻が残っているうちに止まってしまうことがあったため。
+  const stopDelayMs = Math.max(0, (lastEndAt - ctx.currentTime) * 1000 + 150);
+  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, stopDelayMs);
 }
 
 document.getElementById("metronomeBtn").addEventListener("click", () => {
