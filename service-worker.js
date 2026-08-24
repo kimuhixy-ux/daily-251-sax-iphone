@@ -1,4 +1,4 @@
-const CACHE_NAME = "daily-251-sax-v52";
+const CACHE_NAME = "daily-251-sax-v53";
 const ASSETS = [
   "./",
   "./index.html",
