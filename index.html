@@ -104,6 +104,7 @@ const CATEGORIES = [
   { id:"blues",     label:"ブルース" },
   { id:"vamp",      label:"コード・ヴァンプ" },
   { id:"chromatic_tension", label:"クロマチック・テンション" },
+  { id:"net_original", label:"ネットオリジナル" },
   { id:"rhythm",    label:"リズムトレーニング" },
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲家セミナー" },
@@ -249,6 +250,42 @@ const CHROMATIC_TENSION_PHRASES = [
     degrees: "R #2vs 3vs 4vs #4vs 5vs #5vs 6vs #6vs 7vs 1s #1s 2s | 4s 3s b3s 2s b2s 1s 7vs b7vs b5vd 5vd #4vd 2vd #2vd 2vd 3vd #6vd 7vs 2s b2s 1s | 3s 5s 6s 7s 1^s 7s 6s 5s 4s 3s 2s 1s 7vs 1s 2s 3s | 5e 3e R R -",
     beamSizes: [2, 4, 4, 4],
     tip: "1小節目の半音階上昇から始まり、G7での高密度な32分音符下降を経て、Cmaj7へ美しく解決するモダンな4小節フレーズです。"
+  }
+];
+// ネットオリジナル: 特定サイトの譜面をそのまま写すのではなく、ネット上のジャズ教育
+// コンテンツ(Learn Jazz Standards、The Jazz Piano Site等)で共通して紹介されている
+// 「アプローチの考え方」(ガイドトーン、3-9アルペジオ、エンクロージャー、オフビート
+// フレージング、オルタード・ドミナント、ターン・フィギュア)を元に自作したフレーズ集。
+const NET_ORIGINAL_PHRASES = [
+  {
+    name: "ガイドトーン・ライン(7度→3度の半音解決)",
+    degrees: "2 4 6 1 | 7 6 5 4 | 3 2 1 - | 5 3 1 -",
+    tip: "iim7の7度がV7の3度へ、V7の7度がIの3度へと半音で解決するガイドトーンの定番ライン。初心者向けのii-V-I教材でよく紹介される考え方です。"
+  },
+  {
+    name: "3度→9度アルペジオ(定番パターン)",
+    degrees: "4 6 1 3 | 7 2 4 6 | 1 3 5 7 | 6 5 3 1",
+    tip: "各コードの3-5-7-9を上行するアルペジオ。テンションの位置を体に入れる、ネット教材で頻出の基本パターンです。"
+  },
+  {
+    name: "クロマチック・エンクロージャー(ターゲット音を上下から挟む)",
+    degrees: "#4t 3t 4t 6 1 3 | 1t b7t 7t 6 4 2 | 4t b3t 3t 5 7 - | 1 3 5 -",
+    tip: "各コードの3度を、半音上→半音下(またはすぐ隣の音)で挟んでから着地するエンクロージャー。ネット上のジャズ教材で頻出の定番テクニックです。"
+  },
+  {
+    name: "裏拍スタートのスイング・フレーズ",
+    degrees: "Re 2e 4e 6e 1e 3e 2e 1e | 7e 6e 4e 2e 4e 6e 7e 2e | Re 3e 5e 7e 6e 5e 3e 1e | 1 - 5 -",
+    tip: "各小節の頭に休符を置き、裏拍(ウラ)から入るフレージング。「オフビートで始めて終わる」ことがネットの即興講座でよく強調されます。"
+  },
+  {
+    name: "オルタード・ドミナントの彩り(b9・#9・b13)",
+    degrees: "2 4 6 1 | 5e b6e 7e b7e b3e 4e 6e 7e | 1 3 5 - | 7 6 5 -",
+    tip: "V7で b9・#9・b13 といったオルタード・テンションを経由してから3度で解決。ネットのジャズ理論解説で頻出のオルタード・ドミナントの考え方です。"
+  },
+  {
+    name: "ターン・フィギュアで着地(隣接音で装飾)",
+    degrees: "2e 3e 2e 1e 2e 4e 6e 1e | 5e 6e 5e 4e 5e 7e 2e 4e | 1e 2e 1e 7ve 1e 3e 5e 7e | 1 - - -",
+    tip: "各コードのルートを上下の隣接音で軽く装飾するターン(回音)フィギュア。定番の入り方として様々なジャズ教材で紹介されています。"
   }
 ];
 const TURNAROUND_PHRASES = {
@@ -2701,7 +2738,7 @@ function getChordPlan(category, variant, key, phrase){
     const fns = isMinor ? ["dim","V","I","I"] : ["ii","V","I","I"];
     return barsToPlan(bars, fns);
   }
-  if (category === "approach" || category === "bebop" || category === "chromatic_tension"){
+  if (category === "approach" || category === "bebop" || category === "chromatic_tension" || category === "net_original"){
     const bars = practiceBars(MAJOR_251[key]);
     return barsToPlan(bars, ["ii","V","I","I"]);
   }
@@ -2756,6 +2793,7 @@ function getPhrasePool(category, variant){
   if (category === "inaya") return INAYA_PHRASES;
   if (category === "chad_lb") return CHAD_LB_PHRASES;
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
+  if (category === "net_original") return NET_ORIGINAL_PHRASES;
   if (category === "rhythm") return RHYTHM_PHRASES;
   return MAJOR_PHRASES;
 }
@@ -2913,6 +2951,7 @@ function render(){
     blues: `Daily Blues ${variant === "minor" ? "Minor" : "Major"} ${key}`,
     vamp: `Daily Vamp ${variant === "major7" ? "Major7" : "Dominant7"} ${key}`,
     chromatic_tension: `Daily 251 Chromatic Tension ${key}`,
+    net_original: `Daily 251 Net Original ${key}`,
     rhythm: `Daily 251 Rhythm Training ${key}`
   };
   currentPractice = {
