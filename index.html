@@ -63,8 +63,11 @@
     <p class="status" id="irealStatus"></p>
   </div>
 
-  <div class="actions">
-    <input type="number" id="tempoInput" min="30" max="240" step="1" value="90" aria-label="テンポ(BPM)">
+  <div class="controls">
+    <div><label for="tempoInput">テンポ(BPM)</label><input type="number" id="tempoInput" min="30" max="240" step="1" value="90"></div>
+    <div><label for="repeatInput">再生回数</label><input type="number" id="repeatInput" min="1" max="20" step="1" value="1"></div>
+  </div>
+  <div class="actions" style="grid-template-columns:1fr;">
     <button class="secondary" id="metronomeBtn">▶ メトロノームで再生</button>
   </div>
   <div class="actions">
@@ -3374,6 +3377,7 @@ function playMetronome(){
 
   const bpm = Number(document.getElementById("tempoInput").value) || 90;
   const secPerBeat = 60 / bpm;
+  const repeatCount = Math.min(20, Math.max(1, Number(document.getElementById("repeatInput").value) || 1));
   const startAt = ctx.currentTime + 0.15;
 
   // タイをMIDI書き出し(downloadMidi)と同じロジックでマージする
@@ -3390,25 +3394,28 @@ function playMetronome(){
   const totalBeats = totalBars * 4;
   metronomeNodes = [];
 
-  for (let beat = 0; beat < totalBeats; beat++) {
-    const t = startAt + beat * secPerBeat;
-    playClick(ctx, t, beat % 4 === 0);
-  }
-
   const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
-  merged.forEach(n => {
-    if (n.rest) return;
-    const absBeat = n.barIndex * 4 + n.beatInBar;
-    const t = startAt + absBeat * secPerBeat;
-    const dur = n.duration * secPerBeat;
-    const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
-    const freq = 440 * Math.pow(2, (midi - 69) / 12);
-    playPianoNote(ctx, freq, t, dur);
-  });
+  // 指定回数ぶん、同じフレーズを頭から続けて鳴らす
+  for (let rep = 0; rep < repeatCount; rep++) {
+    const repStartAt = startAt + rep * totalBeats * secPerBeat;
+    for (let beat = 0; beat < totalBeats; beat++) {
+      const t = repStartAt + beat * secPerBeat;
+      playClick(ctx, t, beat % 4 === 0);
+    }
+    merged.forEach(n => {
+      if (n.rest) return;
+      const absBeat = n.barIndex * 4 + n.beatInBar;
+      const t = repStartAt + absBeat * secPerBeat;
+      const dur = n.duration * secPerBeat;
+      const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
+      const freq = 440 * Math.pow(2, (midi - 69) / 12);
+      playPianoNote(ctx, freq, t, dur);
+    });
+  }
 
   metronomePlaying = true;
   document.getElementById("metronomeBtn").textContent = "■ 停止";
-  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, (totalBeats * secPerBeat + 0.3) * 1000);
+  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, (repeatCount * totalBeats * secPerBeat + 0.3) * 1000);
 }
 
 document.getElementById("metronomeBtn").addEventListener("click", () => {
