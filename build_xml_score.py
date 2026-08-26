@@ -91,14 +91,19 @@ def main():
     score = converter.parse(str(in_path))
     part = score.parts[0]
     instr = part.getInstrument(returnDefault=True)
-    sounding = part.toSoundingPitch() if instr.transposition else part
+    instrument_name = instr.instrumentName or ""
+    is_sax = "saxophone" in instrument_name.lower()
+    # サックス用に書かれた譜面は、演奏者が実際に読む記譜音のまま使う
+    # (実音に変換すると、サックス奏者にとってはむしろ間違った音に見える)。
+    # サックス以外の楽器(ギター等)は、従来通り実音に変換して読みやすくする。
+    use_part = part if is_sax else (part.toSoundingPitch() if instr.transposition else part)
 
-    measure_numbers = [m.measureNumber for m in sounding.recurse().getElementsByClass("Measure")]
+    measure_numbers = [m.measureNumber for m in use_part.recurse().getElementsByClass("Measure")]
     base_measure = min(measure_numbers)
     total_bars = max(measure_numbers) - base_measure + 1
 
-    notes = build_notes(sounding, base_measure)
-    bars = build_bars(sounding, total_bars, base_measure)
+    notes = build_notes(use_part, base_measure)
+    bars = build_bars(use_part, total_bars, base_measure)
     chords_display = " | ".join(b[0] if b else "?" for b in bars) if any(bars) else "(コード情報なし)"
 
     result_id = args.id or slugify(args.title)
