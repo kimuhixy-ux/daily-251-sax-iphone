@@ -111,7 +111,8 @@ const CATEGORIES = [
   { id:"rhythm",    label:"リズムトレーニング" },
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲家セミナー" },
-  { id:"chad_lb", label:"木村オリジナル" }
+  { id:"chad_lb", label:"木村オリジナル" },
+  { id:"xml", label:"XMLインポート" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -2915,6 +2916,24 @@ function getChordPlan(category, variant, key, phrase){
   }
   return barsToPlan(practiceBars(MAJOR_251[key]), ["ii","V","I","I"]);
 }
+// XMLインポート曲は他カテゴリと違いdata/*.jsonから非同期で読み込む。
+// ユーザーが今後もXMLファイルを増やしていく運用のため、index.htmlを
+// 書き換えずにJSONを追加するだけで反映できるようにするための設計。
+let XML_PHRASES = [];
+let xmlPhrasesLoadPromise = null;
+function loadXmlPhrases(){
+  return fetch("data/xml_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/xml_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { XML_PHRASES = tunes; })
+    .catch(() => { XML_PHRASES = []; });
+}
+function ensureXmlPhrasesLoaded(){
+  if (!xmlPhrasesLoadPromise) xmlPhrasesLoadPromise = loadXmlPhrases();
+  return xmlPhrasesLoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -2926,6 +2945,7 @@ function getPhrasePool(category, variant){
   if (category === "original") return ORIGINAL_PHRASES;
   if (category === "inaya") return INAYA_PHRASES;
   if (category === "chad_lb") return CHAD_LB_PHRASES;
+  if (category === "xml") return XML_PHRASES;
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
   if (category === "net_original") return variant === "minor" ? NET_ORIGINAL_MINOR_PHRASES : NET_ORIGINAL_PHRASES;
   if (category === "rhythm") return RHYTHM_PHRASES;
@@ -2989,6 +3009,11 @@ function updateModeSelect(category){
     modeField.style.display = "none";
     keyField.style.display = "";
     keyField.classList.add("full");
+  } else if (category === "xml"){
+    // Fixed literal chords per tune -- no mode/key to choose; navigation
+    // is entirely via the prev/next phrase buttons.
+    modeField.style.display = "none";
+    keyField.style.display = "none";
   } else {
     modeField.style.display = "none";
     keyField.style.display = "";
@@ -2997,15 +3022,17 @@ function updateModeSelect(category){
 }
 function seedIndex(category, variant, key){
   const pool = getPhrasePool(category, variant);
+  if (!pool.length) return 0;
   const today = localYmd();
   return hashString(`${today}-${category}-${variant}-${key}`) % pool.length;
 }
-function render(){
+async function render(){
   const category = categorySelect.value;
   const key = keySelect.value;
   const variant = modeSelect.value;
+  if (category === "xml") await ensureXmlPhrasesLoaded();
   const pool = getPhrasePool(category, variant);
-  if (currentIndex >= pool.length) currentIndex = 0;
+  if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
   const today = localYmd();
   const catLabel = CATEGORIES.find(c => c.id === category).label;
@@ -3025,6 +3052,30 @@ function render(){
     document.getElementById("tip").textContent = phrase.chordsDisplay;
     currentPractice = {
       title: `${ORIGINAL_SOURCE_TITLE} ${numLabel}`,
+      mode: "Original",
+      key: phrase.key,
+      chordPlan
+    };
+    return;
+  }
+
+  if (category === "xml"){
+    if (!phrase){
+      document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
+      document.getElementById("phraseName").textContent = "XMLファイルがまだ登録されていません";
+      document.getElementById("tip").textContent = "";
+      currentNotes = [];
+      currentPractice = null;
+      return;
+    }
+    const chordPlan = chordPlanFromBars(phrase.bars);
+    renderScore(phrase.notes, chordPlan, phrase);
+    currentNotes = phrase.notes;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${phrase.key}`;
+    document.getElementById("phraseName").textContent = phrase.title;
+    document.getElementById("tip").textContent = phrase.chordsDisplay;
+    currentPractice = {
+      title: phrase.title,
       mode: "Original",
       key: phrase.key,
       chordPlan
@@ -3111,7 +3162,7 @@ modeSelect.addEventListener("change", () => {
 });
 keySelect.addEventListener("change", () => render());
 document.getElementById("todayBtn").addEventListener("click", () => {
-  if (categorySelect.value === "original"){
+  if (categorySelect.value === "original" || categorySelect.value === "xml"){
     currentIndex = seedIndex(categorySelect.value, modeSelect.value, "");
   } else {
     keySelect.value = todayKey();
@@ -3120,12 +3171,12 @@ document.getElementById("todayBtn").addEventListener("click", () => {
 });
 document.getElementById("prevBtn").addEventListener("click", () => {
   const pool = getPhrasePool(categorySelect.value, modeSelect.value);
-  currentIndex = (currentIndex - 1 + pool.length) % pool.length;
+  currentIndex = pool.length ? (currentIndex - 1 + pool.length) % pool.length : 0;
   render();
 });
 document.getElementById("nextBtn").addEventListener("click", () => {
   const pool = getPhrasePool(categorySelect.value, modeSelect.value);
-  currentIndex = (currentIndex + 1) % pool.length;
+  currentIndex = pool.length ? (currentIndex + 1) % pool.length : 0;
   render();
 });
 document.getElementById("irealBtn").addEventListener("click", () => {
@@ -3148,6 +3199,7 @@ updateModeSelect(categorySelect.value);
 keySelect.value = todayKey();
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
+ensureXmlPhrasesLoaded();
 
 function downloadMidi(notes, title) {
   if (!notes || !notes.length) return;

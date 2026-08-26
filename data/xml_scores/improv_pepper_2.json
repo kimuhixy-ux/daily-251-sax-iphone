@@ -1,0 +1,1097 @@
+{
+  "id": "improv_pepper_2",
+  "title": "アドリブ研究(アート・ペッパー風)2",
+  "key": "C",
+  "bars": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "chordsDisplay": "(コード情報なし)",
+  "notes": [
+    {
+      "barIndex": 0,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 1.5,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 1.5,
+      "duration": 1.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 1.5,
+      "duration": 1.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 1.0,
+      "duration": 1.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 1.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 1.5,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    }
+  ]
+}

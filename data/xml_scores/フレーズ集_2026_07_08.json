@@ -1,0 +1,320 @@
+{
+  "id": "フレーズ集_2026_07_08",
+  "title": "フレーズ集②③④(2026-07-08)",
+  "key": "C",
+  "bars": [
+    [
+      "C"
+    ],
+    [
+      "A"
+    ],
+    [
+      "Dm"
+    ],
+    [
+      "G7"
+    ],
+    [
+      "G7"
+    ],
+    [
+      "G7"
+    ]
+  ],
+  "chordsDisplay": "C | A | Dm | G7 | G7 | G7",
+  "notes": [
+    {
+      "barIndex": 0,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 3.0,
+      "duration": 1.5,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 2.0,
+      "duration": 0.0,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    }
+  ]
+}
