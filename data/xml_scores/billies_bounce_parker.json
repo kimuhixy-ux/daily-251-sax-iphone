@@ -1,0 +1,3329 @@
+{
+  "id": "billies_bounce_parker",
+  "title": "Billie's Bounce ソロ採譜(Charlie Parker)",
+  "key": "C",
+  "bars": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "chordsDisplay": "(コード情報なし)",
+  "notes": [
+    {
+      "barIndex": 0,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 4,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 2.5,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 5,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 6,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 7,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 8,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 0.5,
+      "duration": 1.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 9,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 10,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 11,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 12,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 13,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 14,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 0.5,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 15,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 16,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 17,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 18,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 19,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 20,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 21,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 22,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 23,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.5,
+      "duration": 0.16666666666666666,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.6666666666666667,
+      "duration": 0.16666666666666666,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 1.8333333333333333,
+      "duration": 0.16666666666666666,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 3.5,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 24,
+      "beatInBar": 3.75,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 25,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 26,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 27,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 28,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 0.0,
+      "duration": 0.3333333333333333,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 0.3333333333333333,
+      "duration": 0.3333333333333333,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 0.6666666666666666,
+      "duration": 0.3333333333333333,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 1.0,
+      "duration": 0.75,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 29,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 30,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 31,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 3,
+      "accidental": 0
+    },
+    {
+      "barIndex": 32,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "A",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "rest": true
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 33,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 34,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 35,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 1.0,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 1.25,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 2.0,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 2.25,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 2.5,
+      "duration": 0.25,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 2.75,
+      "duration": 0.25,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 3.0,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 3.25,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 3.5,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 36,
+      "beatInBar": 3.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 1.0,
+      "duration": 0.25,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 1.25,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 2.0,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 2.25,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 2.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 2.75,
+      "duration": 0.125,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 2.875,
+      "duration": 0.125,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 3.0,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 3.25,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 3.5,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 37,
+      "beatInBar": 3.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 38,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 38,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 38,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 38,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 38,
+      "beatInBar": 2.5,
+      "duration": 1.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 39,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 40,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 1.0,
+      "duration": 0.3333333333333333,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 1.3333333333333333,
+      "duration": 0.3333333333333333,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 1.6666666666666667,
+      "duration": 0.3333333333333333,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 41,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 2.0,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 2.25,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 2.5,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 2.75,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 42,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 43,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 44,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "rest": true
+    },
+    {
+      "barIndex": 44,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 44,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 44,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 45,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 46,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 46,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 46,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 46,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "rest": true
+    },
+    {
+      "barIndex": 46,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 0.0,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 0.25,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 47,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 3.5,
+      "duration": 0.125,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 3.625,
+      "duration": 0.125,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 3.75,
+      "duration": 0.125,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 48,
+      "beatInBar": 3.875,
+      "duration": 0.125,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 2.0,
+      "duration": 0.3333333333333333,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 2.3333333333333335,
+      "duration": 0.3333333333333333,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 2.6666666666666665,
+      "duration": 0.3333333333333333,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 3.0,
+      "duration": 0.3333333333333333,
+      "letter": "D",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 3.3333333333333335,
+      "duration": 0.3333333333333333,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 49,
+      "beatInBar": 3.6666666666666665,
+      "duration": 0.3333333333333333,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 50,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 50,
+      "beatInBar": 0.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 50,
+      "beatInBar": 0.75,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 50,
+      "beatInBar": 1.0,
+      "duration": 3.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 51,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 51,
+      "beatInBar": 1.0,
+      "duration": 3.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 2.0,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 2.25,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 2.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 2.75,
+      "duration": 0.25,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 52,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 1.0,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 1.25,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 2.0,
+      "duration": 1.0,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 53,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 54,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 55,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "rest": true
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 2.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 2.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 56,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 57,
+      "beatInBar": 3.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 2.0,
+      "duration": 0.3333333333333333,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 2.3333333333333335,
+      "duration": 0.3333333333333333,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 2.6666666666666665,
+      "duration": 0.3333333333333333,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 58,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 1.0,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 1.25,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 59,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 1.0,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 1.25,
+      "duration": 0.25,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 1.5,
+      "duration": 0.25,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 1.75,
+      "duration": 0.25,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 3,
+      "accidental": -1
+    },
+    {
+      "barIndex": 60,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 3,
+      "accidental": 1
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 2.0,
+      "duration": 1.5,
+      "rest": true
+    },
+    {
+      "barIndex": 61,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 62,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 0.0,
+      "duration": 1.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 63,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 64,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "letter": "C",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 64,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "rest": true
+    }
+  ]
+}

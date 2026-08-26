@@ -13,5 +13,10 @@
     "id": "inaya_full",
     "title": "稲家セミナー フルメロディー",
     "file": "inaya_full.json"
+  },
+  {
+    "id": "billies_bounce_parker",
+    "title": "Billie's Bounce ソロ採譜(Charlie Parker)",
+    "file": "billies_bounce_parker.json"
   }
 ]
