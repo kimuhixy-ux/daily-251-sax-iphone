@@ -2657,6 +2657,7 @@ function renderScore(notes, chordPlan, phrase){
     // per-note geometry cached for the beam pass below.
     const rowNotes = notes.filter(n => n.barIndex >= barStart && n.barIndex < rowBarEnd && !n.rest);
     const geo = new Map();
+    let prevNoteCx = -Infinity;
     rowNotes.forEach(n => {
       const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
       const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
@@ -2672,10 +2673,19 @@ function renderScore(notes, chordPlan, phrase){
       }
       const opacity = n.tied ? 0.35 : 1;
       if (n.accidental || n.natural){
+        // 直前の音符との間隔が狭い(8分音符以降の密なパッセージ)ときは
+        // 固定サイズのまま描くと音符・臨時記号同士が重なるため、
+        // 間隔に応じて臨時記号を縮小・位置調整して重なりを避ける。
+        const gapToPrev = cx - prevNoteCx;
+        let accSize = 22, accOffset = 19;
+        if (gapToPrev < 16){ accSize = 12; accOffset = 9; }
+        else if (gapToPrev < 24){ accSize = 15; accOffset = 12; }
+        else if (gapToPrev < 34){ accSize = 18; accOffset = 15; }
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
-        svg += `<text x="${cx - 19}" y="${y + 7}" font-size="22" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
+        svg += `<text x="${cx - accOffset}" y="${y + 7}" font-size="${accSize}" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
       }
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}" opacity="${opacity}"/>`;
+      prevNoteCx = cx;
 
       const chordEvent = activeChordForNote(n, chordPlan);
       if (chordEvent){
