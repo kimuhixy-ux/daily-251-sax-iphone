@@ -74,6 +74,11 @@
     <button class="secondary" id="todayBtn">今日のキーに戻す</button>
   </div>
   <div class="actions">
+    <button class="secondary" id="octaveDownBtn">－1オクターブ</button>
+    <button class="secondary" id="octaveUpBtn">＋1オクターブ</button>
+  </div>
+  <p class="status" id="octaveStatus">オクターブ調整: 0（移調で音域が合わない時に使う）</p>
+  <div class="actions">
     <button class="secondary" id="midiBtn" style="background:#fffdf8; color:#8a2d6b; border-color:#8a2d6b;">MIDIファイルを保存 (GarageBand用)</button>
     <p class="status">保存後: GarageBand→ループブラウザ→「ファイル」タブから読み込んでください</p>
   </div>
@@ -96,6 +101,14 @@
 
 <script>
 let currentNotes = [];
+// 移調(特にB/Aなど遠いキー)で自動生成した音域が高すぎる/低すぎる場合に
+// 手動で補正するためのオクターブ調整量。キー変更やフレーズ送りでは
+// リセットせず、ユーザーが選んだ値を維持する。
+let octaveShift = 0;
+function applyOctaveShift(notes){
+  if (!octaveShift) return notes;
+  return notes.map(n => n.rest ? n : { ...n, octave: n.octave + octaveShift });
+}
 /* ---------- keys / categories ---------- */
 const KEYS = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 const CATEGORIES = [
@@ -3625,8 +3638,9 @@ async function render(){
 
   if (category === "original"){
     const chordPlan = chordPlanFromBars(phrase.bars);
-    renderScore(phrase.notes, chordPlan, phrase);
-    currentNotes = phrase.notes;
+    const notes = applyOctaveShift(phrase.notes);
+    renderScore(notes, chordPlan, phrase);
+    currentNotes = notes;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${phrase.key}`;
     document.getElementById("phraseName").textContent = `${ORIGINAL_SOURCE_TITLE} ${numLabel}`;
@@ -3650,8 +3664,9 @@ async function render(){
       return;
     }
     const chordPlan = chordPlanFromBars(phrase.bars);
-    renderScore(phrase.notes, chordPlan, phrase);
-    currentNotes = phrase.notes;
+    const notes = applyOctaveShift(phrase.notes);
+    renderScore(notes, chordPlan, phrase);
+    currentNotes = notes;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${phrase.key}`;
     document.getElementById("phraseName").textContent = phrase.title;
     document.getElementById("tip").textContent = phrase.chordsDisplay;
@@ -3667,8 +3682,9 @@ async function render(){
   if (category === "chad_lb"){
     const transposed = transposeChadLbPhrase(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
-    renderScore(transposed.notes, chordPlan, transposed);
-    currentNotes = transposed.notes;
+    const notes = applyOctaveShift(transposed.notes);
+    renderScore(notes, chordPlan, transposed);
+    currentNotes = notes;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} ${numLabel} / Key: ${key}`;
     document.getElementById("phraseName").textContent = `${CHAD_LB_SOURCE_TITLE} ${numLabel}`;
@@ -3693,8 +3709,9 @@ async function render(){
     }
     const transposed = transposeApproachEnclosurePhrase(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
-    renderScore(transposed.notes, chordPlan, transposed);
-    currentNotes = transposed.notes;
+    const notes = applyOctaveShift(transposed.notes);
+    renderScore(notes, chordPlan, transposed);
+    currentNotes = notes;
     document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${key}`;
     document.getElementById("phraseName").textContent = phrase.title;
     document.getElementById("tip").textContent = transposed.chordsDisplay;
@@ -3709,7 +3726,7 @@ async function render(){
 
   if (category === "inaya"){
     const chordPlan = getChordPlan(category, variant, key, phrase);
-    const beats = flattenPhrase(phrase, { key });
+    const beats = applyOctaveShift(flattenPhrase(phrase, { key }));
     renderScore(beats, chordPlan, phrase);
     currentNotes = beats;
     const numLabel = `#${String(phrase.number).padStart(2, "0")}`;
@@ -3729,7 +3746,7 @@ async function render(){
   }
 
   const chordPlan = getChordPlan(category, variant, key);
-  const beats = flattenPhrase(phrase, { key });
+  const beats = applyOctaveShift(flattenPhrase(phrase, { key }));
   renderScore(beats, chordPlan, phrase);
   currentNotes = beats;
 
@@ -3773,6 +3790,21 @@ document.getElementById("todayBtn").addEventListener("click", () => {
   } else {
     keySelect.value = todayKey();
   }
+  render();
+});
+const octaveStatus = document.getElementById("octaveStatus");
+function updateOctaveStatus(){
+  const sign = octaveShift > 0 ? "+" : "";
+  octaveStatus.textContent = `オクターブ調整: ${sign}${octaveShift}（移調で音域が合わない時に使う）`;
+}
+document.getElementById("octaveDownBtn").addEventListener("click", () => {
+  octaveShift = Math.max(-2, octaveShift - 1);
+  updateOctaveStatus();
+  render();
+});
+document.getElementById("octaveUpBtn").addEventListener("click", () => {
+  octaveShift = Math.min(2, octaveShift + 1);
+  updateOctaveStatus();
   render();
 });
 document.getElementById("prevBtn").addEventListener("click", () => {
