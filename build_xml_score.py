@@ -31,7 +31,7 @@ except ImportError:
     print("  pip3 install music21", file=sys.stderr)
     sys.exit(1)
 
-DATA_DIR = Path(__file__).parent / "data" / "xml_scores"
+DATA_ROOT = Path(__file__).parent / "data"
 
 
 def slugify(text):
@@ -81,6 +81,7 @@ def main():
     ap.add_argument("input", help="MusicXMLファイル(.musicxml / .xml / .mxl)")
     ap.add_argument("--title", required=True, help="アプリ上に表示する曲名")
     ap.add_argument("--id", help="内部ID(省略時はtitleから自動生成)")
+    ap.add_argument("--outdir", default="xml_scores", help="data/以下の出力先ディレクトリ名(省略時はxml_scores)")
     args = ap.parse_args()
 
     in_path = Path(args.input)
@@ -116,11 +117,12 @@ def main():
         "notes": notes,
     }
 
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = DATA_DIR / f"{result_id}.json"
+    data_dir = DATA_ROOT / args.outdir
+    data_dir.mkdir(parents=True, exist_ok=True)
+    out_path = data_dir / f"{result_id}.json"
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    manifest_path = DATA_DIR / "manifest.json"
+    manifest_path = data_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else []
     manifest = [m for m in manifest if m["id"] != result_id]
     manifest.append({"id": result_id, "title": args.title, "file": out_path.name})

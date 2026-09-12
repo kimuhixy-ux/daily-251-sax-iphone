@@ -112,7 +112,8 @@ const CATEGORIES = [
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲家セミナー" },
   { id:"chad_lb", label:"木村オリジナル" },
-  { id:"xml", label:"XMLインポート" }
+  { id:"xml", label:"XMLインポート" },
+  { id:"approach_enclosure", label:"アプローチ&エンクロージャー" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -2392,6 +2393,31 @@ function transposeChadLbPhrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// コード記号(例: "Cmaj7")のルート部分だけをキー分だけ移調し、
+// クオリティ表記(maj7/m7など)はそのまま残す。ルートはKEYS配列の
+// 並び(半音順)を使って、他の移調処理とスペリングの流儀を揃える。
+const CHROMATIC_PC = {C:0,"C#":1,Db:1,D:2,"D#":3,Eb:3,E:4,F:5,"F#":6,Gb:6,G:7,"G#":8,Ab:8,A:9,"A#":10,Bb:10,B:11};
+function transposeChordFigure(figure, key){
+  const m = figure.match(/^([A-G])([#b]?)/);
+  if (!m || key === "C") return figure;
+  const rootPc = CHROMATIC_PC[m[1] + m[2]];
+  const newPc = (rootPc + KEYS.indexOf(key)) % 12;
+  return KEYS[newPc] + figure.slice(m[0].length);
+}
+// approach_enclosureカテゴリはChad_LBの教則本をXMLインポートしたもので、
+// chad_lbと違いii-V-Iではなく曲ごとの実際のコード(ここでは全曲Cmaj7の
+// ヴァンプ)を持つため、bars内のコード記号自体を移調する。
+function transposeApproachEnclosurePhrase(phrase, key){
+  if (key === "C") return phrase;
+  const bars = phrase.bars.map(bar => bar.map(fig => transposeChordFigure(fig, key)));
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: bars.map(b => b.length ? b[0] : "?").join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // Degree numbers (1-9, 13, optionally b/#-prefixed) are read as major-scale
 // steps above the tonic, per this app's existing notation convention.
 function degreeLetterAndPc(tonic, token){
@@ -2944,6 +2970,24 @@ function ensureXmlPhrasesLoaded(){
   if (!xmlPhrasesLoadPromise) xmlPhrasesLoadPromise = loadXmlPhrases();
   return xmlPhrasesLoadPromise;
 }
+// アプローチ&エンクロージャー(Chad LB教則本のXMLインポート)もxmlカテゴリと
+// 同じ非同期読み込みの仕組みを使うが、12キー移調に対応するため別カテゴリ・
+// 別マニフェストにしている。
+let APPROACH_ENCLOSURE_PHRASES = [];
+let approachEnclosurePhrasesLoadPromise = null;
+function loadApproachEnclosurePhrases(){
+  return fetch("data/approach_enclosure_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/approach_enclosure_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { APPROACH_ENCLOSURE_PHRASES = tunes; })
+    .catch(() => { APPROACH_ENCLOSURE_PHRASES = []; });
+}
+function ensureApproachEnclosurePhrasesLoaded(){
+  if (!approachEnclosurePhrasesLoadPromise) approachEnclosurePhrasesLoadPromise = loadApproachEnclosurePhrases();
+  return approachEnclosurePhrasesLoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -2956,6 +3000,7 @@ function getPhrasePool(category, variant){
   if (category === "inaya") return INAYA_PHRASES;
   if (category === "chad_lb") return CHAD_LB_PHRASES;
   if (category === "xml") return XML_PHRASES;
+  if (category === "approach_enclosure") return APPROACH_ENCLOSURE_PHRASES;
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
   if (category === "net_original") return variant === "minor" ? NET_ORIGINAL_MINOR_PHRASES : NET_ORIGINAL_PHRASES;
   if (category === "rhythm") return RHYTHM_PHRASES;
@@ -3019,6 +3064,11 @@ function updateModeSelect(category){
     modeField.style.display = "none";
     keyField.style.display = "";
     keyField.classList.add("full");
+  } else if (category === "approach_enclosure"){
+    // 曲ごとの固定コード(Cmaj7ヴァンプ)、モード選択はないが12キー移調に対応。
+    modeField.style.display = "none";
+    keyField.style.display = "";
+    keyField.classList.add("full");
   } else if (category === "xml"){
     // Fixed literal chords per tune -- no mode/key to choose; navigation
     // is entirely via the prev/next phrase buttons.
@@ -3041,6 +3091,7 @@ async function render(){
   const key = keySelect.value;
   const variant = modeSelect.value;
   if (category === "xml") await ensureXmlPhrasesLoaded();
+  if (category === "approach_enclosure") await ensureApproachEnclosurePhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -3104,6 +3155,31 @@ async function render(){
     document.getElementById("tip").textContent = transposed.chordsDisplay;
     currentPractice = {
       title: `${CHAD_LB_SOURCE_TITLE} ${numLabel} ${key}`,
+      mode: "Major",
+      key,
+      chordPlan
+    };
+    return;
+  }
+
+  if (category === "approach_enclosure"){
+    if (!phrase){
+      document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
+      document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
+      document.getElementById("tip").textContent = "";
+      currentNotes = [];
+      currentPractice = null;
+      return;
+    }
+    const transposed = transposeApproachEnclosurePhrase(phrase, key);
+    const chordPlan = chordPlanFromBars(transposed.bars);
+    renderScore(transposed.notes, chordPlan, transposed);
+    currentNotes = transposed.notes;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${key}`;
+    document.getElementById("phraseName").textContent = phrase.title;
+    document.getElementById("tip").textContent = transposed.chordsDisplay;
+    currentPractice = {
+      title: `${phrase.title} ${key}`,
       mode: "Major",
       key,
       chordPlan
