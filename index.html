@@ -118,7 +118,6 @@ const CATEGORIES = [
   { id:"turnaround",label:"循環コード" },
   { id:"coltrane",  label:"コルトレーンチェンジ" },
   { id:"blues",     label:"ブルース" },
-  { id:"vamp",      label:"コード・ヴァンプ" },
   { id:"chromatic_tension", label:"クロマチック・テンション" },
   { id:"net_original", label:"ネットオリジナル" },
   { id:"rhythm",    label:"リズムトレーニング" },
@@ -643,23 +642,6 @@ const BLUES_MINOR_PHRASES = [
   {name:"レジスター・ブルース(マイナー)",degrees:"b3 1 b7v 5v | b3 1 b7v 5v | 1 b3 4 b5 | 1 b3 4 b5 | 5 4 b3 1 | 5 4 b3 1 | b3 1 b7v 5v | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"音域を広く使うマイナーブルース。跳躍後の着地を正確に。"},
   {name:"ターン・フィギュア強調(マイナー)",degrees:"b3 4 b5 5 | b3 4 b5 5 | 1 b3 4 b5 | 1 b3 4 b5 | 1 b3 5 b7 | 1 b3 5 b7 | b3 4 b5 5 | 1 b3 4 b5 | b3 4 b5 5 | b7 5 b3 1 | 1 b3 4 b5 | b3 1 b7v 5v",tip:"ターン音型でb5を経由し、V7altバーではb3のブルーノートも試す。"},
   {name:"ミックス・フレーズ(マイナー)",degrees:"5 4 b3 1 | 5 4 b3 1 | 1 b3 4 b5 | 1 b3 4 b5 | 5 b7 5 b3 | 5 b7 5 b3 | 5 4 b3 1 | 1 b3 4 b5 | b6 1 b3 b5 | 5 7 2 4 | 1 b3 4 b5 | 5 7 2 4",tip:"コードトーンとブルーノートを組み合わせた総合フレーズ。bVI7の響きを大切に。"}
-];
-
-// コード・ヴァンプ: iReal Proフォーラムの「ドミナント7練習」「メジャー7練習」チャート集に
-// 倣い、メロディを固定せず全小節を休符にした伴奏チャートのみを提供する。同じ質のコードを
-// 4小節ループしてキー内で自由にアドリブする練習用(コードトーン/スケール/テンションなど
-// 練習の観点をtipで変えているだけで、休符の並びはどのフレーズも共通)。
-const DOMINANT_VAMP_PHRASES = [
-  {name:"コードトーン(1-3-5-b7)",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"1・3・5・b7のコードトーンだけで4小節自由にアドリブ。"},
-  {name:"ミクソリディアン・スケール",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"ミクソリディアンスケールで音階的なラインを探る。"},
-  {name:"ブルーノート混ぜ",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"b3(ブルーノート)を混ぜてブルージーな響きを加える。"},
-  {name:"9th/13thテンション",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"9度・13度のテンションを長めに伸ばして響きを聴く。"}
-];
-const MAJOR7_VAMP_PHRASES = [
-  {name:"コードトーン(1-3-5-7)",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"1・3・5・7のコードトーンだけで4小節自由にアドリブ。"},
-  {name:"リディアン・スケール",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"#11を含むリディアンスケールの響きを試す。"},
-  {name:"6thを混ぜる",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"6度を混ぜてメジャー6thのニュアンスを加える。"},
-  {name:"9th/13thテンション",degrees:"R - - - | R - - - | R - - - | R - - -",tip:"9度・13度のテンションを長めに伸ばして響きを聴く。"}
 ];
 
 // リズムトレーニング: MAJOR_PHRASESの「Simple eighths」と同じ音の並び(2 3 4 5 | 7 6 5 b6 |
@@ -3633,10 +3615,6 @@ function getChordPlan(category, variant, key, phrase){
     const fns = isMinor ? BLUES_MINOR_FNS : BLUES_MAJOR_FNS;
     return barsToPlan(bars, fns);
   }
-  if (category === "vamp"){
-    const chordLabel = variant === "major7" ? `${key}maj7` : `${key}7`;
-    return barsToPlan(Array(4).fill(chordLabel), ["I","I","I","I"]);
-  }
   if (category === "inaya"){
     const dict = (phrase && phrase.chordsDict) || INAYA_CHORDS;
     const fnUnit = (phrase && phrase.chordsFns) || ["I","vi","IV","V"];
@@ -3692,7 +3670,6 @@ function getPhrasePool(category, variant){
   if (category === "turnaround") return TURNAROUND_PHRASES[variant] || TURNAROUND_PHRASES.basic;
   if (category === "coltrane") return COLTRANE_PHRASES;
   if (category === "blues") return variant === "minor" ? BLUES_MINOR_PHRASES : BLUES_MAJOR_PHRASES;
-  if (category === "vamp") return variant === "major7" ? MAJOR7_VAMP_PHRASES : DOMINANT_VAMP_PHRASES;
   if (category === "original") return ORIGINAL_PHRASES;
   if (category === "inaya") return INAYA_PHRASES;
   if (category === "chad_lb") return CHAD_LB_PHRASES;
@@ -3734,11 +3711,6 @@ function updateModeSelect(category){
   } else if (category === "blues"){
     modeSelect.add(new Option("Major Blues","major"));
     modeSelect.add(new Option("Minor Blues","minor"));
-    modeField.style.display = "";
-    keyField.classList.remove("full");
-  } else if (category === "vamp"){
-    modeSelect.add(new Option("Dominant7 Vamp","dominant7"));
-    modeSelect.add(new Option("Major7 Vamp","major7"));
     modeField.style.display = "";
     keyField.classList.remove("full");
   } else if (category === "net_original"){
@@ -3926,7 +3898,6 @@ async function render(){
     turnaround: `Daily 251 Turnaround ${TURNAROUND_LABEL[variant] || "基本形"} ${key}`,
     coltrane: `Daily 251 Coltrane ${key}`,
     blues: `Daily Blues ${variant === "minor" ? "Minor" : "Major"} ${key}`,
-    vamp: `Daily Vamp ${variant === "major7" ? "Major7" : "Dominant7"} ${key}`,
     chromatic_tension: `Daily 251 Chromatic Tension ${key}`,
     net_original: `Daily 251 Net Original ${variant === "minor" ? "Minor" : "Major"} ${key}`,
     rhythm: `Daily 251 Rhythm Training ${key}`
