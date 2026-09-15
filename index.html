@@ -3284,15 +3284,55 @@ function renderScore(notes, chordPlan, phrase){
   const totalBars = chordPlan.totalBars;
   const rows = Math.ceil(totalBars / BARS_PER_ROW);
   const svgW = STAFF_LEFT + BARS_PER_ROW * BEATS_PER_BAR * BEAT_W + 16;
-  const svgH = STAFF_TOP0 + Math.max(0, rows - 1) * ROW_H + 86;
+
+  // コードラベルは行ごとに高い音符の分だけ上にずらす(下記rowLayout)ため、
+  // 固定のROW_H(行間)だと「前の行の低い音符」と「今の行の上にずれたラベル」が
+  // ぶつかることがある。まず行ごとに(1)ラベルが何pxずれるか(labelOffset)と
+  // (2)その行の一番低い音符がどこまで下がるか(lowOffset)をstaffTopYに依存しない
+  // 相対値として計算し、それをもとに行の実際の位置(staffTops)を1行ずつ
+  // 積み上げて決める。
+  const rowLayout = [];
+  for (let row = 0; row < rows; row++){
+    const barStart = row * BARS_PER_ROW;
+    const rowBarEnd = Math.min(barStart + BARS_PER_ROW, totalBars);
+    let labelOffset = -10;
+    let lowOffset = DEGREE_LABEL_Y + 8; // 度数ラベル(fixed offset)が通常は最下端
+    notes.filter(n => !n.rest && n.barIndex >= barStart && n.barIndex < rowBarEnd).forEach(n => {
+      const step = diatonicStep(n.letter, n.octave);
+      const noteTopOffset = (8 - step) * HALF_GAP - NOTE_RY - (n.accidental || n.natural ? 20 : 0);
+      labelOffset = Math.min(labelOffset, noteTopOffset - 12);
+      const noteBottomOffset = (8 - step) * HALF_GAP + NOTE_RY;
+      lowOffset = Math.max(lowOffset, noteBottomOffset);
+    });
+    rowLayout.push({ barStart, rowBarEnd, labelOffset, lowOffset });
+  }
+  const CHORD_LABEL_ASCENT = 14; // 14px太字テキストがベースラインより上にはみ出す高さの目安
+  const CHORD_ROW_GAP = 12; // 前の行の一番低い音符と、次の行の上にずれたラベルとの最小間隔
+  const staffTops = [];
+  let prevRowBottom = null; // 直前行の実際の最下端(絶対y座標)
+  for (let row = 0; row < rows; row++){
+    const { labelOffset, lowOffset } = rowLayout[row];
+    let top;
+    if (row === 0){
+      // 1行目より上には余白の逃げ場がないため、ラベルがキャンバス上端で
+      // 切れないよう必要なら上の余白(staffTop0)を広げる。
+      top = Math.max(STAFF_TOP0, CHORD_LABEL_ASCENT - labelOffset);
+    } else {
+      const natural = staffTops[row - 1] + ROW_H;
+      const required = prevRowBottom + CHORD_ROW_GAP - labelOffset;
+      top = Math.max(natural, required);
+    }
+    staffTops.push(top);
+    prevRowBottom = top + lowOffset;
+  }
+  const svgH = staffTops[rows - 1] + 86;
 
   let svg = `<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
 
   for (let row = 0; row < rows; row++){
-    const staffTopY = STAFF_TOP0 + row * ROW_H;
-    const barStart = row * BARS_PER_ROW;
-    const barsInRow = Math.min(BARS_PER_ROW, totalBars - barStart);
-    const rowBarEnd = barStart + barsInRow;
+    const staffTopY = staffTops[row];
+    const { barStart, rowBarEnd, labelOffset } = rowLayout[row];
+    const barsInRow = rowBarEnd - barStart;
     const rowRight = STAFF_LEFT + barsInRow * BEATS_PER_BAR * BEAT_W;
 
     for (let li = 0; li < 5; li++){
@@ -3304,11 +3344,15 @@ function renderScore(notes, chordPlan, phrase){
       const x = STAFF_LEFT + bi * BEATS_PER_BAR * BEAT_W;
       svg += `<line x1="${x}" x2="${x}" y1="${staffTopY}" y2="${staffTopY + 32}" stroke="${INK}" stroke-width="${bi === barsInRow ? 2 : 1}"/>`;
     }
+    // コードネームは五線の少し上に固定で置いていたが、五線からはみ出る高い音符
+    // (特に♯/♭付き)があると文字と重なるため、行ごとに事前計算したlabelOffset
+    // (rowLayout、前の行の低い音符との間隔も考慮済み)だけ上にずらす。
+    const chordLabelY = staffTopY + labelOffset;
     chordPlan.events.filter(e => e.barIndex >= barStart && e.barIndex < rowBarEnd).forEach(e => {
       const localBeat = (e.barIndex - barStart) * BEATS_PER_BAR + e.beatInBar;
       const x = STAFF_LEFT + localBeat * BEAT_W;
       const color = CHORD_COLORS[e.fn] || INK;
-      svg += `<text x="${x}" y="${staffTopY - 10}" font-size="14" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
+      svg += `<text x="${x}" y="${chordLabelY}" font-size="14" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
     });
 
     // Rest pass: eighth/quarter/half rest glyphs. Rests carry no pitch, so
