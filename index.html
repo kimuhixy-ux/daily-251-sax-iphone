@@ -124,7 +124,8 @@ const CATEGORIES = [
   { id:"approach_enclosure", label:"アプローチ&エンクロージャー" },
   { id:"jamey_major251", label:"ジェイミーメジャー251" },
   { id:"jamey_v79", label:"ジェイミーV7+9" },
-  { id:"jamey_minor251", label:"ジェイミーマイナー251" }
+  { id:"jamey_minor251", label:"ジェイミーマイナー251" },
+  { id:"licks_minor251", label:"1001Licks-Minor251" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3737,6 +3738,21 @@ function ensureJameyMinor251PhrasesLoaded(){
   if (!jameyMinor251LoadPromise) jameyMinor251LoadPromise = loadJameyMinor251Phrases();
   return jameyMinor251LoadPromise;
 }
+let LICKS_MINOR251_PHRASES = [];
+let licksMinor251LoadPromise = null;
+function loadLicksMinor251Phrases(){
+  return fetch("data/licks_minor251_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/licks_minor251_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { LICKS_MINOR251_PHRASES = tunes; })
+    .catch(() => { LICKS_MINOR251_PHRASES = []; });
+}
+function ensureLicksMinor251PhrasesLoaded(){
+  if (!licksMinor251LoadPromise) licksMinor251LoadPromise = loadLicksMinor251Phrases();
+  return licksMinor251LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3755,6 +3771,7 @@ function getPhrasePool(category, variant){
   if (category === "jamey_major251") return JAMEY_MAJOR251_PHRASES;
   if (category === "jamey_v79") return JAMEY_V79_PHRASES;
   if (category === "jamey_minor251") return JAMEY_MINOR251_PHRASES;
+  if (category === "licks_minor251") return LICKS_MINOR251_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -3841,6 +3858,7 @@ async function render(){
   if (category === "jamey_major251") await ensureJameyMajor251PhrasesLoaded();
   if (category === "jamey_v79") await ensureJameyV79PhrasesLoaded();
   if (category === "jamey_minor251") await ensureJameyMinor251PhrasesLoaded();
+  if (category === "licks_minor251") await ensureLicksMinor251PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -3940,7 +3958,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
