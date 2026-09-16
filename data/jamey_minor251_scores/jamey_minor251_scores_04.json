@@ -1,0 +1,214 @@
+{
+  "id": "jamey_minor251_scores_04",
+  "title": "ジェイミーマイナー251 #02",
+  "key": "C",
+  "bars": [
+    [],
+    [],
+    [],
+    []
+  ],
+  "chordsDisplay": "(コード情報なし)",
+  "notes": [
+    {
+      "barIndex": 0,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.0,
+      "duration": 4.0,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    }
+  ]
+}

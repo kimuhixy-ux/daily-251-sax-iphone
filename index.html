@@ -125,7 +125,10 @@ const CATEGORIES = [
   { id:"inaya", label:"稲家セミナー" },
   { id:"chad_lb", label:"木村オリジナル" },
   { id:"xml", label:"XMLインポート" },
-  { id:"approach_enclosure", label:"アプローチ&エンクロージャー" }
+  { id:"approach_enclosure", label:"アプローチ&エンクロージャー" },
+  { id:"jamey_major251", label:"ジェイミーメジャー251" },
+  { id:"jamey_v79", label:"ジェイミーV7+9" },
+  { id:"jamey_minor251", label:"ジェイミーマイナー251" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3028,6 +3031,34 @@ function transposeChadLbPhrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// ジェイミー・マイナー251は、chad_lbと同じ「Cで書かれた実音をそのまま
+// 移調する」方式だが、コードはii-V-Iではなくマイナーのiiø-V7alt-iを使う。
+function transposeJameyMinor251Phrase(phrase, key){
+  const bars = practiceBars(MINOR_251[key]).map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: practiceBars(MINOR_251[key]).join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
+// ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
+// ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
+// C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
+function transposeJameyV79Phrase(phrase, key){
+  const vRoot = key;
+  const iRoot = KEYS[(KEYS.indexOf(key) + 5) % 12];
+  const chords = [`${vRoot}7#9`, `${vRoot}7#9`, `${iRoot}maj7`, `${iRoot}maj7`];
+  const bars = chords.map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: chords.join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // コード記号(例: "Cmaj7")のルート部分だけをキー分だけ移調し、
 // クオリティ表記(maj7/m7など)はそのまま残す。ルートはKEYS配列の
 // 並び(半音順)を使って、他の移調処理とスペリングの流儀を揃える。
@@ -3663,6 +3694,53 @@ function ensureApproachEnclosurePhrasesLoaded(){
   if (!approachEnclosurePhrasesLoadPromise) approachEnclosurePhrasesLoadPromise = loadApproachEnclosurePhrases();
   return approachEnclosurePhrasesLoadPromise;
 }
+// ジェイミー・メジャー251/V7+9/マイナー251の3カテゴリも同じ非同期読み込みの
+// 仕組みを使う。曲数が多く(最大38曲)index.htmlに埋め込むと肥大化するため。
+let JAMEY_MAJOR251_PHRASES = [];
+let jameyMajor251LoadPromise = null;
+function loadJameyMajor251Phrases(){
+  return fetch("data/jamey_major251_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/jamey_major251_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { JAMEY_MAJOR251_PHRASES = tunes; })
+    .catch(() => { JAMEY_MAJOR251_PHRASES = []; });
+}
+function ensureJameyMajor251PhrasesLoaded(){
+  if (!jameyMajor251LoadPromise) jameyMajor251LoadPromise = loadJameyMajor251Phrases();
+  return jameyMajor251LoadPromise;
+}
+let JAMEY_V79_PHRASES = [];
+let jameyV79LoadPromise = null;
+function loadJameyV79Phrases(){
+  return fetch("data/jamey_v79_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/jamey_v79_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { JAMEY_V79_PHRASES = tunes; })
+    .catch(() => { JAMEY_V79_PHRASES = []; });
+}
+function ensureJameyV79PhrasesLoaded(){
+  if (!jameyV79LoadPromise) jameyV79LoadPromise = loadJameyV79Phrases();
+  return jameyV79LoadPromise;
+}
+let JAMEY_MINOR251_PHRASES = [];
+let jameyMinor251LoadPromise = null;
+function loadJameyMinor251Phrases(){
+  return fetch("data/jamey_minor251_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/jamey_minor251_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { JAMEY_MINOR251_PHRASES = tunes; })
+    .catch(() => { JAMEY_MINOR251_PHRASES = []; });
+}
+function ensureJameyMinor251PhrasesLoaded(){
+  if (!jameyMinor251LoadPromise) jameyMinor251LoadPromise = loadJameyMinor251Phrases();
+  return jameyMinor251LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3678,6 +3756,9 @@ function getPhrasePool(category, variant){
   if (category === "chromatic_tension") return CHROMATIC_TENSION_PHRASES;
   if (category === "net_original") return variant === "minor" ? NET_ORIGINAL_MINOR_PHRASES : NET_ORIGINAL_PHRASES;
   if (category === "rhythm") return RHYTHM_PHRASES;
+  if (category === "jamey_major251") return JAMEY_MAJOR251_PHRASES;
+  if (category === "jamey_v79") return JAMEY_V79_PHRASES;
+  if (category === "jamey_minor251") return JAMEY_MINOR251_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -3761,6 +3842,9 @@ async function render(){
   const variant = modeSelect.value;
   if (category === "xml") await ensureXmlPhrasesLoaded();
   if (category === "approach_enclosure") await ensureApproachEnclosurePhrasesLoaded();
+  if (category === "jamey_major251") await ensureJameyMajor251PhrasesLoaded();
+  if (category === "jamey_v79") await ensureJameyV79PhrasesLoaded();
+  if (category === "jamey_minor251") await ensureJameyMinor251PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -3844,6 +3928,59 @@ async function render(){
       return;
     }
     const transposed = transposeApproachEnclosurePhrase(phrase, key);
+    const chordPlan = chordPlanFromBars(transposed.bars);
+    const notes = applyOctaveShift(transposed.notes);
+    renderScore(notes, chordPlan, transposed);
+    currentNotes = notes;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${key}`;
+    document.getElementById("phraseName").textContent = phrase.title;
+    document.getElementById("tip").textContent = transposed.chordsDisplay;
+    currentPractice = {
+      title: `${phrase.title} ${key}`,
+      mode: "Major",
+      key,
+      chordPlan
+    };
+    return;
+  }
+
+  if (category === "jamey_major251" || category === "jamey_minor251"){
+    if (!phrase){
+      document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
+      document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
+      document.getElementById("tip").textContent = "";
+      currentNotes = [];
+      currentPractice = null;
+      return;
+    }
+    const transposeFn = category === "jamey_major251" ? transposeChadLbPhrase : transposeJameyMinor251Phrase;
+    const transposed = transposeFn(phrase, key);
+    const chordPlan = chordPlanFromBars(transposed.bars);
+    const notes = applyOctaveShift(transposed.notes);
+    renderScore(notes, chordPlan, transposed);
+    currentNotes = notes;
+    document.getElementById("dateLine").textContent = `${today} / ${catLabel} / Key: ${key}`;
+    document.getElementById("phraseName").textContent = phrase.title;
+    document.getElementById("tip").textContent = transposed.chordsDisplay;
+    currentPractice = {
+      title: `${phrase.title} ${key}`,
+      mode: category === "jamey_major251" ? "Major" : "Minor",
+      key,
+      chordPlan
+    };
+    return;
+  }
+
+  if (category === "jamey_v79"){
+    if (!phrase){
+      document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
+      document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
+      document.getElementById("tip").textContent = "";
+      currentNotes = [];
+      currentPractice = null;
+      return;
+    }
+    const transposed = transposeJameyV79Phrase(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
     const notes = applyOctaveShift(transposed.notes);
     renderScore(notes, chordPlan, transposed);

@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 try:
-    from music21 import converter, note, harmony
+    from music21 import converter, note, harmony, chord as chordmod
 except ImportError:
     print("music21が見つかりません。次のコマンドでインストールしてください:", file=sys.stderr)
     print("  pip3 install music21", file=sys.stderr)
@@ -68,10 +68,17 @@ def build_notes(sounding_part, base_measure):
             entry["letter"] = n.pitch.step
             entry["octave"] = n.pitch.octave
             entry["accidental"] = int(round(n.pitch.alter))
+        elif isinstance(n, chordmod.Chord):
+            # トリル記号などがMuseScoreの書き出しで2音の和音になることがあるため、
+            # 一番低い音(本来の主音)をメロディー音として採用する
+            p = min(n.pitches, key=lambda p: p.ps)
+            entry["letter"] = p.step
+            entry["octave"] = p.octave
+            entry["accidental"] = int(round(p.alter))
         elif isinstance(n, note.Rest):
             entry["rest"] = True
         else:
-            continue  # 和音(Chord)はメロディー抽出の対象外
+            continue
         notes.append(entry)
     return notes
 
