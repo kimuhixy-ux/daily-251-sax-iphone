@@ -125,7 +125,8 @@ const CATEGORIES = [
   { id:"jamey_major251", label:"ジェイミーメジャー251" },
   { id:"jamey_v79", label:"ジェイミーV7+9" },
   { id:"jamey_minor251", label:"ジェイミーマイナー251" },
-  { id:"licks_minor251", label:"1001Licks-Minor251" }
+  { id:"licks_minor251", label:"1001Licks-Minor251" },
+  { id:"dorian", label:"1001Dorian" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3040,6 +3041,20 @@ function transposeJameyMinor251Phrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// 1001Dorianはⅱ-Ⅴ-Ⅰのようなコード進行ではなく、単一のマイナー7th
+// コード(ドリアン旋法)を4小節ずっと弾くための素材なので、コードは
+// 選んだキーのm7を4回並べるだけでよい。
+function transposeDorianPhrase(phrase, key){
+  const chord = `${key}m7`;
+  const bars = [[chord], [chord], [chord], [chord]];
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: [chord, chord, chord, chord].join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
 // ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
 // C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
@@ -3753,6 +3768,21 @@ function ensureLicksMinor251PhrasesLoaded(){
   if (!licksMinor251LoadPromise) licksMinor251LoadPromise = loadLicksMinor251Phrases();
   return licksMinor251LoadPromise;
 }
+let DORIAN_PHRASES = [];
+let dorianLoadPromise = null;
+function loadDorianPhrases(){
+  return fetch("data/dorian_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/dorian_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { DORIAN_PHRASES = tunes; })
+    .catch(() => { DORIAN_PHRASES = []; });
+}
+function ensureDorianPhrasesLoaded(){
+  if (!dorianLoadPromise) dorianLoadPromise = loadDorianPhrases();
+  return dorianLoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3772,6 +3802,7 @@ function getPhrasePool(category, variant){
   if (category === "jamey_v79") return JAMEY_V79_PHRASES;
   if (category === "jamey_minor251") return JAMEY_MINOR251_PHRASES;
   if (category === "licks_minor251") return LICKS_MINOR251_PHRASES;
+  if (category === "dorian") return DORIAN_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -3859,6 +3890,7 @@ async function render(){
   if (category === "jamey_v79") await ensureJameyV79PhrasesLoaded();
   if (category === "jamey_minor251") await ensureJameyMinor251PhrasesLoaded();
   if (category === "licks_minor251") await ensureLicksMinor251PhrasesLoaded();
+  if (category === "dorian") await ensureDorianPhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -3958,7 +3990,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -3967,7 +3999,9 @@ async function render(){
       currentPractice = null;
       return;
     }
-    const transposeFn = category === "jamey_major251" ? transposeChadLbPhrase : transposeJameyMinor251Phrase;
+    const transposeFn = category === "jamey_major251" ? transposeChadLbPhrase
+      : category === "dorian" ? transposeDorianPhrase
+      : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
     const notes = applyOctaveShift(transposed.notes);
