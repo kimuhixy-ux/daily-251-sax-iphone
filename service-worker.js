@@ -1,4 +1,4 @@
-const CACHE_NAME = "daily-251-sax-v77";
+const CACHE_NAME = "daily-251-sax-v78";
 const ASSETS = [
   "./",
   "./index.html",
@@ -34,8 +34,13 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   if (isNetworkFirst(event.request)) {
+    // GitHub PagesはHTMLやJSONにもCache-Control: max-age(数分〜10分)を
+    // 付けて返すため、素のfetch()だとブラウザのHTTPキャッシュ側で
+    // 「最新版」のつもりが実は古いレスポンスを再利用してしまうことがある。
+    // cache: "no-store"でHTTPキャッシュそのものを迂回し、確実に
+    // ネットワークへ問い合わせる。
     event.respondWith(
-      fetch(event.request).then(response => {
+      fetch(event.request, { cache: "no-store" }).then(response => {
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
         return response;
