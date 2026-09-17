@@ -128,7 +128,8 @@ const CATEGORIES = [
   { id:"licks_minor251", label:"1001Licks-Minor251" },
   { id:"dorian", label:"1001Dorian" },
   { id:"dominant7th", label:"1001Dominant7th" },
-  { id:"major1625", label:"1001major1625" }
+  { id:"major1625", label:"1001major1625" },
+  { id:"minor1625", label:"1001minor1625" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3088,6 +3089,21 @@ function transposeMajor1625Phrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// 1001minor1625は1001major1625の短調版(ⅰ-Ⅵ7-ⅱø7-Ⅴ7alt)。ⅱ・Ⅴ・ⅰは
+// 既存のMINOR_251、Ⅵ7(ⅱへのセカンダリードミナント)は長調と同じ音なので
+// MAJOR_1625の2番目の値をそのまま流用でき、新しい辞書を作る必要がない。
+function transposeMinor1625Phrase(phrase, key){
+  const minorChords = MINOR_251[key];
+  const chords = [minorChords[2], MAJOR_1625[key][1], minorChords[0], minorChords[1]];
+  const bars = chords.map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: chords.join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
 // ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
 // C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
@@ -3846,6 +3862,21 @@ function ensureMajor1625PhrasesLoaded(){
   if (!major1625LoadPromise) major1625LoadPromise = loadMajor1625Phrases();
   return major1625LoadPromise;
 }
+let MINOR1625_PHRASES = [];
+let minor1625LoadPromise = null;
+function loadMinor1625Phrases(){
+  return fetch("data/minor1625_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/minor1625_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { MINOR1625_PHRASES = tunes; })
+    .catch(() => { MINOR1625_PHRASES = []; });
+}
+function ensureMinor1625PhrasesLoaded(){
+  if (!minor1625LoadPromise) minor1625LoadPromise = loadMinor1625Phrases();
+  return minor1625LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3868,6 +3899,7 @@ function getPhrasePool(category, variant){
   if (category === "dorian") return DORIAN_PHRASES;
   if (category === "dominant7th") return DOMINANT7TH_PHRASES;
   if (category === "major1625") return MAJOR1625_PHRASES;
+  if (category === "minor1625") return MINOR1625_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -3958,6 +3990,7 @@ async function render(){
   if (category === "dorian") await ensureDorianPhrasesLoaded();
   if (category === "dominant7th") await ensureDominant7thPhrasesLoaded();
   if (category === "major1625") await ensureMajor1625PhrasesLoaded();
+  if (category === "minor1625") await ensureMinor1625PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -4057,7 +4090,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -4070,6 +4103,7 @@ async function render(){
       : category === "dorian" ? transposeDorianPhrase
       : category === "dominant7th" ? transposeDominant7thPhrase
       : category === "major1625" ? transposeMajor1625Phrase
+      : category === "minor1625" ? transposeMinor1625Phrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
