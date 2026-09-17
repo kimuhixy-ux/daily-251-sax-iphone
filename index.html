@@ -127,13 +127,17 @@ const CATEGORIES = [
   { id:"jamey_minor251", label:"ジェイミーマイナー251" },
   { id:"licks_minor251", label:"1001Licks-Minor251" },
   { id:"dorian", label:"1001Dorian" },
-  { id:"dominant7th", label:"1001Dominant7th" }
+  { id:"dominant7th", label:"1001Dominant7th" },
+  { id:"major1625", label:"1001major1625" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
 /* ---------- chord dictionaries ---------- */
 const MAJOR_251 = {C:["Dm7","G7","Cmaj7"],Db:["Ebm7","Ab7","Dbmaj7"],D:["Em7","A7","Dmaj7"],Eb:["Fm7","Bb7","Ebmaj7"],E:["F#m7","B7","Emaj7"],F:["Gm7","C7","Fmaj7"],Gb:["Abm7","Db7","Gbmaj7"],G:["Am7","D7","Gmaj7"],Ab:["Bbm7","Eb7","Abmaj7"],A:["Bm7","E7","Amaj7"],Bb:["Cm7","F7","Bbmaj7"],B:["C#m7","F#7","Bmaj7"]};
 const MINOR_251 = {C:["Dm7b5","G7alt","Cm6"],Db:["Ebm7b5","Ab7alt","Dbm6"],D:["Em7b5","A7alt","Dm6"],Eb:["Fm7b5","Bb7alt","Ebm6"],E:["F#m7b5","B7alt","Em6"],F:["Gm7b5","C7alt","Fm6"],Gb:["Abm7b5","Db7alt","Gbm6"],G:["Am7b5","D7alt","Gm6"],Ab:["Bbm7b5","Eb7alt","Abm6"],A:["Bm7b5","E7alt","Am6"],Bb:["Cm7b5","F7alt","Bbm6"],B:["C#m7b5","F#7alt","Bm6"]};
+// 1001major1625はⅰ-Ⅵ7-ⅱ-Ⅴ7(いわゆる「1625」ターンアラウンド)を1小節ずつ
+// 進む構成なので、Dorian/Dominant7thと違って4つの異なるコードを持つ辞書が必要。
+const MAJOR_1625 = {C:["Cmaj7","A7","Dm7","G7"],Db:["Dbmaj7","Bb7","Ebm7","Ab7"],D:["Dmaj7","B7","Em7","A7"],Eb:["Ebmaj7","C7","Fm7","Bb7"],E:["Emaj7","C#7","F#m7","B7"],F:["Fmaj7","D7","Gm7","C7"],Gb:["Gbmaj7","Eb7","Abm7","Db7"],G:["Gmaj7","E7","Am7","D7"],Ab:["Abmaj7","F7","Bbm7","Eb7"],A:["Amaj7","F#7","Bm7","E7"],Bb:["Bbmaj7","G7","Cm7","F7"],B:["Bmaj7","G#7","C#m7","F#7"]};
 
 // I - vi7 - ii7 - V7
 const TURNAROUND_BASIC = {C:["Cmaj7","Am7","Dm7","G7"],Db:["Dbmaj7","Bbm7","Ebm7","Ab7"],D:["Dmaj7","Bm7","Em7","A7"],Eb:["Ebmaj7","Cm7","Fm7","Bb7"],E:["Emaj7","C#m7","F#m7","B7"],F:["Fmaj7","Dm7","Gm7","C7"],Gb:["Gbmaj7","Ebm7","Abm7","Db7"],G:["Gmaj7","Em7","Am7","D7"],Ab:["Abmaj7","Fm7","Bbm7","Eb7"],A:["Amaj7","F#m7","Bm7","E7"],Bb:["Bbmaj7","Gm7","Cm7","F7"],B:["Bmaj7","G#m7","C#m7","F#7"]};
@@ -3070,6 +3074,20 @@ function transposeDominant7thPhrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// 1001major1625はⅠ-Ⅵ7-ⅱ-Ⅴ7のターンアラウンドで、Dorian/Dominant7thと違い
+// 1小節ごとにコードが変わる。MAJOR_1625はすでに4小節分揃っているので、
+// jamey_minor251等と違いpracticeBars()での3→4展開は不要。
+function transposeMajor1625Phrase(phrase, key){
+  const chords = MAJOR_1625[key];
+  const bars = chords.map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: chords.join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
 // ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
 // C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
@@ -3813,6 +3831,21 @@ function ensureDominant7thPhrasesLoaded(){
   if (!dominant7thLoadPromise) dominant7thLoadPromise = loadDominant7thPhrases();
   return dominant7thLoadPromise;
 }
+let MAJOR1625_PHRASES = [];
+let major1625LoadPromise = null;
+function loadMajor1625Phrases(){
+  return fetch("data/major1625_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/major1625_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { MAJOR1625_PHRASES = tunes; })
+    .catch(() => { MAJOR1625_PHRASES = []; });
+}
+function ensureMajor1625PhrasesLoaded(){
+  if (!major1625LoadPromise) major1625LoadPromise = loadMajor1625Phrases();
+  return major1625LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3834,6 +3867,7 @@ function getPhrasePool(category, variant){
   if (category === "licks_minor251") return LICKS_MINOR251_PHRASES;
   if (category === "dorian") return DORIAN_PHRASES;
   if (category === "dominant7th") return DOMINANT7TH_PHRASES;
+  if (category === "major1625") return MAJOR1625_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -3923,6 +3957,7 @@ async function render(){
   if (category === "licks_minor251") await ensureLicksMinor251PhrasesLoaded();
   if (category === "dorian") await ensureDorianPhrasesLoaded();
   if (category === "dominant7th") await ensureDominant7thPhrasesLoaded();
+  if (category === "major1625") await ensureMajor1625PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -4022,7 +4057,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -4034,6 +4069,7 @@ async function render(){
     const transposeFn = category === "jamey_major251" ? transposeChadLbPhrase
       : category === "dorian" ? transposeDorianPhrase
       : category === "dominant7th" ? transposeDominant7thPhrase
+      : category === "major1625" ? transposeMajor1625Phrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
