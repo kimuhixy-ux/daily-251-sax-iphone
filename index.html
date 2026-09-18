@@ -3539,15 +3539,18 @@ function renderScore(notes, chordPlan, phrase){
         // 固定サイズのまま描くと音符・臨時記号同士が重なるため、
         // 間隔に応じて臨時記号を縮小・位置調整して重なりを避ける。
         const gapToPrev = cx - prevNoteCx;
-        let accSize = 22, accOffset = 19;
-        if (gapToPrev < 16){ accSize = 12; accOffset = 9; }
-        else if (gapToPrev < 24){ accSize = 15; accOffset = 12; }
-        else if (gapToPrev < 34){ accSize = 18; accOffset = 15; }
+        // 明朝体のグリフはゴシック体より一回り大きく見えるため、
+        // 同じ見た目の大きさになるようフォントサイズを控えめにする。
+        let accSize = 16, accOffset = 14;
+        if (gapToPrev < 16){ accSize = 9; accOffset = 7; }
+        else if (gapToPrev < 24){ accSize = 11; accOffset = 9; }
+        else if (gapToPrev < 34){ accSize = 13; accOffset = 11; }
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
         // 臨時記号の縦位置は音符の中心(y)基準。文字のベースラインは
         // グリフの中心よりかなり下にあるため、フォントサイズに比例した
         // オフセットを足してグリフの見た目の重心を音符の中心に合わせる。
-        const accYOffset = accSize * 0.45;
+        // 明朝体は字面がゴシック体より下寄りなため係数も小さくする。
+        const accYOffset = accSize * 0.3;
         svg += `<text x="${cx - accOffset}" y="${y + accYOffset}" font-size="${accSize}" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
       }
       // 符頭を右肩上がりの楕円にする(手書き・活字譜面の符頭に近い形)。
