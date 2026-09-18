@@ -3541,10 +3541,10 @@ function renderScore(notes, chordPlan, phrase){
         const gapToPrev = cx - prevNoteCx;
         // 明朝体のグリフはゴシック体より一回り大きく見えるため、
         // 同じ見た目の大きさになるようフォントサイズを控えめにする。
-        let accSize = 16, accOffset = 14;
-        if (gapToPrev < 16){ accSize = 9; accOffset = 7; }
-        else if (gapToPrev < 24){ accSize = 11; accOffset = 9; }
-        else if (gapToPrev < 34){ accSize = 13; accOffset = 11; }
+        let accSize = 16, accOffset = 17;
+        if (gapToPrev < 16){ accSize = 9; accOffset = 9; }
+        else if (gapToPrev < 24){ accSize = 11; accOffset = 11; }
+        else if (gapToPrev < 34){ accSize = 13; accOffset = 14; }
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
         // 臨時記号の縦位置は音符の中心(y)基準。文字のベースラインは
         // グリフの中心よりかなり下にあるため、フォントサイズに比例した
