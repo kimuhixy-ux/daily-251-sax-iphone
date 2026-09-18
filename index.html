@@ -3550,7 +3550,9 @@ function renderScore(notes, chordPlan, phrase){
         const accYOffset = accSize * 0.45;
         svg += `<text x="${cx - accOffset}" y="${y + accYOffset}" font-size="${accSize}" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
       }
-      svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}" opacity="${opacity}"/>`;
+      // 符頭を右肩上がりの楕円にする(手書き・活字譜面の符頭に近い形)。
+      // SVGはy軸が下向きのため、右肩を上げるには回転角を負にする。
+      svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}" opacity="${opacity}" transform="rotate(-20 ${cx} ${y})"/>`;
       prevNoteCx = cx;
 
       const chordEvent = activeChordForNote(n, chordPlan);
