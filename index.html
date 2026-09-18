@@ -131,7 +131,8 @@ const CATEGORIES = [
   { id:"major1625", label:"1001major1625" },
   { id:"minor1625", label:"1001minor1625" },
   { id:"major2516", label:"1001major2516" },
-  { id:"minor2516", label:"1001minor2516" }
+  { id:"minor2516", label:"1001minor2516" },
+  { id:"coltrane1001", label:"1001coltrane" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3136,6 +3137,32 @@ function transposeMinor2516Phrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// 1001coltraneはコルトレーンの3トニックシステム(COLTRANE_CENTERSの3つの
+// センターを長3度ずつ移動)で、次のセンターへその完全4度下のドミナント7th
+// で入る進行(Countdown型)。新しい辞書は作らずCOLTRANE_CENTERSとMAJOR_251
+// (のV7)を組み合わせて流用する。
+function transposeColtrane1001Phrase(phrase, key){
+  const centers = COLTRANE_CENTERS[key];
+  const chords = [];
+  for (let i = 0; i < 3; i++){
+    chords.push(`${centers[i]}maj7`);
+    chords.push(MAJOR_251[centers[(i + 1) % 3]][1]);
+  }
+  chords.push(`${centers[0]}maj7`);
+  const bars = [
+    [chords[0], chords[1]],
+    [chords[2], chords[3]],
+    [chords[4], chords[5]],
+    [chords[6]],
+  ];
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: chords.join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
 // ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
 // C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
@@ -3943,6 +3970,21 @@ function ensureMinor2516PhrasesLoaded(){
   if (!minor2516LoadPromise) minor2516LoadPromise = loadMinor2516Phrases();
   return minor2516LoadPromise;
 }
+let COLTRANE1001_PHRASES = [];
+let coltrane1001LoadPromise = null;
+function loadColtrane1001Phrases(){
+  return fetch("data/coltrane1001_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/coltrane1001_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { COLTRANE1001_PHRASES = tunes; })
+    .catch(() => { COLTRANE1001_PHRASES = []; });
+}
+function ensureColtrane1001PhrasesLoaded(){
+  if (!coltrane1001LoadPromise) coltrane1001LoadPromise = loadColtrane1001Phrases();
+  return coltrane1001LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3968,6 +4010,7 @@ function getPhrasePool(category, variant){
   if (category === "minor1625") return MINOR1625_PHRASES;
   if (category === "major2516") return MAJOR2516_PHRASES;
   if (category === "minor2516") return MINOR2516_PHRASES;
+  if (category === "coltrane1001") return COLTRANE1001_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -4061,6 +4104,7 @@ async function render(){
   if (category === "minor1625") await ensureMinor1625PhrasesLoaded();
   if (category === "major2516") await ensureMajor2516PhrasesLoaded();
   if (category === "minor2516") await ensureMinor2516PhrasesLoaded();
+  if (category === "coltrane1001") await ensureColtrane1001PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -4160,7 +4204,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516" || category === "minor2516"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516" || category === "minor2516" || category === "coltrane1001"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -4176,6 +4220,7 @@ async function render(){
       : category === "minor1625" ? transposeMinor1625Phrase
       : category === "major2516" ? transposeMajor2516Phrase
       : category === "minor2516" ? transposeMinor2516Phrase
+      : category === "coltrane1001" ? transposeColtrane1001Phrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
