@@ -130,7 +130,8 @@ const CATEGORIES = [
   { id:"dominant7th", label:"1001Dominant7th" },
   { id:"major1625", label:"1001major1625" },
   { id:"minor1625", label:"1001minor1625" },
-  { id:"major2516", label:"1001major2516" }
+  { id:"major2516", label:"1001major2516" },
+  { id:"minor2516", label:"1001minor2516" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -3120,6 +3121,21 @@ function transposeMajor2516Phrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
+// 1001minor2516は1001minor1625(ⅰ-Ⅵ7-ⅱ°-Ⅴ7alt)と同じ4つのコードを
+// ⅱ°-Ⅴ7alt-ⅰ-Ⅵ7の順に並べ替えたターンアラウンドなので、major2516と同様に
+// 新しい辞書は作らずMINOR_251/MAJOR_1625のインデックスを入れ替えて流用する。
+function transposeMinor2516Phrase(phrase, key){
+  const minorChords = MINOR_251[key];
+  const chords = [minorChords[0], minorChords[1], minorChords[2], MAJOR_1625[key][1]];
+  const bars = chords.map(c => [c]);
+  return {
+    ...phrase,
+    key,
+    bars,
+    chordsDisplay: chords.join(" | "),
+    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
+  };
+}
 // ジェイミーV7+9は「キー」の意味が他のカテゴリと異なり、選んだキーが
 // ドミナント(V7#9)のルート音そのものになる(元譜がCで書かれている版は
 // C7#9→Fmaj7の進行になっているため)。解決先のImaj7は完全4度上のキー。
@@ -3912,6 +3928,21 @@ function ensureMajor2516PhrasesLoaded(){
   if (!major2516LoadPromise) major2516LoadPromise = loadMajor2516Phrases();
   return major2516LoadPromise;
 }
+let MINOR2516_PHRASES = [];
+let minor2516LoadPromise = null;
+function loadMinor2516Phrases(){
+  return fetch("data/minor2516_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/minor2516_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { MINOR2516_PHRASES = tunes; })
+    .catch(() => { MINOR2516_PHRASES = []; });
+}
+function ensureMinor2516PhrasesLoaded(){
+  if (!minor2516LoadPromise) minor2516LoadPromise = loadMinor2516Phrases();
+  return minor2516LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -3936,6 +3967,7 @@ function getPhrasePool(category, variant){
   if (category === "major1625") return MAJOR1625_PHRASES;
   if (category === "minor1625") return MINOR1625_PHRASES;
   if (category === "major2516") return MAJOR2516_PHRASES;
+  if (category === "minor2516") return MINOR2516_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -4028,6 +4060,7 @@ async function render(){
   if (category === "major1625") await ensureMajor1625PhrasesLoaded();
   if (category === "minor1625") await ensureMinor1625PhrasesLoaded();
   if (category === "major2516") await ensureMajor2516PhrasesLoaded();
+  if (category === "minor2516") await ensureMinor2516PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -4127,7 +4160,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516" || category === "minor2516"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -4142,6 +4175,7 @@ async function render(){
       : category === "major1625" ? transposeMajor1625Phrase
       : category === "minor1625" ? transposeMinor1625Phrase
       : category === "major2516" ? transposeMajor2516Phrase
+      : category === "minor2516" ? transposeMinor2516Phrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
