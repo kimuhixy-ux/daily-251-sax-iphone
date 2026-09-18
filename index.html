@@ -3486,7 +3486,7 @@ function renderScore(notes, chordPlan, phrase){
       const localBeat = (e.barIndex - barStart) * BEATS_PER_BAR + e.beatInBar;
       const x = STAFF_LEFT + localBeat * BEAT_W;
       const color = CHORD_COLORS[e.fn] || INK;
-      svg += `<text x="${x}" y="${chordLabelY}" font-size="14" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
+      svg += `<text x="${x}" y="${chordLabelY}" font-size="12" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
     });
 
     // Rest pass: eighth/quarter/half rest glyphs. Rests carry no pitch, so
