@@ -3433,7 +3433,12 @@ function renderScore(notes, chordPlan, phrase){
     let lowOffset = DEGREE_LABEL_Y + 8; // 度数ラベル(fixed offset)が通常は最下端
     notes.filter(n => !n.rest && n.barIndex >= barStart && n.barIndex < rowBarEnd).forEach(n => {
       const step = diatonicStep(n.letter, n.octave);
-      const noteTopOffset = (8 - step) * HALF_GAP - NOTE_RY - (n.accidental || n.natural ? 20 : 0);
+      // step<4(中央線より低い音)は符幹が上向きになり、符幹+連桁の分
+      // (STEM_LEN+BEAM_Y_PAD)だけ音符の頭より高い位置まで伸びる。これを
+      // 見込まずにラベル位置を決めると、低い音の符幹・連桁とコード名が
+      // 重なることがあるため考慮する。
+      const stemAllowance = step < 4 ? STEM_LEN + BEAM_Y_PAD : 0;
+      const noteTopOffset = (8 - step) * HALF_GAP - NOTE_RY - stemAllowance - (n.accidental || n.natural ? 20 : 0);
       labelOffset = Math.min(labelOffset, noteTopOffset - 12);
       const noteBottomOffset = (8 - step) * HALF_GAP + NOTE_RY;
       lowOffset = Math.max(lowOffset, noteBottomOffset);
