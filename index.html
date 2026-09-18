@@ -3137,18 +3137,19 @@ function transposeMinor2516Phrase(phrase, key){
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
-// 1001coltraneはコルトレーンの3トニックシステム(COLTRANE_CENTERSの3つの
-// センターを長3度ずつ移動)で、次のセンターへその完全4度下のドミナント7th
-// で入る進行(Countdown型)。新しい辞書は作らずCOLTRANE_CENTERSとMAJOR_251
-// (のV7)を組み合わせて流用する。
+// 1001coltraneはコルトレーンの名曲"Countdown"の進行。ⅱ-Ⅴ-Ⅰ(Tune Up型)の
+// Ⅴ-Ⅰ部分をコルトレーンの3トニックシステム(COLTRANE_CENTERSの3つの
+// センターを長3度ずつ移動)で置き換えたもの(最初のⅡm7だけは3トニック化
+// されず元のまま残る)。新しい辞書は作らずCOLTRANE_CENTERSとMAJOR_251
+// (のⅱ7/Ⅴ7)を組み合わせて流用する。
 function transposeColtrane1001Phrase(phrase, key){
   const centers = COLTRANE_CENTERS[key];
-  const chords = [];
+  const chords = [MAJOR_251[centers[0]][0]];
   for (let i = 0; i < 3; i++){
-    chords.push(`${centers[i]}maj7`);
-    chords.push(MAJOR_251[centers[(i + 1) % 3]][1]);
+    const next = centers[(i + 1) % 3];
+    chords.push(MAJOR_251[next][1]);
+    chords.push(`${next}maj7`);
   }
-  chords.push(`${centers[0]}maj7`);
   const bars = [
     [chords[0], chords[1]],
     [chords[2], chords[3]],
@@ -3727,7 +3728,10 @@ function barsToPlan(bars, fns){
 function chordPlanFromBars(bars){
   const events = [];
   bars.forEach((barChords, i) => {
-    barChords.forEach((label, j) => events.push({ barIndex: i, beatInBar: j, label, fn: null }));
+    // 1小節に複数コードが入っている場合(例: 半小節ごとに2つ)は、
+    // 小節内で均等に配置する。1個なら従来通り小節頭(拍0)のまま。
+    const step = BEATS_PER_BAR / barChords.length;
+    barChords.forEach((label, j) => events.push({ barIndex: i, beatInBar: j * step, label, fn: null }));
   });
   return { events, totalBars: bars.length };
 }
