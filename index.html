@@ -3495,7 +3495,11 @@ function renderScore(notes, chordPlan, phrase){
         else if (gapToPrev < 24){ accSize = 15; accOffset = 12; }
         else if (gapToPrev < 34){ accSize = 18; accOffset = 15; }
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
-        svg += `<text x="${cx - accOffset}" y="${y + 7}" font-size="${accSize}" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
+        // 臨時記号の縦位置は音符の中心(y)基準。文字のベースラインは
+        // グリフの中心よりかなり下にあるため、フォントサイズに比例した
+        // オフセットを足してグリフの見た目の重心を音符の中心に合わせる。
+        const accYOffset = accSize * 0.45;
+        svg += `<text x="${cx - accOffset}" y="${y + accYOffset}" font-size="${accSize}" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
       }
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}" opacity="${opacity}"/>`;
       prevNoteCx = cx;
