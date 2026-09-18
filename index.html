@@ -3544,7 +3544,9 @@ function renderScore(notes, chordPlan, phrase){
         // グリフの中心よりかなり下にあるため、フォントサイズに比例した
         // オフセットを足してグリフの見た目の重心を音符の中心に合わせる。
         // 明朝体は字面がゴシック体より下寄りなため係数も小さくする。
-        const accYOffset = accSize * 0.3;
+        // ♯だけ字面の重心が他のグリフより高い位置にあるため、
+        // その分だけ追加で下げて他の記号と揃える。
+        const accYOffset = accSize * 0.3 + (n.accidental > 0 ? accSize * 0.15 : 0);
         svg += `<text x="${cx - accOffset}" y="${y + accYOffset}" font-size="${accSize}" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-weight="700" fill="${INK}" opacity="${opacity}">${glyph}</text>`;
       }
       // 符頭を右肩上がりの楕円にする(手書き・活字譜面の符頭に近い形)。
