@@ -3538,7 +3538,7 @@ function renderScore(notes, chordPlan, phrase){
         // 揃わなくなるため、間隔に関わらず固定サイズ・固定距離にする。
         // 明朝体のグリフはゴシック体より一回り大きく見えるため、
         // 同じ見た目の大きさになるようフォントサイズを控えめにする。
-        const accSize = 13, accOffset = 12;
+        const accSize = 13, accOffset = 15;
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
         // 臨時記号の縦位置は音符の中心(y)基準。文字のベースラインは
         // グリフの中心よりかなり下にあるため、フォントサイズに比例した
