@@ -3519,7 +3519,6 @@ function renderScore(notes, chordPlan, phrase){
     // per-note geometry cached for the beam pass below.
     const rowNotes = notes.filter(n => n.barIndex >= barStart && n.barIndex < rowBarEnd && !n.rest);
     const geo = new Map();
-    let prevNoteCx = -Infinity;
     rowNotes.forEach(n => {
       const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
       const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
@@ -3535,16 +3534,11 @@ function renderScore(notes, chordPlan, phrase){
       }
       const opacity = n.tied ? 0.35 : 1;
       if (n.accidental || n.natural){
-        // 直前の音符との間隔が狭い(8分音符以降の密なパッセージ)ときは
-        // 固定サイズのまま描くと音符・臨時記号同士が重なるため、
-        // 間隔に応じて臨時記号を縮小・位置調整して重なりを避ける。
-        const gapToPrev = cx - prevNoteCx;
+        // 音符の間隔によってサイズ・距離を変えると楽譜ごとに見た目が
+        // 揃わなくなるため、間隔に関わらず固定サイズ・固定距離にする。
         // 明朝体のグリフはゴシック体より一回り大きく見えるため、
         // 同じ見た目の大きさになるようフォントサイズを控えめにする。
-        let accSize = 16, accOffset = 17;
-        if (gapToPrev < 16){ accSize = 9; accOffset = 9; }
-        else if (gapToPrev < 24){ accSize = 11; accOffset = 11; }
-        else if (gapToPrev < 34){ accSize = 13; accOffset = 14; }
+        const accSize = 13, accOffset = 12;
         const glyph = n.accidental < 0 ? "♭" : n.accidental > 0 ? "♯" : "♮";
         // 臨時記号の縦位置は音符の中心(y)基準。文字のベースラインは
         // グリフの中心よりかなり下にあるため、フォントサイズに比例した
@@ -3556,7 +3550,6 @@ function renderScore(notes, chordPlan, phrase){
       // 符頭を右肩上がりの楕円にする(手書き・活字譜面の符頭に近い形)。
       // SVGはy軸が下向きのため、右肩を上げるには回転角を負にする。
       svg += `<ellipse cx="${cx}" cy="${y}" rx="${NOTE_RX}" ry="${NOTE_RY}" fill="${INK}" opacity="${opacity}" transform="rotate(-20 ${cx} ${y})"/>`;
-      prevNoteCx = cx;
 
       const chordEvent = activeChordForNote(n, chordPlan);
       if (chordEvent){
