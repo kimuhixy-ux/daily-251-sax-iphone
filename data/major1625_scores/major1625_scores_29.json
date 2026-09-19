@@ -48,7 +48,8 @@
       "duration": 1.5,
       "letter": "B",
       "octave": 4,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 0,
@@ -160,7 +161,8 @@
       "duration": 1.5,
       "letter": "D",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 2,

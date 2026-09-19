@@ -224,7 +224,8 @@
       "duration": 3.0,
       "letter": "C",
       "octave": 4,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     }
   ]
 }

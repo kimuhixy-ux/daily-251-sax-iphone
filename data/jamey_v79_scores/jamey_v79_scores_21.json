@@ -206,7 +206,8 @@
       "duration": 4.0,
       "letter": "A",
       "octave": 3,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     }
   ]
 }

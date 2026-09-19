@@ -79,6 +79,12 @@ def build_notes(sounding_part, base_measure):
             entry["rest"] = True
         else:
             continue
+        # タイで前の音符から継続している音符(continue/stop)は弾き直さないため、
+        # アプリ側の描画で弧線を引いて薄く表示する対象としてtiedを立てる。
+        # startは「これから次の音とタイでつながる」側なので対象外。
+        tie = getattr(n, "tie", None)
+        if tie is not None and tie.type in ("continue", "stop"):
+            entry["tied"] = True
         notes.append(entry)
     return notes
 

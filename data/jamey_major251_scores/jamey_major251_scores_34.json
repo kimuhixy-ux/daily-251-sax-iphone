@@ -136,7 +136,8 @@
       "duration": 4.0,
       "letter": "G",
       "octave": 4,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     }
   ]
 }

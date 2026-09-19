@@ -250,7 +250,8 @@
       "duration": 0.3333333333333333,
       "letter": "B",
       "octave": 4,
-      "accidental": -1
+      "accidental": -1,
+      "tied": true
     },
     {
       "barIndex": 3,

@@ -234,7 +234,8 @@
       "duration": 0.5,
       "letter": "E",
       "octave": 5,
-      "accidental": -1
+      "accidental": -1,
+      "tied": true
     },
     {
       "barIndex": 3,

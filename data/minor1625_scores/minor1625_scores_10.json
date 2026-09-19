@@ -72,7 +72,8 @@
       "duration": 1.0,
       "letter": "E",
       "octave": 4,
-      "accidental": -1
+      "accidental": -1,
+      "tied": true
     },
     {
       "barIndex": 1,

@@ -128,7 +128,8 @@
       "duration": 4.0,
       "letter": "C",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     }
   ]
 }

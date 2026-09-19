@@ -94,7 +94,8 @@
       "duration": 2.0,
       "letter": "A",
       "octave": 4,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 2,

@@ -166,7 +166,8 @@
       "duration": 1.5,
       "letter": "E",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 2,
@@ -206,7 +207,8 @@
       "duration": 2.0,
       "letter": "A",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     }
   ]
 }

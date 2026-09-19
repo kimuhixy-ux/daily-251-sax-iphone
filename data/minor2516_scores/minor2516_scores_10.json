@@ -242,7 +242,8 @@
       "duration": 2.0,
       "letter": "D",
       "octave": 5,
-      "accidental": -1
+      "accidental": -1,
+      "tied": true
     }
   ]
 }

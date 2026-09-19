@@ -48,7 +48,8 @@
       "duration": 0.5,
       "letter": "E",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 0,
@@ -112,7 +113,8 @@
       "duration": 0.5,
       "letter": "A",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 1,
@@ -176,7 +178,8 @@
       "duration": 0.5,
       "letter": "D",
       "octave": 6,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 2,
@@ -240,7 +243,8 @@
       "duration": 0.5,
       "letter": "D",
       "octave": 6,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 3,

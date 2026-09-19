@@ -232,7 +232,8 @@
       "duration": 2.0,
       "letter": "F",
       "octave": 5,
-      "accidental": 1
+      "accidental": 1,
+      "tied": true
     }
   ]
 }

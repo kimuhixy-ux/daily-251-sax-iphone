@@ -214,7 +214,8 @@
       "duration": 0.5,
       "letter": "F",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 3,

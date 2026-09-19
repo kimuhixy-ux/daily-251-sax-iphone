@@ -192,7 +192,8 @@
       "duration": 1.0,
       "letter": "G",
       "octave": 5,
-      "accidental": 0
+      "accidental": 0,
+      "tied": true
     },
     {
       "barIndex": 2,
