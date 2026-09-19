@@ -3166,15 +3166,13 @@ function transposeColtrane1001Phrase(phrase, key){
   };
 }
 // 1001major251は基本のⅡ-Ⅴ-Ⅰ(ⅱ7-Ⅴ7-Ⅰmaj7)進行を1小節ずつ、4小節目は
-// 休符とする形。新しい辞書は作らずMAJOR_251をそのまま流用する。
+// メロディーが休符となる形。ただしコード自体はリードシートの慣習通り
+// 休符中も鳴り続けるため、chad_lb等と同じくpracticeBars()で4小節目も
+// Ⅰのコードを保持する(空の小節配列のままだとiReal Proへの書き出しで
+// 空の小節ができてしまい、再生できないという不具合につながるため)。
 function transposeMajor251Phrase(phrase, key){
-  const chords = MAJOR_251[key];
-  const bars = [
-    [chords[0]],
-    [chords[1]],
-    [chords[2]],
-    [],
-  ];
+  const chords = practiceBars(MAJOR_251[key]);
+  const bars = chords.map(c => [c]);
   return {
     ...phrase,
     key,
