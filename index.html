@@ -4308,7 +4308,13 @@ async function render(){
     document.getElementById("tip").textContent = transposed.chordsDisplay;
     currentPractice = {
       title: `${phrase.title} ${key}`,
-      mode: category === "jamey_major251" ? "Major" : "Minor",
+      // dorianは単一のマイナー7thコードを弾く練習、dominant7thは
+      // ミクソリディアン(実質メジャーキー扱い)なので、"jamey_major251以外は
+      // 全部Minor"というだった以前の判定はmajor251/major1625/major2516/
+      // coltrane1001/dominant7thのキー表記(iReal Pro側)を誤って
+      // マイナー表記にしてしまっていた。実際にマイナー進行のカテゴリだけを
+      // 列挙する形に直す。
+      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251") ? "Minor" : "Major",
       key,
       chordPlan
     };
