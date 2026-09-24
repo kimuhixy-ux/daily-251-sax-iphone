@@ -140,7 +140,8 @@ const CATEGORIES = [
   { id:"ai_minor2516", label:"AI-minor2516" },
   { id:"ai_major2516", label:"AI-major2516" },
   { id:"ai_minor1625", label:"AI-minor1625" },
-  { id:"ai_major1625", label:"AI-major1625" }
+  { id:"ai_major1625", label:"AI-major1625" },
+  { id:"ai_dorian", label:"AI-Dorian" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4086,7 +4087,8 @@ const AI_CATEGORY_DIRS = {
   ai_minor2516: "ai_minor2516_scores",
   ai_major2516: "ai_major2516_scores",
   ai_minor1625: "ai_minor1625_scores",
-  ai_major1625: "ai_major1625_scores"
+  ai_major1625: "ai_major1625_scores",
+  ai_dorian:    "ai_dorian_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4356,6 +4358,7 @@ async function render(){
       : category === "ai_major2516" ? transposeMajor2516Phrase
       : category === "ai_minor1625" ? transposeMinor1625Phrase
       : category === "ai_major1625" ? transposeMajor1625Phrase
+      : category === "ai_dorian" ? transposeDorianPhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
@@ -4373,7 +4376,7 @@ async function render(){
       // coltrane1001/dominant7thのキー表記(iReal Pro側)を誤って
       // マイナー表記にしてしまっていた。実際にマイナー進行のカテゴリだけを
       // 列挙する形に直す。
-      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625") ? "Minor" : "Major",
+      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625" || category === "ai_dorian") ? "Minor" : "Major",
       key,
       chordPlan
     };
