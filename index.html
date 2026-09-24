@@ -134,7 +134,8 @@ const CATEGORIES = [
   { id:"minor2516", label:"1001minor2516" },
   { id:"coltrane1001", label:"1001coltrane" },
   { id:"major251", label:"1001major251" },
-  { id:"minor251", label:"1001minor251" }
+  { id:"minor251", label:"1001minor251" },
+  { id:"ai_minor251", label:"AI-minor251" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4055,6 +4056,23 @@ function ensureMinor251PhrasesLoaded(){
   if (!minor251LoadPromise) minor251LoadPromise = loadMinor251Phrases();
   return minor251LoadPromise;
 }
+// AI-minor251は1001minor251と同じⅱø7-Ⅴ7alt-ⅰ6進行のAI作曲版。
+// 出典が違うので曲データだけ別ディレクトリに分け、進行は同じ関数を使う。
+let AI_MINOR251_PHRASES = [];
+let aiMinor251LoadPromise = null;
+function loadAiMinor251Phrases(){
+  return fetch("data/ai_minor251_scores/manifest.json")
+    .then(res => res.ok ? res.json() : [])
+    .then(manifest => Promise.all(manifest.map(entry =>
+      fetch(`data/ai_minor251_scores/${entry.file}`).then(res => res.json())
+    )))
+    .then(tunes => { AI_MINOR251_PHRASES = tunes; })
+    .catch(() => { AI_MINOR251_PHRASES = []; });
+}
+function ensureAiMinor251PhrasesLoaded(){
+  if (!aiMinor251LoadPromise) aiMinor251LoadPromise = loadAiMinor251Phrases();
+  return aiMinor251LoadPromise;
+}
 function getPhrasePool(category, variant){
   if (category === "diatonic") return variant === "minor" ? MINOR_PHRASES : MAJOR_PHRASES;
   if (category === "approach") return APPROACH_PHRASES;
@@ -4083,6 +4101,7 @@ function getPhrasePool(category, variant){
   if (category === "coltrane1001") return COLTRANE1001_PHRASES;
   if (category === "major251") return MAJOR251_PHRASES;
   if (category === "minor251") return MINOR251_PHRASES;
+  if (category === "ai_minor251") return AI_MINOR251_PHRASES;
   return MAJOR_PHRASES;
 }
 
@@ -4179,6 +4198,7 @@ async function render(){
   if (category === "coltrane1001") await ensureColtrane1001PhrasesLoaded();
   if (category === "major251") await ensureMajor251PhrasesLoaded();
   if (category === "minor251") await ensureMinor251PhrasesLoaded();
+  if (category === "ai_minor251") await ensureAiMinor251PhrasesLoaded();
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
@@ -4278,7 +4298,7 @@ async function render(){
     return;
   }
 
-  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516" || category === "minor2516" || category === "coltrane1001" || category === "major251" || category === "minor251"){
+  if (category === "jamey_major251" || category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "dominant7th" || category === "major1625" || category === "minor1625" || category === "major2516" || category === "minor2516" || category === "coltrane1001" || category === "major251" || category === "minor251" || category === "ai_minor251"){
     if (!phrase){
       document.getElementById("dateLine").textContent = `${today} / ${catLabel}`;
       document.getElementById("phraseName").textContent = "曲がまだ登録されていません";
@@ -4297,6 +4317,7 @@ async function render(){
       : category === "coltrane1001" ? transposeColtrane1001Phrase
       : category === "major251" ? transposeMajor251Phrase
       : category === "minor251" ? transposeMinor251Phrase
+      : category === "ai_minor251" ? transposeMinor251Phrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
@@ -4314,7 +4335,7 @@ async function render(){
       // coltrane1001/dominant7thのキー表記(iReal Pro側)を誤って
       // マイナー表記にしてしまっていた。実際にマイナー進行のカテゴリだけを
       // 列挙する形に直す。
-      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251") ? "Minor" : "Major",
+      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251") ? "Minor" : "Major",
       key,
       chordPlan
     };

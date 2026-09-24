@@ -1,6 +1,6 @@
 {
-  "id": "minor251_scores_02",
-  "title": "1001minor251 #02",
+  "id": "ai_minor251_scores_05",
+  "title": "AI-minor251 #05",
   "key": "C",
   "bars": [
     [],
@@ -13,20 +13,22 @@
     {
       "barIndex": 0,
       "beatInBar": 0.0,
-      "duration": 1.0,
-      "rest": true
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
     },
     {
       "barIndex": 0,
-      "beatInBar": 1.0,
-      "duration": 2.0,
+      "beatInBar": 0.5,
+      "duration": 0.5,
       "letter": "F",
       "octave": 4,
       "accidental": 0
     },
     {
       "barIndex": 0,
-      "beatInBar": 3.0,
+      "beatInBar": 1.0,
       "duration": 0.5,
       "letter": "A",
       "octave": 4,
@@ -34,128 +36,170 @@
     },
     {
       "barIndex": 0,
-      "beatInBar": 3.5,
-      "duration": 0.5,
-      "letter": "C",
-      "octave": 5,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 0.0,
-      "duration": 0.5,
-      "letter": "B",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 0.5,
-      "duration": 0.5,
-      "letter": "D",
-      "octave": 5,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 1.0,
-      "duration": 0.3333333333333333,
-      "letter": "C",
-      "octave": 5,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 1.333333,
-      "duration": 0.3333333333333333,
-      "letter": "B",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 1.666667,
-      "duration": 0.3333333333333333,
-      "letter": "A",
-      "octave": 4,
-      "accidental": -1
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 2.0,
-      "duration": 0.5,
-      "letter": "G",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 2.5,
-      "duration": 0.5,
-      "letter": "F",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 3.0,
-      "duration": 0.5,
-      "letter": "E",
-      "octave": 4,
-      "accidental": -1
-    },
-    {
-      "barIndex": 1,
-      "beatInBar": 3.5,
-      "duration": 0.5,
-      "letter": "D",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 2,
-      "beatInBar": 0.0,
-      "duration": 0.5,
-      "letter": "C",
-      "octave": 4,
-      "accidental": 0
-    },
-    {
-      "barIndex": 2,
-      "beatInBar": 0.5,
-      "duration": 0.5,
-      "letter": "E",
-      "octave": 4,
-      "accidental": -1
-    },
-    {
-      "barIndex": 2,
-      "beatInBar": 1.0,
-      "duration": 0.5,
-      "rest": true
-    },
-    {
-      "barIndex": 2,
       "beatInBar": 1.5,
       "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.0,
+      "duration": 0.5,
       "letter": "G",
       "octave": 4,
       "accidental": 0
     },
     {
-      "barIndex": 2,
-      "beatInBar": 2.0,
+      "barIndex": 0,
+      "beatInBar": 2.5,
       "duration": 0.5,
       "letter": "A",
       "octave": 4,
       "accidental": -1
     },
     {
-      "barIndex": 2,
-      "beatInBar": 2.5,
-      "duration": 1.5,
-      "letter": "C",
+      "barIndex": 0,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "D",
       "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 0.16666666666666666,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.166667,
+      "duration": 0.16666666666666666,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.333333,
+      "duration": 0.16666666666666666,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "D",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 1.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.0,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.5,
+      "duration": 0.5,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 3.0,
+      "duration": 0.5,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 3.5,
+      "duration": 0.5,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 0.5,
+      "letter": "G",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.5,
+      "duration": 0.5,
+      "letter": "F",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.0,
+      "duration": 0.3333333333333333,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.333333,
+      "duration": 0.3333333333333333,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 1.666667,
+      "duration": 0.3333333333333333,
+      "letter": "E",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "C",
+      "octave": 4,
       "accidental": 0
     },
     {
@@ -163,7 +207,7 @@
       "beatInBar": 0.0,
       "duration": 1.0,
       "letter": "C",
-      "octave": 5,
+      "octave": 4,
       "accidental": 0,
       "tied": true
     },
