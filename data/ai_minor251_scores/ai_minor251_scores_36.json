@@ -1,0 +1,83 @@
+{
+  "id": "ai_minor251_scores_36",
+  "title": "AI-minor251 #36",
+  "key": "C",
+  "bars": [
+    [],
+    [],
+    [],
+    []
+  ],
+  "chordsDisplay": "(コード情報なし)",
+  "notes": [
+    {
+      "barIndex": 0,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "letter": "D",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 0,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "A",
+      "octave": 4,
+      "accidental": -1
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "letter": "B",
+      "octave": 4,
+      "accidental": 0
+    },
+    {
+      "barIndex": 1,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 0.0,
+      "duration": 2.0,
+      "letter": "E",
+      "octave": 5,
+      "accidental": -1
+    },
+    {
+      "barIndex": 2,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 0.0,
+      "duration": 1.0,
+      "letter": "C",
+      "octave": 5,
+      "accidental": 0,
+      "tied": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 1.0,
+      "duration": 1.0,
+      "rest": true
+    },
+    {
+      "barIndex": 3,
+      "beatInBar": 2.0,
+      "duration": 2.0,
+      "rest": true
+    }
+  ]
+}
