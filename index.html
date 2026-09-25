@@ -144,7 +144,8 @@ const CATEGORIES = [
   { id:"ai_dorian", label:"AI-Dorian" },
   { id:"ai_coltrane", label:"AI-coltrane" },
   { id:"ai_approach_enclosure", label:"AI-アプローチ&エンクロージャー" },
-  { id:"bebap_progression", label:"Bebap-progression" }
+  { id:"bebap_progression", label:"Bebap-progression" },
+  { id:"ai_bebap_progression", label:"AI-Bebap-progression" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4094,7 +4095,8 @@ const AI_CATEGORY_DIRS = {
   ai_dorian:    "ai_dorian_scores",
   ai_coltrane:  "ai_coltrane_scores",
   ai_approach_enclosure: "ai_approach_enclosure_scores",
-  bebap_progression: "bebap_progression_scores"
+  bebap_progression: "bebap_progression_scores",
+  ai_bebap_progression: "ai_bebap_progression_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4370,6 +4372,7 @@ async function render(){
       // bars内のコード記号ごと移調する共通の関数を使う。
       : category === "ai_approach_enclosure" ? transposeApproachEnclosurePhrase
       : category === "bebap_progression" ? transposeApproachEnclosurePhrase
+      : category === "ai_bebap_progression" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
