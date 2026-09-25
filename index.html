@@ -47,7 +47,9 @@
     <div class="full"><label for="category">カテゴリー</label><select id="category"></select></div>
     <div id="modeField"><label for="mode">モード</label><select id="mode"></select></div>
     <div id="keyField"><label for="key">キー</label><select id="key"></select></div>
+    <div class="full" id="instrumentField"><label for="instrument">楽器</label><select id="instrument"></select></div>
   </div>
+  <p class="status" id="instrumentStatus"></p>
 
   <section class="card">
     <p class="date" id="dateLine"></p>
@@ -4176,9 +4178,58 @@ const categorySelect = document.getElementById("category");
 CATEGORIES.forEach(c => categorySelect.add(new Option(c.label, c.id)));
 const modeSelect = document.getElementById("mode");
 const keySelect = document.getElementById("key");
-KEYS.forEach(k => keySelect.add(new Option(k, k)));
 const modeField = document.getElementById("modeField");
 const keyField = document.getElementById("keyField");
+
+// 移調楽器の「記譜音 − 実音」の半音数。アルトはE♭管で長6度上、テナーはB♭管で
+// 長9度上に記譜するが、調名はオクターブを無視してよいので長2度上として扱う。
+const INSTRUMENTS = [
+  { id: "written", label: "指定なし（譜面の調で選ぶ）", up: 0 },
+  { id: "alto",    label: "アルトサックス（E♭管）",     up: 9 },
+  { id: "tenor",   label: "テナーサックス（B♭管）",     up: 2 },
+];
+const instrumentSelect = document.getElementById("instrument");
+const instrumentField = document.getElementById("instrumentField");
+const instrumentStatus = document.getElementById("instrumentStatus");
+INSTRUMENTS.forEach(i => instrumentSelect.add(new Option(i.label, i.id)));
+// いま適用している移調量。楽器を切り替えたとき「実音は変えずに譜面の調だけ
+// 移す」ために、切り替え前の値が必要になるので変数に持つ。
+let instrumentUp = 0;
+
+function instrumentUpOf(id){
+  const found = INSTRUMENTS.find(i => i.id === id);
+  return found ? found.up : 0;
+}
+function writtenKeyOf(concertKey){
+  return KEYS[(KEYS.indexOf(concertKey) + instrumentUp) % KEYS.length];
+}
+function concertKeyOf(writtenKey, up = instrumentUp){
+  return KEYS[(KEYS.indexOf(writtenKey) - up + KEYS.length) % KEYS.length];
+}
+// 選択肢の value は今までどおり譜面の調のまま。楽器を選んだときだけ、
+// 実音の順に並べ替えて「実音（譜面◯）」と表示する。こうすると移調・描画・
+// iReal Pro書き出しの既存処理に一切手を入れずに済む。
+function rebuildKeyOptions(){
+  keySelect.length = 0;
+  KEYS.forEach(concert => {
+    const written = writtenKeyOf(concert);
+    keySelect.add(new Option(instrumentUp ? `${concert}（譜面${written}）` : written, written));
+  });
+}
+function updateInstrumentStatus(){
+  const label = INSTRUMENTS.find(i => i.id === instrumentSelect.value).label;
+  instrumentStatus.textContent = instrumentUp
+    ? `${label}：キーは実音で選びます。括弧内と譜面・iReal Proは記譜音の調です。`
+    : "";
+}
+// 楽器を替えても「いま練習している実音の調」は変わらないようにする。
+function applyInstrument(){
+  const concert = concertKeyOf(keySelect.value);
+  instrumentUp = instrumentUpOf(instrumentSelect.value);
+  rebuildKeyOptions();
+  keySelect.value = writtenKeyOf(concert);
+  updateInstrumentStatus();
+}
 
 let currentIndex = 0;
 let currentPractice = null;
@@ -4238,6 +4289,9 @@ function updateModeSelect(category){
     keyField.style.display = "";
     keyField.classList.add("full");
   }
+  // キーを選べないカテゴリーでは楽器の指定も意味を持たないので一緒に隠す。
+  instrumentField.style.display = keyField.style.display;
+  instrumentStatus.style.display = keyField.style.display;
 }
 function seedIndex(category, variant, key){
   const pool = getPhrasePool(category, variant);
@@ -4512,8 +4566,14 @@ document.getElementById("todayBtn").addEventListener("click", () => {
   if (categorySelect.value === "original" || categorySelect.value === "xml"){
     currentIndex = seedIndex(categorySelect.value, modeSelect.value, "");
   } else {
-    keySelect.value = todayKey();
+    keySelect.value = writtenKeyOf(todayKey());
   }
+  render();
+});
+instrumentSelect.addEventListener("change", () => {
+  applyInstrument();
+  localStorage.setItem("instrument", instrumentSelect.value);
+  currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
   render();
 });
 const octaveStatus = document.getElementById("octaveStatus");
@@ -4557,8 +4617,14 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
   }
 });
 
+// 楽器は持ち替えない限り変わらない設定なので、次回も同じものを選んだ状態で開く。
+const savedInstrument = localStorage.getItem("instrument");
+if (savedInstrument && INSTRUMENTS.some(i => i.id === savedInstrument)) instrumentSelect.value = savedInstrument;
+instrumentUp = instrumentUpOf(instrumentSelect.value);
+rebuildKeyOptions();
+updateInstrumentStatus();
 updateModeSelect(categorySelect.value);
-keySelect.value = todayKey();
+keySelect.value = writtenKeyOf(todayKey());
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
 ensureXmlPhrasesLoaded();
