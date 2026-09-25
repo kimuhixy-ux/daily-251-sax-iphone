@@ -3040,16 +3040,6 @@ function transposeNoteToKey(note, key){
   }
   return { ...note, letter: newLetter, octave: newOctave, accidental: newAccidental };
 }
-// Bebap-progressionはMuseScoreからの取り込みで、元ファイルにコード記号が
-// 入っていない。辞書で勝手にコードを当てると原曲と違う響きになるため、
-// barsは空のまま音符だけを移調する。
-function transposeBebapProgressionPhrase(phrase, key){
-  return {
-    ...phrase,
-    key,
-    notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
-  };
-}
 function transposeChadLbPhrase(phrase, key){
   const bars = practiceBars(MAJOR_251[key]).map(c => [c]);
   return {
@@ -4376,10 +4366,10 @@ async function render(){
       : category === "ai_major1625" ? transposeMajor1625Phrase
       : category === "ai_dorian" ? transposeDorianPhrase
       : category === "ai_coltrane" ? transposeColtrane1001Phrase
-      // 元カテゴリーと同じく、コードはJS辞書ではなくJSONのbarsに入っている
-      // (全小節Cmaj7)ので、bars内のコード記号ごと移調する関数を使う。
+      // これらはコードをJS辞書ではなくJSONのbarsに持つので、
+      // bars内のコード記号ごと移調する共通の関数を使う。
       : category === "ai_approach_enclosure" ? transposeApproachEnclosurePhrase
-      : category === "bebap_progression" ? transposeBebapProgressionPhrase
+      : category === "bebap_progression" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);

@@ -3,12 +3,20 @@
  "title": "Bebap-progression #5",
  "key": "C",
  "bars": [
-  [],
-  [],
-  [],
-  []
+  [
+   "Cmaj7"
+  ],
+  [
+   "Cmaj7"
+  ],
+  [
+   "Cm7"
+  ],
+  [
+   "Cm7"
+  ]
  ],
- "chordsDisplay": "(コード情報なし)",
+ "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | Cm7",
  "notes": [
   {
    "barIndex": 0,
