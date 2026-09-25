@@ -145,7 +145,8 @@ const CATEGORIES = [
   { id:"ai_coltrane", label:"AI-coltrane" },
   { id:"ai_approach_enclosure", label:"AI-アプローチ&エンクロージャー" },
   { id:"bebap_progression", label:"Bebap-progression" },
-  { id:"ai_bebap_progression", label:"AI-Bebap-progression" }
+  { id:"ai_bebap_progression", label:"AI-Bebap-progression" },
+  { id:"hardbop1001", label:"1001HardBop" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -2900,11 +2901,17 @@ function localYmd(date = new Date()){
 function hashString(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
 function todayKey(){ const d = new Date(); const n = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); return KEYS[n % KEYS.length]; }
 function irealChord(chord){
+  // 分数コード(Cm/Bb)はルート側だけ記号を変換する。ベース音は音名のままで
+  // iReal Proに通るため、"/"以降に変換をかけると逆に壊れる。
+  const slash = chord.indexOf("/");
+  if (slash >= 0) return irealChord(chord.slice(0, slash)) + chord.slice(slash);
   return chord
     .replace("maj7", "^7")
     .replace("m7b5", "h7")
     .replace("m6", "-6")
     .replace("m7", "-7")
+    // 7thの付かない短3和音(Cm)。iReal Proは"Cm"を解釈できず"C-"と書く必要がある
+    .replace(/m$/, "-")
     // iReal Proは増5度を"+5"ではなく"#5"としか認識しないため変換する
     // (未変換だと"E7+5"のようなコードが「サポートされていない」と再生エラーになる)
     .replace("7+5", "7#5")
@@ -3227,6 +3234,13 @@ function transposeJameyV79Phrase(phrase, key){
 // 並び(半音順)を使って、他の移調処理とスペリングの流儀を揃える。
 const CHROMATIC_PC = {C:0,"C#":1,Db:1,D:2,"D#":3,Eb:3,E:4,F:5,"F#":6,Gb:6,G:7,"G#":8,Ab:8,A:9,"A#":10,Bb:10,B:11};
 function transposeChordFigure(figure, key){
+  // 分数コード(Cm/Bb)はベース音も同じだけ動かさないと和音の意味が変わるので、
+  // "/"で分けて両側を移調する。
+  const slash = figure.indexOf("/");
+  if (slash >= 0){
+    return transposeChordFigure(figure.slice(0, slash), key) + "/" +
+           transposeChordFigure(figure.slice(slash + 1), key);
+  }
   const m = figure.match(/^([A-G])([#b]?)/);
   if (!m || key === "C") return figure;
   const rootPc = CHROMATIC_PC[m[1] + m[2]];
@@ -3243,7 +3257,9 @@ function transposeApproachEnclosurePhrase(phrase, key){
     ...phrase,
     key,
     bars,
-    chordsDisplay: bars.map(b => b.length ? b[0] : "?").join(" | "),
+    // 1小節に2つコードが入る曲(1001HardBopは全小節が半小節ごとに2コード)が
+    // あるので、先頭だけでなく小節内の全コードを並べる。1個の小節は従来と同じ表示。
+    chordsDisplay: bars.map(b => b.length ? b.join(" ") : "?").join(" | "),
     notes: phrase.notes.map(n => transposeNoteToKey(n, key)),
   };
 }
@@ -3390,22 +3406,27 @@ function flattenPhrase(phrase, ctx){
 // [degreeName, isChordTone] for each semitone offset (0-11) above the chord
 // root, one table per chord quality actually used by this app's chord
 // dictionaries (all derived from MAJOR_251/MINOR_251, so only maj7/m7/m7b5/
-// m6/7/7alt ever appear as a chord label suffix).
+// m6/7/7alt ever appear as a chord label suffix). 1001HardBopだけは
+// 7thの付かない短3和音("Cm")も使うため "m" を加えてある。
 const QUALITY_DEGREE_TABLE = {
   "7":    [["1",true],["b9",false],["9",false],["#9",false],["3",true],["11",false],["#11",false],["5",true],["b13",false],["13",false],["b7",true],["7",false]],
   "maj7": [["1",true],["b9",false],["9",false],["#9",false],["3",true],["11",false],["#11",false],["5",true],["#5",false],["13",false],["b7",false],["7",true]],
   "m7":   [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["13",false],["b7",true],["7",false]],
   "m7b5": [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["b5",true],["5",false],["b13",false],["13",false],["b7",true],["7",false]],
-  "m6":   [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["6",true],["b7",false],["7",false]]
+  "m6":   [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["6",true],["b7",false],["7",false]],
+  // 短3和音。m7と違い♭7はコードトーンではなくテンション扱いになる
+  "m":    [["1",true],["b9",false],["9",false],["b3",true],["3",false],["11",false],["#11",false],["5",true],["b13",false],["13",false],["b7",false],["7",false]]
 };
 function parseChordSymbolQuality(label){
-  const m = /^([A-G][b#]?)(.*)$/.exec(label);
+  // 分数コード(Cm/Bb)の度数はルートから数えるので、"/"以降のベース音は見ない
+  const m = /^([A-G][b#]?)([^/]*)/.exec(label);
   const rest = m[2];
   let quality = "7"; // dominant is the fallback: also covers "7alt" (same tension spellings as plain 7)
   if (rest === "maj7") quality = "maj7";
   else if (rest === "m7b5") quality = "m7b5";
   else if (rest === "m6") quality = "m6";
   else if (rest === "m7") quality = "m7";
+  else if (rest === "m") quality = "m";
   return { rootStr: m[1], quality };
 }
 // Finds the chord sounding under a note (same bar, latest chord event at or
@@ -4096,7 +4117,8 @@ const AI_CATEGORY_DIRS = {
   ai_coltrane:  "ai_coltrane_scores",
   ai_approach_enclosure: "ai_approach_enclosure_scores",
   bebap_progression: "bebap_progression_scores",
-  ai_bebap_progression: "ai_bebap_progression_scores"
+  ai_bebap_progression: "ai_bebap_progression_scores",
+  hardbop1001: "hardbop1001_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4373,6 +4395,7 @@ async function render(){
       : category === "ai_approach_enclosure" ? transposeApproachEnclosurePhrase
       : category === "bebap_progression" ? transposeApproachEnclosurePhrase
       : category === "ai_bebap_progression" ? transposeApproachEnclosurePhrase
+      : category === "hardbop1001" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
@@ -4390,7 +4413,7 @@ async function render(){
       // coltrane1001/dominant7thのキー表記(iReal Pro側)を誤って
       // マイナー表記にしてしまっていた。実際にマイナー進行のカテゴリだけを
       // 列挙する形に直す。
-      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625" || category === "ai_dorian") ? "Minor" : "Major",
+      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625" || category === "ai_dorian" || category === "hardbop1001") ? "Minor" : "Major",
       key,
       chordPlan
     };
