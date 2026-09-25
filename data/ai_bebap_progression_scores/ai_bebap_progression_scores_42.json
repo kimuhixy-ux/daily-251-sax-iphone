@@ -13,10 +13,10 @@
    "Cm7"
   ],
   [
-   "Cm7"
+   "F7"
   ]
  ],
- "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | Cm7",
+ "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | F7",
  "notes": [
   {
    "barIndex": 0,
@@ -214,23 +214,23 @@
    "barIndex": 3,
    "beatInBar": 0.0,
    "duration": 0.5,
-   "letter": "B",
-   "octave": 3,
-   "accidental": -1
-  },
-  {
-   "barIndex": 3,
-   "beatInBar": 0.5,
-   "duration": 0.5,
    "letter": "C",
    "octave": 4,
    "accidental": 0
   },
   {
    "barIndex": 3,
+   "beatInBar": 0.5,
+   "duration": 0.5,
+   "letter": "B",
+   "octave": 3,
+   "accidental": -1
+  },
+  {
+   "barIndex": 3,
    "beatInBar": 1.0,
    "duration": 0.5,
-   "letter": "D",
+   "letter": "C",
    "octave": 4,
    "accidental": 0
   },

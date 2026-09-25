@@ -13,10 +13,10 @@
    "Cm7"
   ],
   [
-   "Cm7"
+   "F7"
   ]
  ],
- "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | Cm7",
+ "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | F7",
  "notes": [
   {
    "barIndex": 0,
@@ -310,7 +310,7 @@
    "barIndex": 3,
    "beatInBar": 0.0,
    "duration": 0.25,
-   "letter": "G",
+   "letter": "F",
    "octave": 5,
    "accidental": 0
   },
@@ -318,23 +318,23 @@
    "barIndex": 3,
    "beatInBar": 0.25,
    "duration": 0.25,
-   "letter": "F",
-   "octave": 5,
-   "accidental": 0
-  },
-  {
-   "barIndex": 3,
-   "beatInBar": 0.5,
-   "duration": 0.25,
    "letter": "E",
    "octave": 5,
    "accidental": -1
   },
   {
    "barIndex": 3,
-   "beatInBar": 0.75,
+   "beatInBar": 0.5,
    "duration": 0.25,
    "letter": "D",
+   "octave": 5,
+   "accidental": 0
+  },
+  {
+   "barIndex": 3,
+   "beatInBar": 0.75,
+   "duration": 0.25,
+   "letter": "C",
    "octave": 5,
    "accidental": 0
   },
@@ -342,29 +342,21 @@
    "barIndex": 3,
    "beatInBar": 1.0,
    "duration": 0.5,
-   "letter": "C",
-   "octave": 5,
-   "accidental": 0
-  },
-  {
-   "barIndex": 3,
-   "beatInBar": 1.5,
-   "duration": 0.5,
    "letter": "B",
    "octave": 4,
    "accidental": -1
   },
   {
    "barIndex": 3,
-   "beatInBar": 2.0,
-   "duration": 0.25,
+   "beatInBar": 1.5,
+   "duration": 0.5,
    "letter": "A",
    "octave": 4,
    "accidental": 0
   },
   {
    "barIndex": 3,
-   "beatInBar": 2.25,
+   "beatInBar": 2.0,
    "duration": 0.25,
    "letter": "G",
    "octave": 4,
@@ -372,7 +364,7 @@
   },
   {
    "barIndex": 3,
-   "beatInBar": 2.5,
+   "beatInBar": 2.25,
    "duration": 0.25,
    "letter": "F",
    "octave": 4,
@@ -380,7 +372,7 @@
   },
   {
    "barIndex": 3,
-   "beatInBar": 2.75,
+   "beatInBar": 2.5,
    "duration": 0.25,
    "letter": "E",
    "octave": 4,
@@ -388,9 +380,17 @@
   },
   {
    "barIndex": 3,
+   "beatInBar": 2.75,
+   "duration": 0.25,
+   "letter": "D",
+   "octave": 4,
+   "accidental": 0
+  },
+  {
+   "barIndex": 3,
    "beatInBar": 3.0,
    "duration": 0.5,
-   "letter": "D",
+   "letter": "C",
    "octave": 4,
    "accidental": 0
   },
@@ -398,9 +398,9 @@
    "barIndex": 3,
    "beatInBar": 3.5,
    "duration": 0.5,
-   "letter": "C",
+   "letter": "E",
    "octave": 4,
-   "accidental": 0
+   "accidental": -1
   }
  ]
 }

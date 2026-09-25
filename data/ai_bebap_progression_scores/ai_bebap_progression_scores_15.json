@@ -13,10 +13,10 @@
    "Cm7"
   ],
   [
-   "Cm7"
+   "F7"
   ]
  ],
- "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | Cm7",
+ "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | F7",
  "notes": [
   {
    "barIndex": 0,
@@ -214,23 +214,23 @@
    "barIndex": 3,
    "beatInBar": 0.0,
    "duration": 0.5,
-   "letter": "B",
-   "octave": 4,
-   "accidental": 0
-  },
-  {
-   "barIndex": 3,
-   "beatInBar": 0.5,
-   "duration": 0.5,
    "letter": "C",
    "octave": 5,
    "accidental": 0
   },
   {
    "barIndex": 3,
+   "beatInBar": 0.5,
+   "duration": 0.5,
+   "letter": "B",
+   "octave": 4,
+   "accidental": 0
+  },
+  {
+   "barIndex": 3,
    "beatInBar": 1.0,
    "duration": 0.5,
-   "letter": "D",
+   "letter": "C",
    "octave": 5,
    "accidental": 0
   },
@@ -246,7 +246,7 @@
    "barIndex": 3,
    "beatInBar": 2.0,
    "duration": 0.5,
-   "letter": "G",
+   "letter": "F",
    "octave": 5,
    "accidental": 0
   },
@@ -254,7 +254,7 @@
    "barIndex": 3,
    "beatInBar": 2.5,
    "duration": 0.5,
-   "letter": "F",
+   "letter": "A",
    "octave": 5,
    "accidental": 0
   },
@@ -262,15 +262,15 @@
    "barIndex": 3,
    "beatInBar": 3.0,
    "duration": 0.5,
-   "letter": "E",
+   "letter": "G",
    "octave": 5,
-   "accidental": -1
+   "accidental": 0
   },
   {
    "barIndex": 3,
    "beatInBar": 3.5,
    "duration": 0.5,
-   "letter": "D",
+   "letter": "F",
    "octave": 5,
    "accidental": 0
   }

@@ -13,10 +13,10 @@
    "Cm7"
   ],
   [
-   "Cm7"
+   "F7"
   ]
  ],
- "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | Cm7",
+ "chordsDisplay": "Cmaj7 | Cmaj7 | Cm7 | F7",
  "notes": [
   {
    "barIndex": 0,
@@ -216,11 +216,19 @@
    "duration": 0.5,
    "letter": "A",
    "octave": 5,
-   "accidental": -1
+   "accidental": 0
   },
   {
    "barIndex": 3,
    "beatInBar": 0.5,
+   "duration": 0.5,
+   "letter": "A",
+   "octave": 5,
+   "accidental": -1
+  },
+  {
+   "barIndex": 3,
+   "beatInBar": 1.0,
    "duration": 0.5,
    "letter": "G",
    "octave": 5,
@@ -228,7 +236,7 @@
   },
   {
    "barIndex": 3,
-   "beatInBar": 1.0,
+   "beatInBar": 1.5,
    "duration": 0.5,
    "letter": "F",
    "octave": 5,
@@ -236,19 +244,11 @@
   },
   {
    "barIndex": 3,
-   "beatInBar": 1.5,
-   "duration": 0.5,
+   "beatInBar": 2.0,
+   "duration": 2.0,
    "letter": "E",
    "octave": 5,
    "accidental": -1
-  },
-  {
-   "barIndex": 3,
-   "beatInBar": 2.0,
-   "duration": 2.0,
-   "letter": "C",
-   "octave": 5,
-   "accidental": 0
   }
  ]
 }
