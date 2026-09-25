@@ -146,7 +146,8 @@ const CATEGORIES = [
   { id:"ai_approach_enclosure", label:"AI-アプローチ&エンクロージャー" },
   { id:"bebap_progression", label:"Bebap-progression" },
   { id:"ai_bebap_progression", label:"AI-Bebap-progression" },
-  { id:"hardbop1001", label:"1001HardBop" }
+  { id:"hardbop1001", label:"1001HardBop" },
+  { id:"ai_hardbop", label:"AI-Hard-Bop" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4118,7 +4119,8 @@ const AI_CATEGORY_DIRS = {
   ai_approach_enclosure: "ai_approach_enclosure_scores",
   bebap_progression: "bebap_progression_scores",
   ai_bebap_progression: "ai_bebap_progression_scores",
-  hardbop1001: "hardbop1001_scores"
+  hardbop1001: "hardbop1001_scores",
+  ai_hardbop: "ai_hardbop_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4396,6 +4398,7 @@ async function render(){
       : category === "bebap_progression" ? transposeApproachEnclosurePhrase
       : category === "ai_bebap_progression" ? transposeApproachEnclosurePhrase
       : category === "hardbop1001" ? transposeApproachEnclosurePhrase
+      : category === "ai_hardbop" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
@@ -4413,7 +4416,7 @@ async function render(){
       // coltrane1001/dominant7thのキー表記(iReal Pro側)を誤って
       // マイナー表記にしてしまっていた。実際にマイナー進行のカテゴリだけを
       // 列挙する形に直す。
-      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625" || category === "ai_dorian" || category === "hardbop1001") ? "Minor" : "Major",
+      mode: (category === "jamey_minor251" || category === "licks_minor251" || category === "dorian" || category === "minor1625" || category === "minor2516" || category === "minor251" || category === "ai_minor251" || category === "ai_minor2516" || category === "ai_minor1625" || category === "ai_dorian" || category === "hardbop1001" || category === "ai_hardbop") ? "Minor" : "Major",
       key,
       chordPlan
     };
