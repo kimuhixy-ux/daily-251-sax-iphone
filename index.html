@@ -142,7 +142,8 @@ const CATEGORIES = [
   { id:"ai_minor1625", label:"AI-minor1625" },
   { id:"ai_major1625", label:"AI-major1625" },
   { id:"ai_dorian", label:"AI-Dorian" },
-  { id:"ai_coltrane", label:"AI-coltrane" }
+  { id:"ai_coltrane", label:"AI-coltrane" },
+  { id:"ai_approach_enclosure", label:"AI-アプローチ&エンクロージャー" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4090,7 +4091,8 @@ const AI_CATEGORY_DIRS = {
   ai_minor1625: "ai_minor1625_scores",
   ai_major1625: "ai_major1625_scores",
   ai_dorian:    "ai_dorian_scores",
-  ai_coltrane:  "ai_coltrane_scores"
+  ai_coltrane:  "ai_coltrane_scores",
+  ai_approach_enclosure: "ai_approach_enclosure_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4362,6 +4364,9 @@ async function render(){
       : category === "ai_major1625" ? transposeMajor1625Phrase
       : category === "ai_dorian" ? transposeDorianPhrase
       : category === "ai_coltrane" ? transposeColtrane1001Phrase
+      // 元カテゴリーと同じく、コードはJS辞書ではなくJSONのbarsに入っている
+      // (全小節Cmaj7)ので、bars内のコード記号ごと移調する関数を使う。
+      : category === "ai_approach_enclosure" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
