@@ -4158,10 +4158,13 @@ const keyField = document.getElementById("keyField");
 
 // 移調楽器の「記譜音 − 実音」の半音数。アルトはE♭管で長6度上、テナーはB♭管で
 // 長9度上に記譜するが、調名はオクターブを無視してよいので長2度上として扱う。
+// up: 調名の移動量。調名はオクターブを無視してよいのでテナーも長2度で足りる。
+// soundsBelow: 実際に鳴る音が記譜より何半音低いか。こちらはオクターブまで
+// 合わせないと再生が楽器と合わないので、テナーは長9度(14半音)になる。
 const INSTRUMENTS = [
-  { id: "written", label: "指定なし（譜面の調で選ぶ）", up: 0 },
-  { id: "alto",    label: "アルトサックス（E♭管）",     up: 9 },
-  { id: "tenor",   label: "テナーサックス（B♭管）",     up: 2 },
+  { id: "written", label: "指定なし（譜面の調で選ぶ）", up: 0, soundsBelow: 0 },
+  { id: "alto",    label: "アルトサックス（E♭管）",     up: 9, soundsBelow: 9 },
+  { id: "tenor",   label: "テナーサックス（B♭管）",     up: 2, soundsBelow: 14 },
 ];
 const instrumentSelect = document.getElementById("instrument");
 const instrumentField = document.getElementById("instrumentField");
@@ -4174,6 +4177,11 @@ let instrumentUp = 0;
 function instrumentUpOf(id){
   const found = INSTRUMENTS.find(i => i.id === id);
   return found ? found.up : 0;
+}
+// 再生のたびに現在の選択を読む。楽器を替えた直後に鳴らしても必ず追従させるため。
+function instrumentSoundsBelow(){
+  const found = INSTRUMENTS.find(i => i.id === instrumentSelect.value);
+  return found ? found.soundsBelow : 0;
 }
 function writtenKeyOf(concertKey){
   return KEYS[(KEYS.indexOf(concertKey) + instrumentUp) % KEYS.length];
@@ -4194,7 +4202,7 @@ function rebuildKeyOptions(){
 function updateInstrumentStatus(){
   const label = INSTRUMENTS.find(i => i.id === instrumentSelect.value).label;
   instrumentStatus.textContent = instrumentUp
-    ? `${label}：キーは実音で選びます。括弧内と譜面・iReal Proは記譜音の調です。`
+    ? `${label}：キーと再生は実音です。括弧内と譜面・iReal Proは記譜音の調です。`
     : "";
 }
 // 楽器を替えても「いま練習している実音の調」は変わらないようにする。
@@ -4690,7 +4698,10 @@ function playMetronome(){
       const absBeat = n.barIndex * 4 + n.beatInBar;
       const t = repStartAt + absBeat * secPerBeat;
       const dur = n.duration * secPerBeat;
-      const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0);
+      // 譜面は記譜音なので、そのまま鳴らすと移調楽器で吹いた音より高くなる
+      // (アルトなら長6度上)。選んだ楽器の実音まで下げて、一緒に吹いたときに
+      // device側とユニゾンになるようにする。
+      const midi = (n.octave + 1) * 12 + noteMap[n.letter] + (n.accidental || 0) - instrumentSoundsBelow();
       const freq = 440 * Math.pow(2, (midi - 69) / 12);
       const end = playPianoNote(ctx, freq, t, dur);
       if (end > lastEndAt) lastEndAt = end;
