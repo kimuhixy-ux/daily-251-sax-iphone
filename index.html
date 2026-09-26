@@ -2933,7 +2933,7 @@ function irealBarsFromChordPlan(chordPlan){
   const bars = [];
   for (let i = 0; i < chordPlan.totalBars; i++){
     const evs = (byBar.get(i) || []).slice().sort((a, b) => a.beatInBar - b.beatInBar);
-    bars.push(evs.map(e => irealChord(e.label)).join(" "));
+    bars.push(evs.map(e => irealChord(concertFigure(e.label))).join(" "));
   }
   return bars;
 }
@@ -2946,14 +2946,26 @@ function irealProgressionText(bars){
 }
 // Builds the custom irealbook:// URL documented at
 // https://www.irealpro.com/ireal-pro-custom-chord-chart-protocol
+// iReal Proのバッキングは実音で鳴るため、楽器を選んでいるときは記譜音の
+// コード記号を実音へ移してから書き出す。transposeChordFigureはCからの
+// 上向きの移調しか受け付けないので、下げる量を12から引いて上向きに読み替える。
+function concertFigure(figure){
+  if (!instrumentUp) return figure;
+  return transposeChordFigure(figure, KEYS[(12 - instrumentUp) % 12]);
+}
 function irealUrl(){
   if (!currentPractice) return "";
   const { title, mode, key, chordPlan } = currentPractice;
   const composer = "App Daily251";
   const style = "Medium Swing";
-  const keyLabel = irealKeyLabel(mode, key);
+  const concertKey = instrumentUp ? concertKeyOf(key) : key;
+  // 曲名の末尾には記譜キーを付けているので、コードと食い違わないよう実音に直す。
+  const concertTitle = title.endsWith(` ${key}`)
+    ? `${title.slice(0, title.length - key.length)}${concertKey}`
+    : title;
+  const keyLabel = irealKeyLabel(mode, concertKey);
   const progression = irealProgressionText(irealBarsFromChordPlan(chordPlan));
-  const raw = `${title}=${composer}=${style}=${keyLabel}=n=${progression}`;
+  const raw = `${concertTitle}=${composer}=${style}=${keyLabel}=n=${progression}`;
   return `irealbook://${encodeURIComponent(raw)}`;
 }
 
@@ -4202,7 +4214,7 @@ function rebuildKeyOptions(){
 function updateInstrumentStatus(){
   const label = INSTRUMENTS.find(i => i.id === instrumentSelect.value).label;
   instrumentStatus.textContent = instrumentUp
-    ? `${label}：キーと再生は実音です。括弧内と譜面・iReal Proは記譜音の調です。`
+    ? `${label}：キー・再生・iReal Proは実音です。括弧内と譜面は記譜音の調です。`
     : "";
 }
 // 楽器を替えても「いま練習している実音の調」は変わらないようにする。
