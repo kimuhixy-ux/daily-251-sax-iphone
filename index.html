@@ -4543,7 +4543,7 @@ document.getElementById("todayBtn").addEventListener("click", () => {
 instrumentSelect.addEventListener("change", () => {
   applyInstrument();
   localStorage.setItem("instrument", instrumentSelect.value);
-  currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
+  // 曲は選び直さない。譜面の調名が変わるため seedIndex を呼ぶと別の曲に飛んでしまう。
   render();
 });
 const octaveStatus = document.getElementById("octaveStatus");
