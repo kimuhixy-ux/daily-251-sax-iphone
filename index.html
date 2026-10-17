@@ -4605,10 +4605,48 @@ ensureXmlPhrasesLoaded();
 let metronomeAudioCtx = null;
 let metronomeNodes = [];
 let metronomePlaying = false;
+// 前回の再生の終了タイマーを残すと、再開後の再生を途中で止めてしまうため保持して取り消す
+let metronomeStopTimer = null;
+// 全部の音をこのバス経由で鳴らす。音が重なっても割れないようリミッターを通し、
+// 停止時はバスごとフェードアウトさせて「プツッ」という歪みを防ぐ
+let metronomeBus = null;
+let metronomeLimiter = null;
+
+function createMetronomeBus(ctx){
+  if (!metronomeLimiter) {
+    metronomeLimiter = ctx.createDynamicsCompressor();
+    metronomeLimiter.threshold.value = -6;
+    metronomeLimiter.knee.value = 0;
+    metronomeLimiter.ratio.value = 20;
+    metronomeLimiter.attack.value = 0.003;
+    metronomeLimiter.release.value = 0.1;
+    metronomeLimiter.connect(ctx.destination);
+  }
+  const bus = ctx.createGain();
+  bus.gain.value = 0.8;
+  bus.connect(metronomeLimiter);
+  return bus;
+}
 
 function stopMetronome(){
-  metronomeNodes.forEach(node => { try { node.stop(); } catch(e){} });
+  clearTimeout(metronomeStopTimer);
+  metronomeStopTimer = null;
+  const ctx = metronomeAudioCtx;
+  const bus = metronomeBus;
+  const nodes = metronomeNodes;
+  metronomeBus = null;
   metronomeNodes = [];
+  if (ctx && bus) {
+    const now = ctx.currentTime;
+    bus.gain.cancelScheduledValues(now);
+    bus.gain.setValueAtTime(bus.gain.value, now);
+    bus.gain.linearRampToValueAtTime(0, now + 0.03);
+    // フェードが終わってから止めて切り離す
+    setTimeout(() => {
+      nodes.forEach(node => { try { node.stop(); } catch(e){} });
+      bus.disconnect();
+    }, 60);
+  }
   metronomePlaying = false;
   document.getElementById("metronomeBtn").textContent = "▶ メトロノームで再生";
 }
@@ -4617,7 +4655,7 @@ function stopMetronome(){
 // 耳に届きやすいノイズ成分(打楽器的な「コツッ」という音)を重ねて音量も上げる。
 function playClick(ctx, t, accent){
   const gain = ctx.createGain();
-  gain.connect(ctx.destination);
+  gain.connect(metronomeBus);
   gain.gain.setValueAtTime(accent ? 0.55 : 0.4, t);
   gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
 
@@ -4651,7 +4689,7 @@ function playPianoNote(ctx, freq, t, dur){
   const harmonics = [1, 2, 3, 4, 5, 6];
   const amps = [1, 0.55, 0.3, 0.18, 0.1, 0.06];
   const gain = ctx.createGain();
-  gain.connect(ctx.destination);
+  gain.connect(metronomeBus);
   const decayTime = Math.max(dur, 0.4) + 0.6;
   gain.gain.setValueAtTime(0.0001, t);
   gain.gain.exponentialRampToValueAtTime(0.3, t + 0.005);
@@ -4694,6 +4732,7 @@ function playMetronome(){
   const totalBars = Math.max(...currentNotes.map(n => n.barIndex)) + 1;
   const totalBeats = totalBars * 4;
   metronomeNodes = [];
+  metronomeBus = createMetronomeBus(ctx);
 
   const noteMap = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
   let lastEndAt = startAt;
@@ -4725,7 +4764,7 @@ function playMetronome(){
   // 音の減衰(余韻)が終わる時刻まで待ってから止める。固定バッファだと
   // ロングトーンの余韻が残っているうちに止まってしまうことがあったため。
   const stopDelayMs = Math.max(0, (lastEndAt - ctx.currentTime) * 1000 + 150);
-  setTimeout(() => { if (metronomePlaying) stopMetronome(); }, stopDelayMs);
+  metronomeStopTimer = setTimeout(() => { if (metronomePlaying) stopMetronome(); }, stopDelayMs);
 }
 
 document.getElementById("metronomeBtn").addEventListener("click", () => {
