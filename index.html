@@ -4634,6 +4634,7 @@ function stopMetronome(){
   const ctx = metronomeAudioCtx;
   const bus = metronomeBus;
   const nodes = metronomeNodes;
+  metronomeAudioCtx = null;
   metronomeBus = null;
   metronomeNodes = [];
   if (ctx && bus) {
@@ -4645,6 +4646,7 @@ function stopMetronome(){
     setTimeout(() => {
       nodes.forEach(node => { try { node.stop(); } catch(e){} });
       bus.disconnect();
+      ctx.close().catch(() => {});
     }, 60);
   }
   metronomePlaying = false;
@@ -4710,7 +4712,10 @@ function playPianoNote(ctx, freq, t, dur){
 
 function playMetronome(){
   if (!currentNotes || currentNotes.length === 0) return;
-  if (!metronomeAudioCtx) metronomeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  // iOSは放置中にAudioContextを止めることがあり、使い回すとresume()しても無音のままになる。
+  // そのためタップのたびに新しく作り、再生が終わったら閉じる
+  metronomeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  metronomeLimiter = null;
   const ctx = metronomeAudioCtx;
   ctx.resume();
 
