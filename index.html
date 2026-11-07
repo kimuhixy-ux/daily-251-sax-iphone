@@ -33,6 +33,10 @@
     .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
     .ireal-actions { display:grid; grid-template-columns:1fr; gap:8px; margin-top:12px; }
     .status { min-height:18px; color:var(--muted); font-size:13px; margin:8px 0 0; }
+    .medley-list { margin:10px 0 0; padding-left:22px; }
+    .medley-list li { display:flex; align-items:center; gap:8px; margin:4px 0; }
+    .medley-list li span { flex:1; }
+    .medley-list li button { width:44px; height:44px; padding:0; flex:none; }
     details { margin-top:16px; color:var(--muted); }
     details div { margin-top:8px; line-height:1.7; }
     @media (max-width:420px){ h1{font-size:23px}.controls,.actions{grid-template-columns:1fr} }
@@ -84,6 +88,17 @@
     <button class="secondary" id="prevBtn">◀ 前のフレーズ</button>
     <button id="nextBtn">次のフレーズ ▶</button>
   </div>
+
+  <p class="section">連続練習（再読み込みで消えます）</p>
+  <div class="actions">
+    <button class="secondary" id="medleyAddBtn">＋この曲を追加</button>
+    <button id="medleyShowBtn">つなげて表示</button>
+  </div>
+  <ol class="medley-list" id="medleyList"></ol>
+  <div class="actions">
+    <button class="secondary" id="medleyClearBtn">リストを空にする</button>
+  </div>
+  <p class="status" id="medleyStatus"></p>
 
   <details>
     <summary>練習メモ</summary>
@@ -3487,6 +3502,8 @@ function diatonicStep(letter, octave){
 function escapeXml(s){ return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
 function renderScore(notes, chordPlan, phrase){
+  // 連続練習に追加するとき、小節ごとの連桁設定(beamSizes)も一緒に持ち出すため覚えておく
+  lastScorePhrase = phrase;
   const totalBars = chordPlan.totalBars;
   const rows = Math.ceil(totalBars / BARS_PER_ROW);
   const svgW = STAFF_LEFT + BARS_PER_ROW * BEATS_PER_BAR * BEAT_W + 16;
@@ -4300,6 +4317,8 @@ function seedIndex(category, variant, key){
   return hashString(`${today}-${category}-${variant}-${key}`) % pool.length;
 }
 async function render(){
+  // カテゴリやキーを変えたら、つなげた譜面の表示は終わって通常の1曲表示に戻る
+  medleyView = false;
   const category = categorySelect.value;
   const key = keySelect.value;
   const variant = modeSelect.value;
@@ -4597,6 +4616,104 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
     document.getElementById("irealStatus").textContent = url;
   }
 });
+
+// 連続練習: 表示中の曲をそのまま(移調・オクターブ調整済みで)控えておき、
+// 小節番号をずらして1曲につなげる。つないだ結果をcurrentNotes/currentPracticeに
+// 入れるので、メトロノーム再生とiReal Pro書き出しは既存の処理がそのまま通しで動く。
+let medleyItems = [];
+let medleyView = false;
+let lastScorePhrase = null;
+const medleyStatus = document.getElementById("medleyStatus");
+
+function addToMedley(){
+  if (medleyView){
+    medleyStatus.textContent = "つなげた譜面は追加できません。1曲ずつ表示してから追加してください。";
+    return;
+  }
+  if (!currentPractice || !currentNotes.length) return;
+  medleyItems.push({
+    title: currentPractice.title,
+    mode: currentPractice.mode,
+    key: currentPractice.key,
+    notes: currentNotes,
+    chordPlan: currentPractice.chordPlan,
+    beamSizes: lastScorePhrase && lastScorePhrase.beamSizes
+  });
+  renderMedleyList();
+  medleyStatus.textContent = `「${currentPractice.title}」を追加しました（${medleyItems.length}曲）。`;
+}
+
+function buildMedley(){
+  const notes = [], events = [], beamSizes = [];
+  let offset = 0;
+  medleyItems.forEach(item => {
+    // 最後が休符だけの小節でも曲の長さを失わないよう、コード側の小節数も見る
+    const bars = Math.max(item.chordPlan.totalBars, Math.max(...item.notes.map(n => n.barIndex)) + 1);
+    item.notes.forEach(n => notes.push({ ...n, barIndex: n.barIndex + offset }));
+    item.chordPlan.events.forEach(e => events.push({ ...e, barIndex: e.barIndex + offset }));
+    for (let i = 0; i < bars; i++) beamSizes[offset + i] = item.beamSizes ? item.beamSizes[i] : undefined;
+    offset += bars;
+  });
+  return { notes, chordPlan: { events, totalBars: offset }, phrase: { beamSizes } };
+}
+
+function showMedley(){
+  if (!medleyItems.length){
+    medleyStatus.textContent = "先に「＋この曲を追加」で曲を入れてください。";
+    return;
+  }
+  const { notes, chordPlan, phrase } = buildMedley();
+  renderScore(notes, chordPlan, phrase);
+  currentNotes = notes;
+  const count = medleyItems.length;
+  document.getElementById("dateLine").textContent = `${localYmd()} / 連続練習 / ${chordPlan.totalBars}小節`;
+  document.getElementById("phraseName").textContent = `連続練習（${count}曲）`;
+  document.getElementById("tip").textContent = medleyItems.map(item => item.title).join(" → ");
+  // iReal Proのキー表記は1曲目に合わせる(1曲分しか指定できないため)
+  currentPractice = {
+    title: `Daily251 連続練習 ${count}曲`,
+    mode: medleyItems[0].mode,
+    key: medleyItems[0].key,
+    chordPlan
+  };
+  medleyView = true;
+  medleyStatus.textContent = "";
+  document.querySelector(".card").scrollIntoView({ behavior: "smooth" });
+}
+
+function renderMedleyList(){
+  const list = document.getElementById("medleyList");
+  list.replaceChildren();
+  medleyItems.forEach((item, i) => {
+    const li = document.createElement("li");
+    const label = document.createElement("span");
+    label.textContent = item.title;
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "secondary";
+    removeBtn.textContent = "✕";
+    removeBtn.setAttribute("aria-label", `${item.title}を外す`);
+    removeBtn.addEventListener("click", () => {
+      medleyItems.splice(i, 1);
+      renderMedleyList();
+      // つなげて表示している最中なら、外した結果の譜面に描き直す
+      if (medleyView) medleyItems.length ? showMedley() : render();
+    });
+    li.append(label, removeBtn);
+    list.append(li);
+  });
+  document.getElementById("medleyShowBtn").disabled = !medleyItems.length;
+  document.getElementById("medleyClearBtn").disabled = !medleyItems.length;
+}
+
+document.getElementById("medleyAddBtn").addEventListener("click", addToMedley);
+document.getElementById("medleyShowBtn").addEventListener("click", showMedley);
+document.getElementById("medleyClearBtn").addEventListener("click", () => {
+  medleyItems = [];
+  renderMedleyList();
+  medleyStatus.textContent = "";
+  if (medleyView) render();
+});
+renderMedleyList();
 
 // 楽器は持ち替えない限り変わらない設定なので、次回も同じものを選んだ状態で開く。
 const savedInstrument = localStorage.getItem("instrument");
