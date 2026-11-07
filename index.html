@@ -3246,7 +3246,15 @@ function transposeChordFigure(figure, key){
   if (!m || key === "C") return figure;
   const rootPc = CHROMATIC_PC[m[1] + m[2]];
   const newPc = (rootPc + KEYS.indexOf(key)) % 12;
-  return KEYS[newPc] + figure.slice(m[0].length);
+  // 音名の文字をキーの分だけずらしてから♯♭を決める(音符の移調と同じ考え方)。
+  // KEYSから引くだけだとDキーのEm7がGbm7になるなど、調に合わない♭表記になるため。
+  const letterShift = LETTERS.indexOf(parseKeySpelling(key).letter);
+  const newLetter = LETTERS[(LETTERS.indexOf(m[1]) + letterShift) % 7];
+  const acc = ((newPc - NATURAL_PC[newLetter] + 18) % 12) - 6;
+  const name = newLetter + (acc === 1 ? "#" : acc === -1 ? "b" : "");
+  // Cb/Fb/E#/B#やダブルシャープ等は読みにくくiReal Proでも通る保証がないので従来の綴りに戻す
+  const awkward = Math.abs(acc) > 1 || ["Cb","Fb","E#","B#"].includes(name);
+  return (awkward ? KEYS[newPc] : name) + figure.slice(m[0].length);
 }
 // approach_enclosureカテゴリはChad_LBの教則本をXMLインポートしたもので、
 // chad_lbと違いii-V-Iではなく曲ごとの実際のコード(ここでは全曲Cmaj7の
