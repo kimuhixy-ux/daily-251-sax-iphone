@@ -113,9 +113,9 @@
    "barIndex": 1,
    "beatInBar": 1.5,
    "duration": 0.5,
-   "letter": "E",
+   "letter": "D",
    "octave": 5,
-   "accidental": -1
+   "accidental": 0
   },
   {
    "barIndex": 1,
