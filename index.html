@@ -149,7 +149,8 @@ const CATEGORIES = [
   { id:"bebap_progression", label:"Bebap-progression" },
   { id:"ai_bebap_progression", label:"AI-Bebap-progression" },
   { id:"hardbop1001", label:"1001HardBop" },
-  { id:"ai_hardbop", label:"AI-Hard-Bop" }
+  { id:"ai_hardbop", label:"AI-Hard-Bop" },
+  { id:"confirmation", label:"Confirmation" }
 ];
 const CHORD_COLORS = { I:"#0f6b5f", V:"#b45137", ii:"#3f6376", dim:"#6e4560", subV:"#8a5814", vi:"#5f5c28", IV:"#3a7d5c", VI:"#9c5a2e", iv:"#2d5f7a", bVI:"#7a3f6b" };
 
@@ -4110,6 +4111,7 @@ const AI_CATEGORY_DIRS = {
   ai_bebap_progression: "ai_bebap_progression_scores",
   hardbop1001: "hardbop1001_scores",
   ai_hardbop: "ai_hardbop_scores",
+  confirmation: "confirmation_scores",
   inaya: "inaya_scores"
 };
 const AI_PHRASES = {};
@@ -4443,6 +4445,7 @@ async function render(){
       : category === "ai_bebap_progression" ? transposeApproachEnclosurePhrase
       : category === "hardbop1001" ? transposeApproachEnclosurePhrase
       : category === "ai_hardbop" ? transposeApproachEnclosurePhrase
+      : category === "confirmation" ? transposeApproachEnclosurePhrase
       : category === "inaya" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
