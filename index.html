@@ -136,6 +136,7 @@ const CATEGORIES = [
   { id:"rhythm",    label:"リズムトレーニング" },
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲屋セミナー" },
+  { id:"ai_seminar", label:"AIセミナー" },
   { id:"chad_lb", label:"木村オリジナル" },
   { id:"xml", label:"XMLインポート" },
   { id:"approach_enclosure", label:"アプローチ&エンクロージャー" },
@@ -4189,7 +4190,8 @@ const AI_CATEGORY_DIRS = {
   billies_bounce: "billies_bounce_scores",
   donna_lee: "donna_lee_scores",
   bags_groove: "bags_groove_scores",
-  inaya: "inaya_scores"
+  inaya: "inaya_scores",
+  ai_seminar: "ai_seminar_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4530,6 +4532,7 @@ async function render(){
       : category === "donna_lee" ? transposeApproachEnclosurePhrase
       : category === "bags_groove" ? transposeApproachEnclosurePhrase
       : category === "inaya" ? transposeApproachEnclosurePhrase
+      : category === "ai_seminar" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
