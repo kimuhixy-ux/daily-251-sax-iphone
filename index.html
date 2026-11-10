@@ -137,6 +137,7 @@ const CATEGORIES = [
   { id:"original",  label:"オリジナル" },
   { id:"inaya", label:"稲屋セミナー" },
   { id:"ai_seminar", label:"AIセミナー" },
+  { id:"autumn_leaves_cannonball", label:"Autumn Leaves Solo Cannonball" },
   { id:"chad_lb", label:"木村オリジナル" },
   { id:"xml", label:"XMLインポート" },
   { id:"approach_enclosure", label:"アプローチ&エンクロージャー" },
@@ -4191,7 +4192,8 @@ const AI_CATEGORY_DIRS = {
   donna_lee: "donna_lee_scores",
   bags_groove: "bags_groove_scores",
   inaya: "inaya_scores",
-  ai_seminar: "ai_seminar_scores"
+  ai_seminar: "ai_seminar_scores",
+  autumn_leaves_cannonball: "autumn_leaves_cannonball_scores"
 };
 const AI_PHRASES = {};
 const aiLoadPromises = {};
@@ -4533,6 +4535,7 @@ async function render(){
       : category === "bags_groove" ? transposeApproachEnclosurePhrase
       : category === "inaya" ? transposeApproachEnclosurePhrase
       : category === "ai_seminar" ? transposeApproachEnclosurePhrase
+      : category === "autumn_leaves_cannonball" ? transposeApproachEnclosurePhrase
       : transposeJameyMinor251Phrase;
     const transposed = transposeFn(phrase, key);
     const chordPlan = chordPlanFromBars(transposed.bars);
