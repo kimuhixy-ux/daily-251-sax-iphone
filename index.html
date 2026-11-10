@@ -3514,12 +3514,12 @@ function isGraceNote(n){
 
 // 装飾音を、すぐ後ろの本体の音の左に小さな符頭+斜線つきの符幹で描く。
 // 本体に臨時記号があるときは、それとぶつからないようさらに左へ寄せる。
-function graceNoteSvg(n, rowNotes, geo, barStart, staffTopY){
+function graceNoteSvg(n, rowNotes, geo, barStart, staffTopY, beatX){
   const main = rowNotes.find(m => m.barIndex === n.barIndex && Math.abs(m.beatInBar - n.beatInBar) < 1e-6);
   const mainGeo = main && geo.get(main);
   const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
   const gap = main && (main.accidental || main.natural) ? 30 : 17;
-  const cx = mainGeo ? mainGeo.cx - gap : STAFF_LEFT + localBeat * BEAT_W + 6;
+  const cx = mainGeo ? mainGeo.cx - gap : beatX(localBeat) + 6;
   const step = diatonicStep(n.letter, n.octave);
   const y = yForStep(step, staffTopY);
   const rx = NOTE_RX * 0.65, ry = NOTE_RY * 0.65;
@@ -3544,12 +3544,49 @@ function graceNoteSvg(n, rowNotes, geo, barStart, staffTopY){
   return svg;
 }
 
+// 拍の位置→x座標の対応を行ごとに作る。1拍=BEAT_Wの等間隔だと、32分音符や
+// 細かい連符(1/8拍で5px、1/12拍で約3px)の音符が重なって読めなくなるため、
+// 音の出だしごとに最低限の間隔(臨時記号つきの音の前は広め)を確保し、
+// その分を音の少ない区間から詰めて、行の幅はできるだけ元のまま保つ。
+const MIN_NOTE_GAP = 11, ACC_EXTRA_GAP = 7, MIN_SPAN_RATIO = 0.4;
+function buildRowBeatX(notes, barStart, barsInRow){
+  const rowBeats = barsInRow * BEATS_PER_BAR;
+  const rowItems = notes.filter(n => n.barIndex >= barStart && n.barIndex < barStart + barsInRow && !isGraceNote(n))
+    .map(n => ({ n, at: (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar }));
+  const pts = [];
+  for (let b = 0; b <= rowBeats; b++) pts.push(b);
+  rowItems.forEach(({ n, at }) => pts.push(at, Math.min(at + n.duration, rowBeats)));
+  pts.sort((a, b) => a - b);
+  const uniq = pts.filter((p, i) => i === 0 || p - pts[i - 1] > 1e-6);
+  const near = (a, b) => Math.abs(a - b) < 1e-6;
+  const segs = [];
+  for (let i = 0; i < uniq.length - 1; i++){
+    const a = uniq[i], b = uniq[i + 1];
+    const natural = (b - a) * BEAT_W;
+    let need = rowItems.some(it => near(it.at, a)) ? MIN_NOTE_GAP : 0;
+    if (rowItems.some(it => near(it.at, b) && !it.n.rest && (it.n.accidental || it.n.natural))) need += ACC_EXTRA_GAP;
+    need = Math.max(need, natural * MIN_SPAN_RATIO);
+    segs.push({ a, b, w: Math.max(natural, need), slack: Math.max(0, natural - need) });
+  }
+  const excess = segs.reduce((s, g) => s + g.w, 0) - rowBeats * BEAT_W;
+  const totalSlack = segs.reduce((s, g) => s + g.slack, 0);
+  const shrink = excess > 0 && totalSlack > 0 ? Math.min(1, excess / totalSlack) : 0;
+  const xs = [0];
+  segs.forEach(g => { g.w -= g.slack * shrink; xs.push(xs[xs.length - 1] + g.w); });
+  const beatX = beat => {
+    const i = segs.findIndex(g => beat <= g.b + 1e-6);
+    if (i < 0) return STAFF_LEFT + xs[xs.length - 1];
+    const g = segs[i];
+    return STAFF_LEFT + xs[i] + (beat - g.a) / (g.b - g.a) * g.w;
+  };
+  return { beatX, width: xs[xs.length - 1] };
+}
+
 function renderScore(notes, chordPlan, phrase){
   // 連続練習に追加するとき、小節ごとの連桁設定(beamSizes)も一緒に持ち出すため覚えておく
   lastScorePhrase = phrase;
   const totalBars = chordPlan.totalBars;
   const rows = Math.ceil(totalBars / BARS_PER_ROW);
-  const svgW = STAFF_LEFT + BARS_PER_ROW * BEATS_PER_BAR * BEAT_W + 16;
 
   // コードラベルは行ごとに高い音符の分だけ上にずらす(下記rowLayout)ため、
   // 固定のROW_H(行間)だと「前の行の低い音符」と「今の行の上にずれたラベル」が
@@ -3575,8 +3612,18 @@ function renderScore(notes, chordPlan, phrase){
       const noteBottomOffset = (8 - step) * HALF_GAP + NOTE_RY;
       lowOffset = Math.max(lowOffset, noteBottomOffset);
     });
-    rowLayout.push({ barStart, rowBarEnd, labelOffset, lowOffset });
+    const { beatX, width } = buildRowBeatX(notes, barStart, rowBarEnd - barStart);
+    rowLayout.push({ barStart, rowBarEnd, labelOffset, lowOffset, beatX, width });
   }
+  // 細かい音符で行が広がったときは、いちばん広い行に合わせてSVG全体の幅をとる
+  const rowW = Math.max(BARS_PER_ROW * BEATS_PER_BAR * BEAT_W, ...rowLayout.map(r => r.width));
+  const svgW = STAFF_LEFT + rowW + 16;
+  // 他の段は右端がそろうよう同じ幅まで引き伸ばす(小節数が少ない最終段は除く)
+  rowLayout.forEach(r => {
+    if (r.rowBarEnd - r.barStart < BARS_PER_ROW || r.width >= rowW) return;
+    const base = r.beatX, ratio = rowW / r.width;
+    r.beatX = beat => STAFF_LEFT + (base(beat) - STAFF_LEFT) * ratio;
+  });
   const CHORD_LABEL_ASCENT = 14; // 14px太字テキストがベースラインより上にはみ出す高さの目安
   const CHORD_ROW_GAP = 12; // 前の行の一番低い音符と、次の行の上にずれたラベルとの最小間隔
   const staffTops = [];
@@ -3602,9 +3649,9 @@ function renderScore(notes, chordPlan, phrase){
 
   for (let row = 0; row < rows; row++){
     const staffTopY = staffTops[row];
-    const { barStart, rowBarEnd, labelOffset } = rowLayout[row];
+    const { barStart, rowBarEnd, labelOffset, beatX } = rowLayout[row];
     const barsInRow = rowBarEnd - barStart;
-    const rowRight = STAFF_LEFT + barsInRow * BEATS_PER_BAR * BEAT_W;
+    const rowRight = beatX(barsInRow * BEATS_PER_BAR);
 
     for (let li = 0; li < 5; li++){
       const y = staffTopY + li * HALF_GAP * 2;
@@ -3612,7 +3659,7 @@ function renderScore(notes, chordPlan, phrase){
     }
     svg += `<text x="${STAFF_LEFT - 26}" y="${staffTopY + 26}" font-size="28" fill="${INK}">\u{1D11E}</text>`;
     for (let bi = 0; bi <= barsInRow; bi++){
-      const x = STAFF_LEFT + bi * BEATS_PER_BAR * BEAT_W;
+      const x = beatX(bi * BEATS_PER_BAR);
       svg += `<line x1="${x}" x2="${x}" y1="${staffTopY}" y2="${staffTopY + 32}" stroke="${INK}" stroke-width="${bi === barsInRow ? 2 : 1}"/>`;
     }
     // コードネームは五線の少し上に固定で置いていたが、五線からはみ出る高い音符
@@ -3621,7 +3668,7 @@ function renderScore(notes, chordPlan, phrase){
     const chordLabelY = staffTopY + labelOffset;
     chordPlan.events.filter(e => e.barIndex >= barStart && e.barIndex < rowBarEnd).forEach(e => {
       const localBeat = (e.barIndex - barStart) * BEATS_PER_BAR + e.beatInBar;
-      const x = STAFF_LEFT + localBeat * BEAT_W;
+      const x = beatX(localBeat);
       const color = CHORD_COLORS[e.fn] || INK;
       svg += `<text x="${x}" y="${chordLabelY}" font-size="12" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-weight="700" fill="${color}">${escapeXml(e.label)}</text>`;
     });
@@ -3632,7 +3679,7 @@ function renderScore(notes, chordPlan, phrase){
     const restY = yForStep(4, staffTopY); // middle staff line (B4), the shared anchor for all rest glyphs
     notes.filter(n => n.rest && n.barIndex >= barStart && n.barIndex < rowBarEnd).forEach(n => {
       const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
-      const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
+      const cx = (beatX(localBeat) + beatX(localBeat + n.duration)) / 2;
       if (n.duration < 1 - 1e-6){
         // eighth rest: small hooked flag with a dot, floating above center
         svg += `<circle cx="${cx + 2}" cy="${restY - 6}" r="2.2" fill="${INK}"/>`;
@@ -3656,7 +3703,7 @@ function renderScore(notes, chordPlan, phrase){
     const geo = new Map();
     rowNotes.forEach(n => {
       const localBeat = (n.barIndex - barStart) * BEATS_PER_BAR + n.beatInBar;
-      const cx = STAFF_LEFT + localBeat * BEAT_W + (n.duration * BEAT_W) / 2;
+      const cx = (beatX(localBeat) + beatX(localBeat + n.duration)) / 2;
       const step = diatonicStep(n.letter, n.octave);
       const y = yForStep(step, staffTopY);
       ledgerSteps(step).forEach(s => {
@@ -3664,7 +3711,7 @@ function renderScore(notes, chordPlan, phrase){
         svg += `<line x1="${cx - 8}" x2="${cx + 8}" y1="${ly}" y2="${ly}" stroke="${INK}" stroke-width="1"/>`;
       });
       if (n.duration > 1 + 1e-6){
-        const holdEndX = STAFF_LEFT + (localBeat + n.duration) * BEAT_W - 6;
+        const holdEndX = beatX(localBeat + n.duration) - 6;
         svg += `<line x1="${cx + 7}" x2="${holdEndX}" y1="${y}" y2="${y}" stroke="${INK}" stroke-width="2"/>`;
       }
       const opacity = n.tied ? 0.35 : 1;
@@ -3741,7 +3788,7 @@ function renderScore(notes, chordPlan, phrase){
     });
 
     rowGraces.forEach(n => {
-      svg += graceNoteSvg(n, rowNotes, geo, barStart, staffTopY);
+      svg += graceNoteSvg(n, rowNotes, geo, barStart, staffTopY, beatX);
     });
 
     // Beam pass: group same-bar, same-beat notes shorter than 1 beat (eighth
