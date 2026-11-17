@@ -4421,7 +4421,16 @@ function seedIndex(category, variant, key){
   const today = localYmd();
   return hashString(`${today}-${category}-${variant}-${key}`) % pool.length;
 }
+// 何回目の描画かを数える。曲データの読み込みを待つあいだに別の曲が選ばれたら、
+// 古い描画が後から終わって新しい曲を上書きしないよう、最新の番号以外は捨てる。
+let renderToken = 0;
 async function render(){
+  const token = ++renderToken;
+  // 曲を替えたのに前の曲の再生が鳴り続けないよう止める。初回の描画はメトロノームの
+  // 変数が宣言される前に呼ばれるので触らない。
+  if (token > 1 && metronomePlaying) stopMetronome();
+  // 新しいカテゴリの曲を読み込み中に再生を押しても、前の曲が鳴らないよう空にしておく
+  currentNotes = [];
   // カテゴリやキーを変えたら、つなげた譜面の表示は終わって通常の1曲表示に戻る
   medleyView = false;
   const category = categorySelect.value;
@@ -4444,6 +4453,7 @@ async function render(){
   if (category === "minor251") await ensureMinor251PhrasesLoaded();
   if (category === "ai_minor251") await ensureAiMinor251PhrasesLoaded();
   if (AI_CATEGORY_DIRS[category]) await ensureAiPhrasesLoaded(category);
+  if (token !== renderToken) return;
   const pool = getPhrasePool(category, variant);
   if (!pool.length || currentIndex >= pool.length) currentIndex = 0;
   const phrase = pool[currentIndex];
