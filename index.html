@@ -29,6 +29,7 @@
     .section { color:var(--muted); font-size:13px; font-weight:700; margin:16px 0 7px; }
     .score { background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:10px 6px; overflow-x:auto; }
     .score svg { display:block; margin:0 auto; }
+    .theory-link { display:block; margin-top:12px; padding:12px; min-height:44px; border:1px solid var(--accent); border-radius:8px; background:#fffdf8; color:var(--accent); font-weight:700; text-align:center; text-decoration:none; }
     .tip { font-size:17px; line-height:1.6; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; }
     .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
     .ireal-actions { display:grid; grid-template-columns:1fr; gap:8px; margin-top:12px; }
@@ -61,6 +62,7 @@
     <div class="score" id="score"></div>
     <p class="section">今日のポイント</p>
     <div class="tip" id="tip"></div>
+    <a class="theory-link" id="theoryLink" target="_blank" rel="noopener" hidden></a>
   </section>
 
   <div class="ireal-actions" id="irealSection">
@@ -4674,12 +4676,58 @@ async function render(){
   };
 }
 
+// フレーズを吹いていて「なぜこの音？」と思ったときに、理由をすぐ読めるよう
+// カテゴリーに合うジャズ理論ステップの単元へつなぐ。合う単元がないカテゴリーでは出さない
+const THEORY_URL = location.hostname === "kimuhixy.com"
+  ? "https://kimuhixy.com/jazz-theory/"
+  : "https://kimuhixy-ux.github.io/jazz-theory/";
+const TWO_FIVE = { unit:"two-five", title:"ツーファイブワン" };
+const MINOR_TWO_FIVE = { unit:"minor-two-five", title:"マイナーのツーファイブワン" };
+const CHAINS = { unit:"two-five-chains", title:"ツーファイブの連鎖" };
+const BLUES = { unit:"blues", title:"ブルース進行" };
+const COLTRANE = { unit:"coltrane-changes", title:"コルトレーン・チェンジ" };
+const CHORD_SCALE = { unit:"chord-scale", title:"コードとスケール" };
+const ALTERED = { unit:"altered-tensions", title:"オルタード・テンション" };
+const BEBOP = { unit:"bebop-scale", title:"ビバップ・スケール" };
+const ENCLOSURE = { unit:"enclosure", title:"エンクロージャー" };
+const THEORY_UNITS = {
+  major251:TWO_FIVE, ai_major251:TWO_FIVE, jamey_major251:TWO_FIVE,
+  minor251:MINOR_TWO_FIVE, ai_minor251:MINOR_TWO_FIVE, jamey_minor251:MINOR_TWO_FIVE, licks_minor251:MINOR_TWO_FIVE,
+  minor2516:MINOR_TWO_FIVE, ai_minor2516:MINOR_TWO_FIVE,
+  major2516:{ unit:"secondary-dominants", title:"セカンダリードミナント" }, ai_major2516:{ unit:"secondary-dominants", title:"セカンダリードミナント" },
+  major1625:CHAINS, ai_major1625:CHAINS, minor1625:CHAINS, ai_minor1625:CHAINS, turnaround:CHAINS,
+  diatonic:{ unit:"guide-tones", title:"ガイドトーン" },
+  blues:BLUES, nows_the_time:BLUES, billies_bounce:BLUES, bags_groove:BLUES,
+  coltrane:COLTRANE, coltrane1001:COLTRANE, ai_coltrane:COLTRANE,
+  dorian:CHORD_SCALE, ai_dorian:CHORD_SCALE,
+  dominant7th:ALTERED, jamey_v79:ALTERED,
+  bebop:BEBOP, bebap_progression:BEBOP, ai_bebap_progression:BEBOP,
+  approach:ENCLOSURE, approach_enclosure:ENCLOSURE, ai_approach_enclosure:ENCLOSURE,
+  chromatic_tension:{ unit:"tensions", title:"テンション（9th・11th・13th）" },
+  autumn_leaves_cannonball:{ unit:"song-autumn", title:"曲で使う：枯葉型の進行" }
+};
+// 同じカテゴリーでもモードで中身が変わるものは、モードに合う単元を優先する
+const THEORY_UNITS_BY_MODE = {
+  "turnaround/tritone":{ unit:"tritone-sub", title:"裏コード" },
+  "blues/minor":{ unit:"song-minor-blues", title:"曲で使う：マイナー・ブルース" }
+};
+const theoryLink = document.getElementById("theoryLink");
+function updateTheoryLink(){
+  const found = THEORY_UNITS_BY_MODE[`${categorySelect.value}/${modeSelect.value}`] || THEORY_UNITS[categorySelect.value];
+  theoryLink.hidden = !found;
+  if (!found) return;
+  theoryLink.href = `${THEORY_URL}#/${found.unit}`;
+  theoryLink.textContent = `理論を読む：${found.title}`;
+}
+
 categorySelect.addEventListener("change", () => {
   updateModeSelect(categorySelect.value);
+  updateTheoryLink();
   currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
   render();
 });
 modeSelect.addEventListener("change", () => {
+  updateTheoryLink();
   currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
   render();
 });
@@ -4855,6 +4903,7 @@ updateModeSelect(categorySelect.value);
 if ([...modeSelect.options].some(o => o.value === linkParams.get("mode"))) modeSelect.value = linkParams.get("mode");
 // 読み直したときやホーム画面に置いたときに、リンクの指定が残り続けないよう消しておく
 if (location.search) history.replaceState(null, "", location.pathname);
+updateTheoryLink();
 keySelect.value = writtenKeyOf(todayKey());
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
