@@ -4840,10 +4840,21 @@ renderMedleyList();
 // 楽器は持ち替えない限り変わらない設定なので、次回も同じものを選んだ状態で開く。
 const savedInstrument = localStorage.getItem("instrument");
 if (savedInstrument && INSTRUMENTS.some(i => i.id === savedInstrument)) instrumentSelect.value = savedInstrument;
+// ジャズ理論ステップの単元から開いたときは、その単元に合うカテゴリー・モード・楽器を選んだ状態にする。
+// キーは渡さない。毎日キーが変わる「今日のキー」の流れを崩さないため。
+const linkParams = new URLSearchParams(location.search);
+if (CATEGORIES.some(c => c.id === linkParams.get("cat"))) categorySelect.value = linkParams.get("cat");
+if (INSTRUMENTS.some(i => i.id === linkParams.get("inst"))){
+  instrumentSelect.value = linkParams.get("inst");
+  localStorage.setItem("instrument", instrumentSelect.value);
+}
 instrumentUp = instrumentUpOf(instrumentSelect.value);
 rebuildKeyOptions();
 updateInstrumentStatus();
 updateModeSelect(categorySelect.value);
+if ([...modeSelect.options].some(o => o.value === linkParams.get("mode"))) modeSelect.value = linkParams.get("mode");
+// 読み直したときやホーム画面に置いたときに、リンクの指定が残り続けないよう消しておく
+if (location.search) history.replaceState(null, "", location.pathname);
 keySelect.value = writtenKeyOf(todayKey());
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
