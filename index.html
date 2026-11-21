@@ -30,6 +30,11 @@
     .score { background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:10px 6px; overflow-x:auto; }
     .score svg { display:block; margin:0 auto; }
     .theory-link { display:block; margin-top:12px; padding:12px; min-height:44px; border:1px solid var(--accent); border-radius:8px; background:#fffdf8; color:var(--accent); font-weight:700; text-align:center; text-decoration:none; }
+    .recent-theory { margin-top:12px; padding:12px; border:1px solid var(--line); border-radius:8px; background:var(--soft); }
+    .recent-theory-title { margin:0 0 8px; font-weight:700; }
+    .recent-theory-actions { display:grid; gap:8px; }
+    .recent-theory-actions button, .recent-theory-actions a { min-height:44px; }
+    .recent-theory-actions a { display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:700; text-decoration:none; }
     .tip { font-size:17px; line-height:1.6; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px; }
     .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
     .ireal-actions { display:grid; grid-template-columns:1fr; gap:8px; margin-top:12px; }
@@ -55,6 +60,10 @@
     <div class="full" id="instrumentField"><label for="instrument">楽器</label><select id="instrument"></select></div>
   </div>
   <p class="status" id="instrumentStatus"></p>
+  <section class="recent-theory" id="recentTheory" hidden>
+    <p class="recent-theory-title" id="recentTheoryTitle"></p>
+    <div class="recent-theory-actions" id="recentTheoryActions"></div>
+  </section>
 
   <section class="card">
     <p class="date" id="dateLine"></p>
@@ -4720,6 +4729,52 @@ function updateTheoryLink(){
   theoryLink.textContent = `理論を読む：${found.title}`;
 }
 
+// ジャズ理論ステップは同じサイト(kimuhixy.com同士・GitHub Pages同士)にあり端末の保存場所を共有するので、
+// そこで最後に開いた単元と点数を出し、読んだ理論をすぐ吹けるようにする
+function readRecentTheory(){
+  try {
+    const recent = JSON.parse(localStorage.getItem("jazz-theory-recent"));
+    const progress = JSON.parse(localStorage.getItem("jazz-theory"))?.progress ?? {};
+    if (!recent?.id || !recent.title) return null;
+    return { ...recent, score: progress[recent.id] };
+  } catch {
+    return null;
+  }
+}
+function selectCategory(cat, mode){
+  if (!CATEGORIES.some(c => c.id === cat)) return;
+  categorySelect.value = cat;
+  updateModeSelect(cat);
+  if (mode && [...modeSelect.options].some(o => o.value === mode)) modeSelect.value = mode;
+  updateTheoryLink();
+  currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
+  render();
+}
+function renderRecentTheory(){
+  const recent = readRecentTheory();
+  const box = document.getElementById("recentTheory");
+  box.hidden = !recent;
+  if (!recent) return;
+  const score = recent.score === undefined ? "（練習はまだ）" : `（練習 ${recent.score}/10点）`;
+  document.getElementById("recentTheoryTitle").textContent = `前回読んだ理論：${recent.title}${score}`;
+  const actions = document.getElementById("recentTheoryActions");
+  actions.replaceChildren();
+  for (const target of (recent.daily251 || []).filter(t => CATEGORIES.some(c => c.id === t.cat))){
+    const btn = document.createElement("button");
+    btn.textContent = `この単元を吹く：${target.label}`;
+    btn.addEventListener("click", () => selectCategory(target.cat, target.mode));
+    actions.append(btn);
+  }
+  const link = document.createElement("a");
+  link.href = `${THEORY_URL}#/${recent.id}`;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = "理論の続きを読む";
+  actions.append(link);
+}
+// 理論アプリで別の単元を開いてから戻ってきたときにも新しい内容にする
+document.addEventListener("visibilitychange", () => { if (!document.hidden) renderRecentTheory(); });
+
 categorySelect.addEventListener("change", () => {
   updateModeSelect(categorySelect.value);
   updateTheoryLink();
@@ -4904,6 +4959,7 @@ if ([...modeSelect.options].some(o => o.value === linkParams.get("mode"))) modeS
 // 読み直したときやホーム画面に置いたときに、リンクの指定が残り続けないよう消しておく
 if (location.search) history.replaceState(null, "", location.pathname);
 updateTheoryLink();
+renderRecentTheory();
 keySelect.value = writtenKeyOf(todayKey());
 currentIndex = seedIndex(categorySelect.value, modeSelect.value, keySelect.value);
 render();
